@@ -99,24 +99,25 @@
 
 
 
-  <meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.">
+  <meta name="description" content="Install the depot_tools package Confirm git and python are installed. git 2.2.1+ recommended. python 2.7+ recommended.  Fetch depot_tools:   1$ git clone https://chromium.googlesource.com/chromium/too">
+<meta name="keywords" content="Android,Chromium">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hello World">
-<meta property="og:url" content="http://yoursite.com/2018/03/16/hello-world/index.html">
+<meta property="og:title" content="Building chromium for Android">
+<meta property="og:url" content="http://yoursite.com/2017/03/11/build-chromium-for-android/index.html">
 <meta property="og:site_name" content="Zhenhao&#39;s Blog">
-<meta property="og:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.">
+<meta property="og:description" content="Install the depot_tools package Confirm git and python are installed. git 2.2.1+ recommended. python 2.7+ recommended.  Fetch depot_tools:   1$ git clone https://chromium.googlesource.com/chromium/too">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-03-16T02:36:55.239Z">
+<meta property="og:updated_time" content="2018-03-16T06:48:39.105Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hello World">
-<meta name="twitter:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.">
+<meta name="twitter:title" content="Building chromium for Android">
+<meta name="twitter:description" content="Install the depot_tools package Confirm git and python are installed. git 2.2.1+ recommended. python 2.7+ recommended.  Fetch depot_tools:   1$ git clone https://chromium.googlesource.com/chromium/too">
 
 
 
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/03/16/hello-world/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/03/11/build-chromium-for-android/"/>
 
 
 
@@ -126,7 +127,7 @@
   };
 </script>
 
-  <title>Hello World | Zhenhao's Blog</title>
+  <title>Building chromium for Android | Zhenhao's Blog</title>
   
 
 
@@ -302,7 +303,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/16/hello-world/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/03/11/build-chromium-for-android/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="fr0stw01f">
@@ -319,7 +320,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Hello World</h1>
+          <h1 class="post-title" itemprop="name headline">Building chromium for Android</h1>
         
 
         <div class="post-meta">
@@ -331,7 +332,7 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-16T10:36:55+08:00">2018-03-16</time>
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-11T14:05:12+08:00">2017-03-11</time>
             
 
             
@@ -368,16 +369,53 @@
       
 
       
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
+        <h2 id="Install-the-depot-tools-package"><a href="#Install-the-depot-tools-package" class="headerlink" title="Install the depot_tools package"></a>Install the depot_tools package</h2><ol>
+<li><p>Confirm git and python are installed. git 2.2.1+ recommended. python 2.7+ recommended.</p>
+</li>
+<li><p>Fetch depot_tools:</p>
+</li>
+</ol>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git <span class="built_in">clone</span> https://chromium.googlesource.com/chromium/tools/depot_tools.git</span><br></pre></td></tr></table></figure>
+<ol>
+<li>Add depot_tools to your PATH:</li>
+</ol>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">export</span> PATH=`<span class="built_in">pwd</span>`/depot_tools:<span class="string">"<span class="variable">$PATH</span>"</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>Yes, you want to put depot_tools ahead of everything else, otherwise gcl will refer to the GNU Common Lisp compiler.</li>
+<li>You may want to add this to your .bashrc file or your shell’s equivalent so that you don’t need to reset your $PATH manually each time you open a new shell.</li>
+</ul>
 <a id="more"></a>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+<h2 id="Check-out-the-source-code"><a href="#Check-out-the-source-code" class="headerlink" title="Check out the source code"></a>Check out the source code</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ mkdir ~/chromium &amp;&amp; <span class="built_in">cd</span> ~/chromium</span><br><span class="line">~/chromium$ fetch --nohooks android</span><br></pre></td></tr></table></figure>
+<p>If error occurs, just try again.</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">~/chromium/src$ gclient sync</span><br></pre></td></tr></table></figure>
+<p>Sync to a specific version, identified by a commit hash, chose from <a href="https://chromium.googlesource.com/chromium/src/+refs" target="_blank" rel="noopener">stable versions</a> or at least <a href="http://chromium-status.appspot.com/revisions" target="_blank" rel="noopener">lkgr versions</a><br>Here is the <a href="http://dev.chromium.org/developers/calendar" target="_blank" rel="noopener">development calendar</a>.</p>
+<p>For example, the sha1 of the stable version 56.0.2924.87 is b169b9a1cc402573843e8c952af14c4e43487e91.</p>
+<p><del>Stable versions hardly work, don’t know why, try lkgrs.</del></p>
+<p>75ee3cee8e33bd1bcf4fb335b20acc04991448e8 is successfully synced.</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">~/chromium$ gclient sync --nohooks -r &lt;lkgr-sha1&gt;</span><br><span class="line">~/chromium/src$ gn args out/Default <span class="comment"># Default is just a name</span></span><br></pre></td></tr></table></figure>
+<h2 id="Config"><a href="#Config" class="headerlink" title="Config"></a>Config</h2><p>Add the following to the file editor: (with modifications depending on purposes).</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">target_os = <span class="string">"android"</span></span><br><span class="line">target_cpu = <span class="string">"x64"</span>  <span class="comment"># (default)</span></span><br><span class="line">is_debug = <span class="literal">false</span>  <span class="comment"># (default), better choose false to make webview work</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Other args you may want to set:</span></span><br><span class="line">is_component_build = <span class="literal">true</span></span><br><span class="line">is_clang = <span class="literal">true</span></span><br><span class="line">symbol_level = 1  <span class="comment"># Faster build with fewer symbols. -g1 rather than -g2</span></span><br><span class="line">enable_incremental_javac = <span class="literal">true</span>  <span class="comment"># Much faster; experimental, need to remove if not debug</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">~/chromium/src$ build/install-build-deps-android.sh</span><br><span class="line">~/chromium/src$ . build/android/envsetup.sh</span><br></pre></td></tr></table></figure>
+<h2 id="Build"><a href="#Build" class="headerlink" title="Build"></a>Build</h2><ul>
+<li>Build Chrome (chrome/BUILD.gn)</li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">~/chromium/src$ ninja -C out/Default chrome_public_apk</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Build Content Shell (content/BUILD.gn)</li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">~/chromium/src$ ninja -C out/Default content_shell_apk</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Build WebView Shell (android_webview/test/BUILD.gn)</li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">~/chromium/src$ ninja -C out/Default android_webview_apk</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Build System WebView (android_webview/BUILD.gn)</li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Modify android_webview/BUILD.gn to change the package name</span></span><br><span class="line">~/chromium/src$ ninja -C out/Default system_webview_apk</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Build System WebView Shell (android_webview/tools/system_webview_shell/BUILD.gn)</li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">~/chromium/src$ ninja -C out/Default system_webview_shell_apk</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -396,6 +434,14 @@
 
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/tags/Android/" rel="tag"># Android</a>
+          
+            <a href="/tags/Chromium/" rel="tag"># Chromium</a>
+          
+        </div>
+      
 
       
       
@@ -405,8 +451,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/03/11/build-chromium-for-android/" rel="next" title="Building chromium for Android">
-                <i class="fa fa-chevron-left"></i> Building chromium for Android
+              <a href="/2017/02/22/tools/" rel="next" title="一些有用的工具">
+                <i class="fa fa-chevron-left"></i> 一些有用的工具
               </a>
             
           </div>
@@ -414,6 +460,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/03/16/hello-world/" rel="prev" title="Hello World">
+                Hello World <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -562,7 +612,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Quick-Start"><span class="nav-number">1.</span> <span class="nav-text">Quick Start</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Create-a-new-post"><span class="nav-number">1.1.</span> <span class="nav-text">Create a new post</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Run-server"><span class="nav-number">1.2.</span> <span class="nav-text">Run server</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Generate-static-files"><span class="nav-number">1.3.</span> <span class="nav-text">Generate static files</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Deploy-to-remote-sites"><span class="nav-number">1.4.</span> <span class="nav-text">Deploy to remote sites</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Install-the-depot-tools-package"><span class="nav-number">1.</span> <span class="nav-text">Install the depot_tools package</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Check-out-the-source-code"><span class="nav-number">2.</span> <span class="nav-text">Check out the source code</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Config"><span class="nav-number">3.</span> <span class="nav-text">Config</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Build"><span class="nav-number">4.</span> <span class="nav-text">Build</span></a></li></ol></div>
             
 
           </div>

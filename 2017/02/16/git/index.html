@@ -1,0 +1,887 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.0.6" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.0.6">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.0.6">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.0.6">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.0.6" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '6.0.6',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="CommandsAlias Use ‘git adog’ to show pretty branch graphs  1git config --global alias.adog &amp;quot;log --all --decorate --oneline --graph&amp;quot; Basics Add file to the Index (Stage)  12$ git add &amp;lt;file">
+<meta name="keywords" content="git">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Git常用命令和分支模型">
+<meta property="og:url" content="http://yoursite.com/2017/02/16/git/index.html">
+<meta property="og:site_name" content="Zhenhao&#39;s Blog">
+<meta property="og:description" content="CommandsAlias Use ‘git adog’ to show pretty branch graphs  1git config --global alias.adog &amp;quot;log --all --decorate --oneline --graph&amp;quot; Basics Add file to the Index (Stage)  12$ git add &amp;lt;file">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://nvie.com/img/git-model@2x.png">
+<meta property="og:updated_time" content="2018-03-16T06:48:08.005Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Git常用命令和分支模型">
+<meta name="twitter:description" content="CommandsAlias Use ‘git adog’ to show pretty branch graphs  1git config --global alias.adog &amp;quot;log --all --decorate --oneline --graph&amp;quot; Basics Add file to the Index (Stage)  12$ git add &amp;lt;file">
+<meta name="twitter:image" content="http://nvie.com/img/git-model@2x.png">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/02/16/git/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>Git常用命令和分支模型 | Zhenhao's Blog</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"> 
+
+<div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Zhenhao's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Connecting the dots.</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+          
+  <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+</li>
+
+      
+        
+        
+          
+  <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br />关于</a>
+</li>
+
+      
+        
+        
+          
+  <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签</a>
+</li>
+
+      
+        
+        
+          
+  <li class="menu-item menu-item-categories">
+    <a href="/categories/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />分类</a>
+</li>
+
+      
+        
+        
+          
+  <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档</a>
+</li>
+
+      
+
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+  
+
+
+
+ </div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/02/16/git/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="fr0stw01f">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhenhao's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Git常用命令和分支模型</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-02-16T18:22:43+08:00">2017-02-16</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="Commands"><a href="#Commands" class="headerlink" title="Commands"></a>Commands</h2><h3 id="Alias"><a href="#Alias" class="headerlink" title="Alias"></a>Alias</h3><ul>
+<li>Use ‘git adog’ to show pretty branch graphs</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git config --global alias.adog &quot;log --all --decorate --oneline --graph&quot;</span><br></pre></td></tr></table></figure>
+<h3 id="Basics"><a href="#Basics" class="headerlink" title="Basics"></a>Basics</h3><ul>
+<li>Add file to the Index (Stage)</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ git add &lt;filename&gt;</span><br><span class="line">$ git add *</span><br></pre></td></tr></table></figure>
+<p>This is the first step in the basic git workflow.</p>
+<ul>
+<li>To actually commit these changes use</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git commit -m &quot;Commit message&quot;</span><br></pre></td></tr></table></figure>
+<p>Now the file is committed to the HEAD, but not in your remote repository yet.</p>
+<a id="more"></a>
+<ul>
+<li>Commit after staging</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git commit -a -m &quot;Commit message&quot;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>-a (–all): automatically stage files that have been modified and deleted, but new files you have not told Git about are not affected.</p>
+</blockquote>
+<ul>
+<li>Rename a file</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git mv &lt;old_filename&gt; &lt;new_filename&gt;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Set/Show git username</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git config [--global] user.name &quot;&lt;username&gt;&quot;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Using clang-format on Chromium C++ code</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git cl format</span><br></pre></td></tr></table></figure>
+<h3 id="Branching"><a href="#Branching" class="headerlink" title="Branching"></a>Branching</h3><ul>
+<li>Create a new branch and switch to it</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git checkout -b &lt;branch_name&gt; [&lt;start point&gt;]</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Switch to branch</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git checkout &lt;branch_name&gt;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Delete branch</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git branch -d &lt;branch_name&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="Pushing-changes"><a href="#Pushing-changes" class="headerlink" title="Pushing changes"></a>Pushing changes</h3><ul>
+<li>Show all remote repositories</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git remote</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Connect repository to a remote server (Add a new remote repository)</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git remote add &lt;repo_alias&gt; &lt;repo_url&gt;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Push the branch to remote repository</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git push [&lt;repo_alias&gt; &lt;branch_name&gt;]</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Remove remote branch</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git push &lt;repo_alias&gt; :&lt;branch_name&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="Update-and-merge"><a href="#Update-and-merge" class="headerlink" title="Update and merge"></a>Update and merge</h3><ul>
+<li>Update local repository to the newest commit (fetch and merge remote changes)</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git pull #in your working directory</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Merge another branch into active branch (e.g. master)</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git merge [--no-ff] [-X &lt;strategy-option&gt;] &lt;branch_name&gt;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>The –no-ff flag avoids losing information about the historical existence of a feature branch and groups together all commits that together added the feature.</p>
+</blockquote>
+<blockquote>
+<p>The -X option specifies merge strategy, including theirs and ours. Use “theirs” when trying to updata the current branch to a newer branch.</p>
+</blockquote>
+<blockquote>
+<p>In both cases git tries to auto-merge changes. Unfortunately, this is not always possible and results in conflicts. You are responsible to merge those conflicts manually by editing the files shown by git.</p>
+</blockquote>
+<ul>
+<li>Add manually merged files after editing</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git add &lt;filename&gt;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Preview them by using before merging changes</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git diff &lt;source_branch&gt; &lt;target_branch&gt;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Prefer theirs(ours) when merging to avoid conflict</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git pull -X theirs(ours)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Accept theirs(ours) if already in conflicted state</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git checkout --theirs(ours) &lt;path/to/file&gt;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Discard changes on staged files</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git checkout -- &lt;path/to/file&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="Stash"><a href="#Stash" class="headerlink" title="Stash"></a>Stash</h3><p>Stash the changes in a dirty working directory away</p>
+<ul>
+<li>Move changes in current branch to another branch</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ git stash</span><br><span class="line">$ git checkout &lt;branch_name&gt;</span><br><span class="line">$ git stash pop</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Move changes in current branch to a new branch</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ git stash</span><br><span class="line">$ git stash branch &lt;branchname&gt; [&lt;stash&gt;]</span><br></pre></td></tr></table></figure>
+<p>Its effect is the same as the effect of:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ git stash</span><br><span class="line">$ git checkout -b xxx</span><br><span class="line">$ git stash pop</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Interrupted workflow</li>
+</ul>
+<p>When you are in the middle of something, your boss comes in and demands that you fix something immediately.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">... hack hack hack ...</span><br><span class="line">$ git stash</span><br><span class="line">... edit emergency fix ...</span><br><span class="line">$ git commit -a -m &quot;Fix in a hurry&quot;</span><br><span class="line">$ git stash pop</span><br><span class="line">... continue hacking ...</span><br></pre></td></tr></table></figure>
+<h2 id="Branching-model"><a href="#Branching-model" class="headerlink" title="Branching model"></a>Branching model</h2><p><img src="http://nvie.com/img/git-model@2x.png" alt="alt text" title="Branching model"></p>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
+<li><a href="http://rogerdudler.github.io/git-guide/index.html" target="_blank" rel="noopener">git - the simple guide</a></li>
+<li><a href="http://rogerdudler.github.io/git-guide/index.zh.html" target="_blank" rel="noopener">git - 简明指南</a></li>
+<li><a href="http://nvie.com/posts/a-successful-git-branching-model/" target="_blank" rel="noopener">A successful Git branching model</a></li>
+</ul>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/git/" rel="tag"># git</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/10/23/old-posts/" rel="next" title="老博客">
+                <i class="fa fa-chevron-left"></i> 老博客
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/02/22/tools/" rel="prev" title="一些有用的工具">
+                一些有用的工具 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">fr0stw01f</p>
+              <p class="site-description motion-element" itemprop="description">long long ago = 0;</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">5</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">5</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/fr0stw01f" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:tangzhnju@gmail.com" target="_blank" title="E-Mail"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Commands"><span class="nav-number">1.</span> <span class="nav-text">Commands</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Alias"><span class="nav-number">1.1.</span> <span class="nav-text">Alias</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Basics"><span class="nav-number">1.2.</span> <span class="nav-text">Basics</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Branching"><span class="nav-number">1.3.</span> <span class="nav-text">Branching</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Pushing-changes"><span class="nav-number">1.4.</span> <span class="nav-text">Pushing changes</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Update-and-merge"><span class="nav-number">1.5.</span> <span class="nav-text">Update and merge</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Stash"><span class="nav-number">1.6.</span> <span class="nav-text">Stash</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Branching-model"><span class="nav-number">2.</span> <span class="nav-text">Branching model</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">3.</span> <span class="nav-text">References</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">fr0stw01f</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Mist</a> v6.0.6</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.0.6"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.0.6"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.0.6"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.0.6"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.0.6"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
