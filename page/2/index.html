@@ -659,8 +659,7 @@
 
       
         
-          
-            <p>最近当离散数学助教，有三次编程作业，为了发布题目和方便同学检查自己的代码，就自己搭建一个Online Judge系统。比较了一番之后，感觉hustoj比较符合我的要求，因此就用它了。下面是搭建指南。操作系统是Debian。</p>
+          <p>最近当离散数学助教，有三次编程作业，为了发布题目和方便同学检查自己的代码，就自己搭建一个Online Judge系统。比较了一番之后，感觉hustoj比较符合我的要求，因此就用它了。下面是搭建指南。操作系统是Debian。</p>
 <p>1、自动安装<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-get update;sudo apt-get install subversion</span><br><span class="line">$ svn checkout http://hustoj.googlecode.com/svn/trunk/install hustoj</span><br><span class="line">$ cd hustoj</span><br></pre></td></tr></table></figure></p>
 <p>编辑install.sh和web/include/db_info.inc.php，设定数据库用户名密码后</p>
 <p>sudo ./install-interactive.sh</p>
@@ -670,44 +669,13 @@
 <li>下载源码<br><a href="http://code.google.com/p/hustoj/" target="_blank" rel="noopener">http://code.google.com/p/hustoj/</a></li>
 </ul>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ svn checkout http://hustoj.googlecode.com/svn/trunk/ hustoj-read-only</span><br></pre></td></tr></table></figure>
-<ul>
-<li>创建数据库</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ mysql</span><br><span class="line">$ set names utf8;</span><br><span class="line">$ create database jol;</span><br><span class="line">$ use jol;</span><br><span class="line">$ source db.sql</span><br></pre></td></tr></table></figure>
-<ul>
-<li>配置Web界面</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ cp -R web /var/www/html/JudgeOnline</span><br></pre></td></tr></table></figure>
-<ul>
-<li>注册用户</li>
-</ul>
-<p><a href="http://127.0.0.1/JudgeOnline/registerpage.php" target="_blank" rel="noopener">http://127.0.0.1/JudgeOnline/registerpage.php</a> 注册一个普通帐号zhenhao</p>
-<ul>
-<li>创建管理员</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">insert into privilege(user_id,rightstr) values(&apos;zhenhao&apos;,&apos;administrator&apos;); zhenhao 为需要加管理员权限的帐号</span><br></pre></td></tr></table></figure>
-<ul>
-<li>管理员登录</li>
-</ul>
-<p>普通登录后访问<a href="http://127.0.0.1/JudgeOnline/admin" target="_blank" rel="noopener">http://127.0.0.1/JudgeOnline/admin</a></p>
-<p>添加用户<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">useradd --uid 1536 judge judge_client.cc:424</span><br><span class="line"></span><br><span class="line">setuid(1536); ==&gt; //设置判题用户//</span><br></pre></td></tr></table></figure></p>
-<ul>
-<li>编译判题服务器、客户端</li>
-</ul>
-<p>需要make g++ libmysql++-dev</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt install g++ libmysql++-dev</span><br><span class="line">$ mkdir /home/judge/</span><br><span class="line">$ mkdir /home/judge/etc</span><br><span class="line">$ mkdir /home/judge/data</span><br><span class="line">$ mkdir /home/judge/log</span><br><span class="line">$ mkdir /home/judge/run0</span><br><span class="line">$ cd hustoj-read-only/core/</span><br><span class="line">$ sudo ./make.sh</span><br></pre></td></tr></table></figure>
-<ul>
-<li>判题配置文件</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">########################/home/judge/etc/judge.conf###########################</span><br><span class="line"></span><br><span class="line">        OJ_HOST_NAME=localhost    #数据库地址</span><br><span class="line"></span><br><span class="line">        OJ_USER_NAME=jol #数据库用户名</span><br><span class="line"></span><br><span class="line">        OJ_PASSWORD=# 数据库密码</span><br><span class="line"></span><br><span class="line">        OJ_DB_NAME=jol #数据库名</span><br><span class="line"></span><br><span class="line">        OJ_PORT_NUMBER=3306 #数据库端口</span><br><span class="line"></span><br><span class="line">        OJ_RUNNING=1 #可以同时运行几个进程</span><br><span class="line"></span><br><span class="line">        OJ_SLEEP_TIME=1 #如果有空闲 要休眠多久</span><br><span class="line"></span><br><span class="line">        OJ_TOTAL=1 #总共有多少台机器负责判题</span><br><span class="line"></span><br><span class="line">        OJ_MOD=0 #当前机器评判取模为多少的提交</span><br><span class="line"></span><br><span class="line">########################/home/judge/etc/judge.conf###########################</span><br></pre></td></tr></table></figure>
-<p>设置启动脚本</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ sudo echo &quot;LANG=C /usr/bin/judged&quot; &gt; /etc/init.d/judged</span><br><span class="line">$ sudo chmod +x  /etc/init.d/judged</span><br><span class="line">$ sudo ln -s /etc/init.d/judged /etc/rc2.d/S93judged</span><br><span class="line">$ sudo ln -s /etc/init.d/judged /etc/rc3.d/S93judged</span><br></pre></td></tr></table></figure>
-<p>您需要修改系统php.ini,给予php操作数据目录的权限。 以下是推荐修改的设置</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo gedit /etc/php5/apache2/php.ini</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">open_basedir =/home/judge/data:/var/www/JudgeOnline:/tmp</span><br><span class="line">max_execution_time = 300    ; Maximum execution time of each script, in seconds</span><br><span class="line">max_input_time = 600</span><br><span class="line">memory_limit = 256M      ; Maximum amount of memory a script may consume (16MB)</span><br><span class="line">post_max_size = 64M</span><br><span class="line">upload_tmp_dir =/tmp</span><br><span class="line">upload_max_filesize = 64M</span><br></pre></td></tr></table></figure>
-<p>修改php.ini后apache需重启</p>
-
-          
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2015/10/12/hustoj-install/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>

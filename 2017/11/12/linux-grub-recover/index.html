@@ -107,7 +107,7 @@
 <meta property="og:site_name" content="Zhenhao&#39;s Blog">
 <meta property="og:description" content="Windows和Linux双系统出了问题，无法引导，在网上找到了恢复grub引导的办法，记下来防止忘记。 将Linux所在分区挂载到/mnt1sudo mount /dev/sda3 /mnt 挂载额外的目录123sudo mount --bind /dev /mnt/devsudo mount --bind /proc /mnt/procsudo mount --bind /sys /mnt/s">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-03-17T02:09:19.444Z">
+<meta property="og:updated_time" content="2018-03-17T02:47:20.087Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Linux恢复grub引导">
 <meta name="twitter:description" content="Windows和Linux双系统出了问题，无法引导，在网上找到了恢复grub引导的办法，记下来防止忘记。 将Linux所在分区挂载到/mnt1sudo mount /dev/sda3 /mnt 挂载额外的目录123sudo mount --bind /dev /mnt/devsudo mount --bind /proc /mnt/procsudo mount --bind /sys /mnt/s">
@@ -395,7 +395,8 @@
 <p>将Linux所在分区挂载到/mnt<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo mount /dev/sda3 /mnt</span><br></pre></td></tr></table></figure></p>
 <p>挂载额外的目录<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo mount --bind /dev /mnt/dev</span><br><span class="line">sudo mount --bind /proc /mnt/proc</span><br><span class="line">sudo mount --bind /sys /mnt/sys</span><br></pre></td></tr></table></figure></p>
 <p>将根目录切换到/mnt<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo chroot /mnt</span><br></pre></td></tr></table></figure></p>
-<p>安装grub，并生成grub引导<br>如果grub2*不存在，使用将grub2替换成grub<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">grub2-install /dev/sda</span><br><span class="line">grub2-mkconfig -o /boot/grub2/grub.cfg</span><br></pre></td></tr></table></figure></p>
+<p>安装grub，并生成grub引导<br>如果grub2不存在，使用将grub2替换成grub<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">grub2-install /dev/sda</span><br><span class="line">grub2-mkconfig -o /boot/grub2/grub.cfg</span><br></pre></td></tr></table></figure></p>
+<a id="more"></a>
 <p>退出chroot<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">exit</span><br></pre></td></tr></table></figure></p>
 <p>取消挂载<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sudo umount /mnt/dev</span><br><span class="line">sudo umount /mnt/proc</span><br><span class="line">sudo umount /mnt/sys</span><br><span class="line">sudo umount /mnt</span><br></pre></td></tr></table></figure></p>
 <p>重启<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo reboot</span><br></pre></td></tr></table></figure></p>

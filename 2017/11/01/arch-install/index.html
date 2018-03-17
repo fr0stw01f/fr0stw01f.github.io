@@ -107,7 +107,7 @@
 <meta property="og:site_name" content="Zhenhao&#39;s Blog">
 <meta property="og:description" content="对/dev/sda进行分区，一般分三个区(sda1:boot(83), sda2:swap(82), sda3:root(83))1# fdisk /dev/sda 除了swap分区，其它格式化为ext41234# mkfs.ext4 /dev/sda1# mkswap /dev/sda2# swapon /dev/sda2# mkfs.ext4 /dev/sda3 将root分区挂载到/mnt1">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-03-17T02:17:27.789Z">
+<meta property="og:updated_time" content="2018-03-17T02:47:34.616Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="安装Arch Linux">
 <meta name="twitter:description" content="对/dev/sda进行分区，一般分三个区(sda1:boot(83), sda2:swap(82), sda3:root(83))1# fdisk /dev/sda 除了swap分区，其它格式化为ext41234# mkfs.ext4 /dev/sda1# mkswap /dev/sda2# swapon /dev/sda2# mkfs.ext4 /dev/sda3 将root分区挂载到/mnt1">
@@ -397,6 +397,7 @@
 <p>在root分区下面创建以下目录<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># mkdir /mnt/boot /mnt/var /mnt/home</span><br></pre></td></tr></table></figure></p>
 <p>将sda1挂在到/mnt/boot(如果只是一个分区，可以省去额外挂载的步骤)<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># mount /dev/sda1 /mnt/boot</span><br></pre></td></tr></table></figure></p>
 <p>修改mirrorlist，提高联网速度<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># vi /etc/pacman.d/mirrorlist (move China up)</span><br></pre></td></tr></table></figure></p>
+<a id="more"></a>
 <p>安装基本包<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># pacstrap /mnt base base-devel</span><br></pre></td></tr></table></figure></p>
 <p>升级<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># pacman -Syu</span><br></pre></td></tr></table></figure></p>
 <p>安装grub<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># pacstrap /mnt grub-bios</span><br></pre></td></tr></table></figure></p>
