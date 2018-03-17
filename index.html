@@ -324,6 +324,437 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://zhenhao.io/2017/11/12/linux-grub-recover/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="fr0stw01f">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhenhao's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/11/12/linux-grub-recover/" itemprop="url">Linux恢复grub引导</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-12T23:12:55+08:00">2017-11-12</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>Windows和Linux双系统出了问题，无法引导，在网上找到了恢复grub引导的办法，记下来防止忘记。</p>
+<p>将Linux所在分区挂载到/mnt<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo mount /dev/sda3 /mnt</span><br></pre></td></tr></table></figure></p>
+<p>挂载额外的目录<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo mount --bind /dev /mnt/dev</span><br><span class="line">sudo mount --bind /proc /mnt/proc</span><br><span class="line">sudo mount --bind /sys /mnt/sys</span><br></pre></td></tr></table></figure></p>
+<p>将根目录切换到/mnt<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo chroot /mnt</span><br></pre></td></tr></table></figure></p>
+<p>安装grub，并生成grub引导<br>如果grub2*不存在，使用将grub2替换成grub<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">grub2-install /dev/sda</span><br><span class="line">grub2-mkconfig -o /boot/grub2/grub.cfg</span><br></pre></td></tr></table></figure></p>
+<p>退出chroot<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">exit</span><br></pre></td></tr></table></figure></p>
+<p>取消挂载<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sudo umount /mnt/dev</span><br><span class="line">sudo umount /mnt/proc</span><br><span class="line">sudo umount /mnt/sys</span><br><span class="line">sudo umount /mnt</span><br></pre></td></tr></table></figure></p>
+<p>重启<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo reboot</span><br></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://zhenhao.io/2017/11/01/arch-install/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="fr0stw01f">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhenhao's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/11/01/arch-install/" itemprop="url">安装Arch Linux</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-01T23:12:55+08:00">2017-11-01</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>对/dev/sda进行分区，一般分三个区(sda1:boot(83), sda2:swap(82), sda3:root(83))<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># fdisk /dev/sda</span><br></pre></td></tr></table></figure></p>
+<p>除了swap分区，其它格式化为ext4<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># mkfs.ext4 /dev/sda1</span><br><span class="line"># mkswap /dev/sda2</span><br><span class="line"># swapon /dev/sda2</span><br><span class="line"># mkfs.ext4 /dev/sda3</span><br></pre></td></tr></table></figure></p>
+<p>将root分区挂载到/mnt<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># mount /dev/sda3 /mnt</span><br></pre></td></tr></table></figure></p>
+<p>在root分区下面创建以下目录<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># mkdir /mnt/boot /mnt/var /mnt/home</span><br></pre></td></tr></table></figure></p>
+<p>将sda1挂在到/mnt/boot(如果只是一个分区，可以省去额外挂载的步骤)<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># mount /dev/sda1 /mnt/boot</span><br></pre></td></tr></table></figure></p>
+<p>修改mirrorlist，提高联网速度<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># vi /etc/pacman.d/mirrorlist (move China up)</span><br></pre></td></tr></table></figure></p>
+<p>安装基本包<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># pacstrap /mnt base base-devel</span><br></pre></td></tr></table></figure></p>
+<p>升级<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># pacman -Syu</span><br></pre></td></tr></table></figure></p>
+<p>安装grub<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># pacstrap /mnt grub-bios</span><br></pre></td></tr></table></figure></p>
+<p>生成fstab<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># genfstab -p /mnt &gt;&gt; /mnt/etc/fstab</span><br></pre></td></tr></table></figure></p>
+<p>将/mnt挂载的分区作为root分区<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># arch-chroot /mnt</span><br></pre></td></tr></table></figure></p>
+<p>设置硬件时钟<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># hwclock --systohc --utc</span><br></pre></td></tr></table></figure></p>
+<p>创建初始的ramdisk环境<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># mkinitcpio -p linux</span><br></pre></td></tr></table></figure></p>
+<p>设置root用户密码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># passwd root</span><br></pre></td></tr></table></figure></p>
+<p>添加新用户<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># useradd -m -g users -G wheel -s /bin/bash zhenhao</span><br></pre></td></tr></table></figure></p>
+<p>给新用户设置密码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># passwd zhenhao</span><br></pre></td></tr></table></figure></p>
+<p>将grub安装到sda<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># grub-install /dev/sda</span><br></pre></td></tr></table></figure></p>
+<p>将sda上的所有系统的启动目录加入grub<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># grub-mkconfig -o /boot/grub/grub.cfg</span><br></pre></td></tr></table></figure></p>
+<p>退出chroot<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># exit</span><br></pre></td></tr></table></figure></p>
+<p>退出<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># exit</span><br></pre></td></tr></table></figure></p>
+<p>重启<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># reboot</span><br></pre></td></tr></table></figure></p>
+<p>=====================================</p>
+<p>设置主机名<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># hostnamectl set-hostname archlinux</span><br></pre></td></tr></table></figure></p>
+<p>查看网络状态<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># ip addr</span><br></pre></td></tr></table></figure></p>
+<p>设置dhcpcd<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># systemctl enable dhcpcd</span><br></pre></td></tr></table></figure></p>
+<p>启动hdcpcd<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># systemctl start dhcpcd</span><br></pre></td></tr></table></figure></p>
+<p>再次查看网络状态<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># ip addr</span><br></pre></td></tr></table></figure></p>
+<p>尝试ping<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># ping www.baidu.com</span><br></pre></td></tr></table></figure></p>
+<p>赋予用户root权限<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># nano /etc/sudoers (add &apos;zhenhao ALL=(ALL) ALL&apos; under &apos;root ALL=(ALL) ALL&apos;)</span><br></pre></td></tr></table></figure></p>
+<p>安装xorg<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># pacman -S xorg</span><br></pre></td></tr></table></figure></p>
+<p>安装xorg相关<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># pacman -S xterm xorg-xclock xorg-twm xorg-xinit oxorg-apps</span><br></pre></td></tr></table></figure></p>
+<p>安装gnome相关<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># pacman -Syy gnome gnome-extra gnome-tweak-tool</span><br></pre></td></tr></table></figure></p>
+<p>设置gdm<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># systemctl enable gdm</span><br></pre></td></tr></table></figure></p>
+<p>加入英文和中文编码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># nano /etc/locale.gen (uncomment en_US and zh_CN)</span><br></pre></td></tr></table></figure></p>
+<p>产生英文和中文编码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># locale-gen</span><br></pre></td></tr></table></figure></p>
+<p>设置主语言<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># localectl set-locale LANG=&quot;en_US.UTF-8&quot;</span><br></pre></td></tr></table></figure></p>
+<p>安装中文字体，防止乱码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># sudo pacman -Syy wqy-microhei (refer to here)</span><br></pre></td></tr></table></figure></p>
+<p>强制让登陆界面使用xorg<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># nano /etc/gdm/custom.conf (uncomment WaylandEnable=false)</span><br></pre></td></tr></table></figure></p>
+<p>重启使xorg和gnome生效<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># reboot</span><br></pre></td></tr></table></figure></p>
+<p>========================================</p>
+<p>安装其他包<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># sudo pacman -Syy net-tools gtkmm</span><br></pre></td></tr></table></figure></p>
+<p>安装open-vm-tools（仅对vmware）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># sudo pacman -Syy open-vm-tools (for vmware)</span><br></pre></td></tr></table></figure></p>
+<p>重启生效<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># reboot</span><br></pre></td></tr></table></figure></p>
+<p>=========================================</p>
+<p>安装steam<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># sudo vi /etc/pacman.conf (uncomment the [multilib] section in /etc/pacman.conf)</span><br></pre></td></tr></table></figure></p>
+<p>更新系统<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># sudo pacman -Syu</span><br></pre></td></tr></table></figure></p>
+<p>安装steam客户端<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># sudo pacman -S steam</span><br></pre></td></tr></table></figure></p>
+<p>安装32位显卡驱动<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># yaourt lib32-catalyst-libgl (AMD闭源,或者安装开源版本:sudo pacman -S lib32-mesa)</span><br><span class="line"># sudo pacman -S lib32-nvidia-utils (Nvidia闭源,或者安装开源版本:sudo pacman -S lib32-mesa)</span><br></pre></td></tr></table></figure></p>
+<p>如果遇到很多库miss的情况<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># sudo pacman -S steam-native-runtime</span><br></pre></td></tr></table></figure></p>
+<p>如果遇到找不到libpangoft的情况<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># steam-runtime</span><br></pre></td></tr></table></figure></p>
+<p>安装字体<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># sudo pacman -S ttf-liberation</span><br><span class="line"># sudo pacman -S wqy-zenhei</span><br></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://zhenhao.io/2017/10/28/turbofan-code-generation-architechture/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="fr0stw01f">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhenhao's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/10/28/turbofan-code-generation-architechture/" itemprop="url">TurboFan代码生成的架构</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-28T15:33:11+08:00">2017-10-28</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>下面三张图基本说明了TurboFan的代码生成架构。</p>
+<p><img src="/images/TurboFan0.svg" alt=""><br><img src="/images/TurboFan1.png" alt=""><br><img src="/images/TurboFan2.svg" alt=""></p>
+<p><a href="https://docs.google.com/presentation/d/1_eLlVzcj94_G4r9j9d_Lj5HRKFnq6jgpuPJtnmIBs88/edit#slide=id.g2125d80fda_0_80" target="_blank" rel="noopener">原文链接</a></p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://zhenhao.io/2017/10/28/raspberry-pi-nas-ss/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -532,6 +963,471 @@
 <li>不要写伤脑的getter/setter了。</li>
 <li>加强了Java的类型系统，可以显式指定一个指针是不是可以为null。之前在Java中需要通过库来实现。</li>
 </ul>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://zhenhao.io/2017/04/22/run-curl-from-terminal-in-android/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="fr0stw01f">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhenhao's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/04/22/run-curl-from-terminal-in-android/" itemprop="url">在安卓上运行curl</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-22T13:48:12+08:00">2017-04-22</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>最近因为工作需要，想从安卓的终端上运行curl。试了几种办法都不是很靠谱，最后找到一种实用的办法。这个办法是将termux中提供的curl拿出来供整个系统。</p>
+<ul>
+<li>安装termux。</li>
+<li>在termux中安装curl。<ul>
+<li>命令：<code>packages install curl</code></li>
+</ul>
+</li>
+<li>将termux中的curl可执行文件拷贝到/system/bin。</li>
+<li>将以下curl以来的动态库文件拷贝到/system/lib。<ul>
+<li>libcurl.so</li>
+<li>libnghttp2.so</li>
+<li>libssl.so.1.0.0</li>
+<li>libcrypto.so.1.0.0</li>
+</ul>
+</li>
+<li>将curl的权限改为755，把拷贝的库的权限改为644。注意点：<ul>
+<li>这需要获取su权限: su or su -c ‘cmd’。</li>
+<li>还需要把/system目录改为writable<ul>
+<li>命令：<code>mount -o rw,remount,rw /system</code></li>
+<li>参考：<a href="http://android.stackexchange.com/questions/110927/how-to-mount-system-rewritable-or-read-only-rw-ro。" target="_blank" rel="noopener">http://android.stackexchange.com/questions/110927/how-to-mount-system-rewritable-or-read-only-rw-ro。</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://zhenhao.io/2017/04/15/Ignition-v8-interpreter/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="fr0stw01f">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhenhao's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/04/15/Ignition-v8-interpreter/" itemprop="url">Ignition - V8 Interpreter(转载)</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-15T01:22:01+08:00">2017-04-15</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>JavaScript isn’t enabled in your browser, so this file can’t be opened. Enable and reload.</p>
+<p>The machine code generated by V8’s full-codegen compiler is verbose, and as such, can contribute significantly to the amount of memory used by V8’s heap for typical web-pages (a previous analysis showed that the code-space contributed to around 15-20% of the JS heap). The aim of the ignition project is to build an interpreter for V8 which executes a low-level bytecode, thus enabling run-once or non-hot code to be stored more compactly in bytecode form. An added advantage of the bytecode is that it could be fed into a Turbofan graph generator directly, thereby avoiding the need to reparse the JavaScript source code when optimizing a function</p>
+<p>This section outlines the overall design of the Ignition bytecode interpreter, with following sections giving more details on the specifics.</p>
+<p>The interpreter itself consists of a set of bytecode handler code snippets, each of which handles a specific bytecode and dispatches to the handler for the next bytecode. These bytecode handlers are written in a high level, machine architecture agnostic form of assembly code, as implemented by the RawMachineAssembler class and compiled by Turbofan (in the future, we may write some of the more complex bytecode handlers in JavaScript with intrinsics, like the Turbofan CodeStubs). As such, the interpreter can be written once and uses TurboFan to generate machine instructions for each of the architectures supported by V8. When the interpreter is enabled, the isolate includes a global interpreter table holding a code object pointer to each bytecode handler, indexed by the bytecode value. These bytecode handlers can be included in the startup snapshot and deserialized when a new isolate is created.</p>
+<p>In order to be run by the interpreter, a function is translated to bytecode by a BytecodeGenerator during its initial unoptimized compile step. The BytecodeGenerator is an AstVisitor which walks the function’s AST emitting appropriate bytecodes for each AST node. This bytecode is associated with the function as a field on the SharedFunctionInfo object, and the function’s entry address is be set to the InterpreterEntryTrampoline builtin stub.</p>
+<p>When the function is called at runtime, the InterpreterEntryTrampoline stub is entered. This stub set up an appropriate stack frame, and then dispatch to the interpreter’s bytecode handler for the function’s first bytecode in order to start execution of the function in the interpreter. The end of each bytecode handler directly dispatches to the next handler via an index into the global interpreter table, based on the bytecode.</p>
+<p>Prototype implementation at <a href="https://codereview.chromium.org/1239793002/" target="_blank" rel="noopener">https://codereview.chromium.org/1239793002/</a></p>
+<p>Bytecode handlers are generated by the TurboFan compiler. Each handler is its own code object and is generated independently. The handlers are written as a graph of Turbofan operations, via an InterpreterAssembler, which is a subclass of the existing RawMachineAssembler, with some extra instructions required by the interpreter (e.g., Push, Pop and Dispatch). An example of the generator function for the LoadLocal0 bytecode handler is as follows:</p>
+<p>The bytecode handlers are not intended to be called directly, instead they are dispatched to via the interpreter. As such, they have a new Linkage type, specified by a CallDescriptor with kind CallDescriptor::kInterpreterDispatch. This linkage type does not get passed any arguments, and doesn’t set up a stack frame or generate prologue or epilogue code. It also allows direct dispatch between bytecode handlers using the TailCall operation.</p>
+<p>The ignition interpreter is a register-based interpreter, thus bytecodes will operate on particular registers in the register file in the function’s stack frame. Bytecodes can specify the input and output registers on which they operator through bytecode arguments, which immediately follow the bytecode itself in the BytecodeArray stream.</p>
+<p>The interpreter also needs to maintain state across bytecode handlers in fixed registers. For example, one register is be reserved to hold the pointer to the current bytecode being executed. This register is be incremented during bytecode dispatch (or updated during branch / jump operations). This requires adding an operation to TurboFan to specify that a particular register is reserved (i.e., should not be touched chosen by the register allocator), and to enable access to that register. TODO(rmcilroy): More discussion on this and how it will interact with the GC once I’ve looked into it.</p>
+<p>Once the graph for a bytecode handler is produced it is passed through a simplified version of Turbofan’s pipeline (currently using Pipeline::GenerateCodeForTesting) and assigned to the corresponding entry in the interpreter table.</p>
+<p>Prototype implementation at <a href="https://codereview.chromium.org/1224433003/" target="_blank" rel="noopener">https://codereview.chromium.org/1224433003/</a></p>
+<p>In order to generate its bytecode, a function is parsed to generate its AST. A BytecodeGenerator then walks this AST and generates bytecode for each of the AST nodes as appropriate. At least initially, this bytecode is likely to be similar to a serialization of the full-codegen’s representation - with a bytecode being emitted wherever the full-codegen compiler would have generated code (of course, this bytecode should be much smaller than the code which would be generated by the full-codegen).</p>
+<p>The BytecodeGenerator uses a BytecodeArrayBuilder to generate well formed array of byte codes for the interpreter. The BytecodeArrayBuilder has methods for each bytecode and together with it’s arguments. This provides flexibility in changing emitted byte codes, ie if in future we emit specialized bytecodes for hot registers, then the change can be handled in one place, the BytecodeArrayBuilder. The BytecodeArrayBuilder also keeps the BytecodeGenerator clean of Bytecode sequences and so simpler to implement.</p>
+<p>Once the bytecode is generated it is stored on a field in the SharedFunctionInfo. As well as being used by the interpreter for code execution, the aim is for this bytecode to be representative enough to enable re-generation of the AST when the function is recompiled by an optimizing compiler. This should avoid the current requirement to reparse the function’s JavaScript source before recompile.</p>
+<p>During bytecode generation, the BytecodeGenerator needs to determine the stack frame size required to evaluate a given function. During execution there are two types of value stored on the frame - locals and temporaries. Each of these values are stored in a slot in the function’s register file, and are accessed by bytecodes which operate on these interpreter registers (via their slot index).</p>
+<p>Locals are variables declared within the function and are hoisted to the top of the function by the AstVisitor. As such the number of locals is known ahead of time, and each local is assigned an index in the register file during the initial stage of AST walking.</p>
+<p>Temporaries are required during expression evaluation, where there may be one or more live registers holding intermediate values in the expression tree until they are consumed. These temporaries are only live for the lifetime of the expression, therefore the emitter keeps a count of the maximum number of temporaries required for each expression, and allocates enough extra slots in the register file for the largest number of temporaries required by any expression in the function.</p>
+<p>The layout of the register file will consist of the locals followed by the temporary registers, with no overlap between locals and temporary registers to keep access simple. Once the emitter has calculated the total size of the register file, it will use this to calculate the required framesize of the function, and will save this value in the BytecodeArray object.</p>
+<p>On entry to the function, the interpreter prologue will increment the stack pointer amount required to allocate space for the register file on the stack frame. All entries in the register file will initially be tagged pointers to undefinedvalue (like the locals pushed by full-codegen’s prologue). The interpreter will only every store tagged pointers in the entries of the register file, so the GC can walk over any register files on the stack visiting all entries as tagged pointers.</p>
+<p>Bytecodes will use an accumulator register to hold the result of operations. The intent is to minimize loading and storing repeatedly to the same slots, this a form of top-of-stack-caching. It results in operator bytecodes that consume two registers rather than having a three registers for the operands since the destination is implicit.</p>
+<p>The BytecodeGenerator whilst processing the AST and generating bytecode will also log metadata from the AST input that allows it to be fed into Turbofan. This will include identifying the bounds of loops and nested loops, identifying basic blocks, and other data that Turbofan currently gets from the AST graph builder.</p>
+<p>There also needs to be a path from the turbofan optimized code back to the interpreter. This will require new code in the de-optimizer to support the frame layout of the interpreter.</p>
+<p>To do this we need to be careful about any elided stack push/pops since this will cause the deopt environment to be different from a full-codegen environment. One option might be to have the Bytecode -&gt; TFGraphBuilder generate the deopt environment while optimizing the code which takes into account these elided push/pops, and generates the same of environment as full-codegen but with a different stack layout.</p>
+<p>// TODO(rmcilroy/oth): describe the set of bytecodes being emitted and how they are used.<br>// TODO(rmcilroy/oth): Talk about register specialized bytecodes.<br>// TODO(rmcilroy/oth): figure out how much detail is required in the bytecode in order for it to be representative enough to generate an optimizing graph.<br>// TODO(rmcilroy/oth): ensure bytecode is the correct granularity for deopt support.<br>// TODO(rmcilroy/oth): describe emitting of constants and typefeedback vector entries alongside bytecode.</p>
+<p>The ignition interpreter is a register-based, indirect threaded interpreter. The entry point to the interpreter from other JavaScript code is the InterpreterEntryPoint builtin stub. This builtin sets up an appropriate stack frame, and loads reserved registers (e.g., the bytecode pointer, interpreter dispatch table pointer, type-feedback vector pointer and possibly a constant pool pointer) with the appropriate values before dispatching to the first bytecode of the called function.</p>
+<p>Local variables will be allocated to specific registers within the function’s register file, on its stack frame, during bytecode generation. Temporary values will also be assigned a particular register in the register file during bytecode generation. Both locals and temporaries can be accessed directly via their register index passed to bytecode operators. The arguments to the function will have been pushed by the callee on their stack, and can be referenced by frame pointer relative addressing via a loadArg bytecode.</p>
+<p>Bytecodes which access JS object properties do so via ICs. The ICs are located in a function’s TypeFeedbackVector, with bytecodes calling the appropriate IC stub in the TypeFeedbackVector entry associated with the AST node. The runtime can patch ICs in the typefeedback vector in the same manner as it does now for the fullcodgen compiler, enabling learning of type feedback for later use by the optimizing compiler. // TODO(rmcilroy): more details on this once it is worked out.</p>
+<p>Calls to other functions are handled similarly to the full-codegen compiler, with property-based function calls involving a loadIC then call. An interpreted function’s stack frame has an extra slot for saving the bytecode pointer during calls. Initially calls to other interpreted functions are treated the same as calls to JITed functions (calling the code entry point, which invokes the InterpreterEntryPoint builtin stub for the interpreter and then reenter the interpreter), however in the future we may optimize the inter-interpreter function call sequence to avoid having to call into the InterpreterEntryPoint again.</p>
+<p>When an interpreted function returns, the return bytecode loads appropriate value into the return register and return to the epilogue in the InterpreterEntryPoint builtin stub, which then tears-down the stack frame and restore control to the calling function.</p>
+<p>Small SMI literals can be loaded directly with special bytecodes (e.g., loadLiteralSmi8, loadLiteral0, etc). Other common roots can be loaded with their own specialized bytecodes (e.g., LoadNil, loadUndefined, etc.). All other literals and constants will be added to the function’s literalarray, and will be accessed via indirection as a bytecode which looks up function pointer-&gt;literalarray.</p>
+<p>Loads and stores ICs (including calls which use LoadIC) will call into ICs via the TypeFeedbackVector. When an IC is updated the entry in the TypeFeedbackVector vector will be updated but no code will be patched.</p>
+<p>For BinaryOps and other UnaryOps (e.g., ToBoolean) ICs we will rely on the generic IC handlers. The IC handler will update TypeFeedbackVector slots to ensure that type feedback is maintained for these ICs, however the handlers will not back-patch the code to point to new IC handlers. As a future optimization the IC handlers can back-patch the actual bytecodes to point to specialized bytecode handlers for a given operation (e.g., inlining SmiAdd as a specific bytecode). Even if the bytecodes are patched, the IC handler will still update the TypeFeedbackVector to ensure that all type feedback is maintained in the TypeFeedbackVector and can be continually updated by the optimized code if necessary.</p>
+<p>Debugging support is not an initial goal for the interpreter, however the interpreter enables the possibility of much simpler debugging than with full-codegen. To enable breakpointing the debugger will copy the BytecodeArray object of the function, and then replace any bytecode which is the target of a breakpoint with a special Breakpoint bytecode. Since all bytecodes are at least one byte, this should be simple to do. Once the breakpoint is hit, the debugger can resume by looking at the function’s real BytecodeArray and dispatching to the actual bytecode which was replaced by the Breakpoint bytecode.<br>// TODO (rmcilroy): discussion on how to represent current context (e.g., cp register and context-push/pop bytecodes).<br>// TODO (rmcilroy): discussion on more advanced operations such as argument adaptors, generators, yield and exceptions.<br>// TODO (rmcilroy): discussion about deoptimizing to the interpreter.</p>
+<ul>
+<li><p>Threaded Code, in Wikipedia entry, <a href="https://en.wikipedia.org/wiki/Threadedcode" target="_blank" rel="noopener">https://en.wikipedia.org/wiki/Threadedcode</a></p>
+</li>
+<li><p>Revolutionizing Embedded Software, Kasper Verdich Lund and Jakob Roland Andersen, in Master’s Thesis at University of Aarhus, <a href="http://verdich.dk/kasper/RES.pdf" target="_blank" rel="noopener">http://verdich.dk/kasper/RES.pdf</a>.</p>
+</li>
+<li><p>inside javascriptcore’s low-level interpreter, Andy Wingo’s blog, <a href="https://wingolog.org/archives/2012/06/27/inside-javascriptcores-low-level-interpreter" target="_blank" rel="noopener">https://wingolog.org/archives/2012/06/27/inside-javascriptcores-low-level-interpreter</a></p>
+</li>
+<li><p>SquirrelFish, David Manelin’s blog, <a href="https://blog.mozilla.org/dmandelin/2008/06/03/squirrelfish/" target="_blank" rel="noopener">https://blog.mozilla.org/dmandelin/2008/06/03/squirrelfish/</a></p>
+</li>
+<li><p>Context Threading, Marc Berndl, Benjamin Vitale, Mathew Zaleski, and Angela Demke Brown, in CGO ’05: Proceedings of the international symposium on Code generation and optimization, <a href="http://www.cs.toronto.edu/syslab/pubs/demkeacontext.pdf" target="_blank" rel="noopener">http://www.cs.toronto.edu/syslab/pubs/demkeacontext.pdf</a> (also Mathew Zeleski’s thesis <a href="http://www.cs.toronto.edu/~matz/dissertation/" target="_blank" rel="noopener">http://www.cs.toronto.edu/~matz/dissertation/</a>)</p>
+</li>
+<li><p>Optimizing Indirect Branch Prediction Accuracy in Virtual Machine Interpreters, M. Anton Ertl and David Gregg, in PLDI’03, <a href="http://www.eecg.toronto.edu/~steffan/carg/readings/optimizing-indirect-branch-prediction.pdf" target="_blank" rel="noopener">http://www.eecg.toronto.edu/~steffan/carg/readings/optimizing-indirect-branch-prediction.pdf</a></p>
+</li>
+<li><p>The Case for Virtual Register Machines, Brian Davis, Andrew Beatty, Kevin Casey, David Gregg, and John Waldron, in Interpreters, Virtual Machines, and Emulators (IVME’03), <a href="http://dl.acm.org/citation.cfm?id=858575" target="_blank" rel="noopener">http://dl.acm.org/citation.cfm?id=858575</a></p>
+</li>
+<li><p>Virtual Machine Showdown: Stack vs Registers, Yuhne Shi, David Gregg, Andrew Beatty, and M. Anton Ertl, in VEE’05. <a href="https://www.usenix.org/legacy/events/vee05/fullpapers/p153-yunhe.pdf" target="_blank" rel="noopener">https://www.usenix.org/legacy/events/vee05/fullpapers/p153-yunhe.pdf</a></p>
+</li>
+<li><p>vmgen - A Generator of Efficient Virtual Machine Interpreters, M. Anton Ertl, David Gregg, Andreas Krall, and Bernd Paysan, in Software: Practice and Experience, 2002. <a href="http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.16.7676&amp;rep=rep1&amp;type=pdf" target="_blank" rel="noopener">http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.16.7676&amp;rep=rep1&amp;type=pdf</a></p>
+</li>
+<li><p>The Self Bibliography, <a href="https://www.cs.ucsb.edu/~urs/oocsb/self/papers/papers.html" target="_blank" rel="noopener">https://www.cs.ucsb.edu/~urs/oocsb/self/papers/papers.html</a></p>
+</li>
+<li><p>Interpreter Implementation Choices, <a href="http://realityforge.org/code/virtual-machines/2011/05/19/interpreters.html" target="_blank" rel="noopener">http://realityforge.org/code/virtual-machines/2011/05/19/interpreters.html</a></p>
+</li>
+<li><p>Optimizing an ANSI C Interpreter with Superoperators, Todd A. Proebstring, in POPL’95, <a href="http://http://dl.acm.org/citation.cfm?id=199526" target="_blank" rel="noopener">http://http://dl.acm.org/citation.cfm?id=199526</a></p>
+</li>
+<li><p>Stack Caching for Interpreters, M Anton Ertl, in SIGPLAN ’95 Conference on Programming Language Design and Implementation, <a href="http://www.csc.uvic.ca/~csc485c/Papers/ertl94sc.pdf" target="_blank" rel="noopener">http://www.csc.uvic.ca/~csc485c/Papers/ertl94sc.pdf</a></p>
+</li>
+<li><p>Code sharing among states for stack-caching interpreter, Jinzhan Peng, Gansha Wu, Guei-Yuan Lueh, in Proceedings of the 2004 workshop on Interpreters, Virtual Machines, and Emulators, <a href="http://dl.acm.org/citation.cfm?id=1059584" target="_blank" rel="noopener">http://dl.acm.org/citation.cfm?id=1059584</a></p>
+</li>
+<li><p>Towards superinstructions for java interpeters, K. Casey, D. Gregg, M. A. Ertl, and A. Nisbet, in</p>
+</li>
+</ul>
+<p><a href="https://neuropuff.com/search/ignition-v8-interpreter" target="_blank" rel="noopener">原文链接</a></p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://zhenhao.io/2017/04/11/how-v8-works/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="fr0stw01f">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhenhao's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/04/11/how-v8-works/" itemprop="url">一张图说明V8是如何工作的</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-11T23:12:55+08:00">2017-04-11</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>简洁明了。</p>
+<p><img src="/images/v8.png" alt=""></p>
+<p><a href="https://medium.com/reloading/javascript-start-up-performance-69200f43b201" target="_blank" rel="noopener">原文链接</a></p>
 
           
         
@@ -845,275 +1741,13 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://zhenhao.io/2017/02/16/git/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="fr0stw01f">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhenhao's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/02/16/git/" itemprop="url">Git常用命令和分支模型</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-02-16T18:22:43+08:00">2017-02-16</time>
-            
-
-            
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="Commands"><a href="#Commands" class="headerlink" title="Commands"></a>Commands</h2><h3 id="Alias"><a href="#Alias" class="headerlink" title="Alias"></a>Alias</h3><ul>
-<li>Use ‘git adog’ to show pretty branch graphs</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git config --global alias.adog &quot;log --all --decorate --oneline --graph&quot;</span><br></pre></td></tr></table></figure>
-<h3 id="Basics"><a href="#Basics" class="headerlink" title="Basics"></a>Basics</h3><ul>
-<li>Add file to the Index (Stage)</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ git add &lt;filename&gt;</span><br><span class="line">$ git add *</span><br></pre></td></tr></table></figure>
-<p>This is the first step in the basic git workflow.</p>
-<ul>
-<li>To actually commit these changes use</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git commit -m &quot;Commit message&quot;</span><br></pre></td></tr></table></figure>
-<p>Now the file is committed to the HEAD, but not in your remote repository yet.</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/02/16/git/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://zhenhao.io/2016/10/23/old-posts/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="fr0stw01f">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhenhao's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/10/23/old-posts/" itemprop="url">老博客</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-10-23T08:35:48+08:00">2016-10-23</time>
-            
-
-            
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>这里有一些之前写的<a href="http://codemood.cnblogs.com/" target="_blank" rel="noopener">老博客</a>。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">long long ago = 0;</span><br></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
+  <nav class="pagination">
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+  </nav>
+
 
 
           </div>
@@ -1154,7 +1788,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">6</span>
+                    <span class="site-state-item-count">13</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -1189,7 +1823,25 @@
                     
                       
                     
-                    <span class="site-state-item-count">10</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">19</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>

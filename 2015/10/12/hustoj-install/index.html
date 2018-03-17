@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.0.6" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.0.6">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.0.6">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.0.6">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.0.6" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '6.0.6',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="最近当离散数学助教，有三次编程作业，为了发布题目和方便同学检查自己的代码，就自己搭建一个Online Judge系统。比较了一番之后，感觉hustoj比较符合我的要求，因此就用它了。下面是搭建指南。操作系统是Debian。 1、自动安装123$ sudo apt-get update;sudo apt-get install subversion$ svn checkout http://hust">
+<meta name="keywords" content="hustoj">
+<meta property="og:type" content="article">
+<meta property="og:title" content="安装hustoj">
+<meta property="og:url" content="http://zhenhao.io/2015/10/12/hustoj-install/index.html">
+<meta property="og:site_name" content="Zhenhao&#39;s Blog">
+<meta property="og:description" content="最近当离散数学助教，有三次编程作业，为了发布题目和方便同学检查自己的代码，就自己搭建一个Online Judge系统。比较了一番之后，感觉hustoj比较符合我的要求，因此就用它了。下面是搭建指南。操作系统是Debian。 1、自动安装123$ sudo apt-get update;sudo apt-get install subversion$ svn checkout http://hust">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-03-17T02:32:31.420Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="安装hustoj">
+<meta name="twitter:description" content="最近当离散数学助教，有三次编程作业，为了发布题目和方便同学检查自己的代码，就自己搭建一个Online Judge系统。比较了一番之后，感觉hustoj比较符合我的要求，因此就用它了。下面是搭建指南。操作系统是Debian。 1、自动安装123$ sudo apt-get update;sudo apt-get install subversion$ svn checkout http://hust">
+
+
+
+
+
+
+  <link rel="canonical" href="http://zhenhao.io/2015/10/12/hustoj-install/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>安装hustoj | Zhenhao's Blog</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"> 
+
+<div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Zhenhao's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Connecting the dots.</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+          
+  <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+</li>
+
+      
+        
+        
+          
+  <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br />关于</a>
+</li>
+
+      
+        
+        
+          
+  <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签</a>
+</li>
+
+      
+        
+        
+          
+  <li class="menu-item menu-item-categories">
+    <a href="/categories/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />分类</a>
+</li>
+
+      
+        
+        
+          
+  <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档</a>
+</li>
+
+      
+
+      
+    </ul>
+  
+
+  
+    
+
+    
+    
+      
+      
+    
+      
+      
+    
+      
+      
+    
+      
+      
+    
+      
+      
+    
+    
+
+  
+
+
+  
+
+  
+</nav>
+
+
+  
+
+
+
+ </div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://zhenhao.io/2015/10/12/hustoj-install/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="fr0stw01f">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhenhao's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">安装hustoj</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2015-10-12T09:55:12+08:00">2015-10-12</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>最近当离散数学助教，有三次编程作业，为了发布题目和方便同学检查自己的代码，就自己搭建一个Online Judge系统。比较了一番之后，感觉hustoj比较符合我的要求，因此就用它了。下面是搭建指南。操作系统是Debian。</p>
+<p>1、自动安装<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-get update;sudo apt-get install subversion</span><br><span class="line">$ svn checkout http://hustoj.googlecode.com/svn/trunk/install hustoj</span><br><span class="line">$ cd hustoj</span><br></pre></td></tr></table></figure></p>
+<p>编辑install.sh和web/include/db_info.inc.php，设定数据库用户名密码后</p>
+<p>sudo ./install-interactive.sh</p>
+<p>自动安装使用install.sh，运行前阅读脚本头部说明设置数据库帐号，使用root运行。</p>
+<p>2、手动安装顺序如下：</p>
+<ul>
+<li>下载源码<br><a href="http://code.google.com/p/hustoj/" target="_blank" rel="noopener">http://code.google.com/p/hustoj/</a></li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ svn checkout http://hustoj.googlecode.com/svn/trunk/ hustoj-read-only</span><br></pre></td></tr></table></figure>
+<ul>
+<li>创建数据库</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ mysql</span><br><span class="line">$ set names utf8;</span><br><span class="line">$ create database jol;</span><br><span class="line">$ use jol;</span><br><span class="line">$ source db.sql</span><br></pre></td></tr></table></figure>
+<ul>
+<li>配置Web界面</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ cp -R web /var/www/html/JudgeOnline</span><br></pre></td></tr></table></figure>
+<ul>
+<li>注册用户</li>
+</ul>
+<p><a href="http://127.0.0.1/JudgeOnline/registerpage.php" target="_blank" rel="noopener">http://127.0.0.1/JudgeOnline/registerpage.php</a> 注册一个普通帐号zhenhao</p>
+<ul>
+<li>创建管理员</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">insert into privilege(user_id,rightstr) values(&apos;zhenhao&apos;,&apos;administrator&apos;); zhenhao 为需要加管理员权限的帐号</span><br></pre></td></tr></table></figure>
+<ul>
+<li>管理员登录</li>
+</ul>
+<p>普通登录后访问<a href="http://127.0.0.1/JudgeOnline/admin" target="_blank" rel="noopener">http://127.0.0.1/JudgeOnline/admin</a></p>
+<p>添加用户<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">useradd --uid 1536 judge judge_client.cc:424</span><br><span class="line"></span><br><span class="line">setuid(1536); ==&gt; //设置判题用户//</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>编译判题服务器、客户端</li>
+</ul>
+<p>需要make g++ libmysql++-dev</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt install g++ libmysql++-dev</span><br><span class="line">$ mkdir /home/judge/</span><br><span class="line">$ mkdir /home/judge/etc</span><br><span class="line">$ mkdir /home/judge/data</span><br><span class="line">$ mkdir /home/judge/log</span><br><span class="line">$ mkdir /home/judge/run0</span><br><span class="line">$ cd hustoj-read-only/core/</span><br><span class="line">$ sudo ./make.sh</span><br></pre></td></tr></table></figure>
+<ul>
+<li>判题配置文件</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">########################/home/judge/etc/judge.conf###########################</span><br><span class="line"></span><br><span class="line">        OJ_HOST_NAME=localhost    #数据库地址</span><br><span class="line"></span><br><span class="line">        OJ_USER_NAME=jol #数据库用户名</span><br><span class="line"></span><br><span class="line">        OJ_PASSWORD=# 数据库密码</span><br><span class="line"></span><br><span class="line">        OJ_DB_NAME=jol #数据库名</span><br><span class="line"></span><br><span class="line">        OJ_PORT_NUMBER=3306 #数据库端口</span><br><span class="line"></span><br><span class="line">        OJ_RUNNING=1 #可以同时运行几个进程</span><br><span class="line"></span><br><span class="line">        OJ_SLEEP_TIME=1 #如果有空闲 要休眠多久</span><br><span class="line"></span><br><span class="line">        OJ_TOTAL=1 #总共有多少台机器负责判题</span><br><span class="line"></span><br><span class="line">        OJ_MOD=0 #当前机器评判取模为多少的提交</span><br><span class="line"></span><br><span class="line">########################/home/judge/etc/judge.conf###########################</span><br></pre></td></tr></table></figure>
+<p>设置启动脚本</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ sudo echo &quot;LANG=C /usr/bin/judged&quot; &gt; /etc/init.d/judged</span><br><span class="line">$ sudo chmod +x  /etc/init.d/judged</span><br><span class="line">$ sudo ln -s /etc/init.d/judged /etc/rc2.d/S93judged</span><br><span class="line">$ sudo ln -s /etc/init.d/judged /etc/rc3.d/S93judged</span><br></pre></td></tr></table></figure>
+<p>您需要修改系统php.ini,给予php操作数据目录的权限。 以下是推荐修改的设置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo gedit /etc/php5/apache2/php.ini</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">open_basedir =/home/judge/data:/var/www/JudgeOnline:/tmp</span><br><span class="line">max_execution_time = 300    ; Maximum execution time of each script, in seconds</span><br><span class="line">max_input_time = 600</span><br><span class="line">memory_limit = 256M      ; Maximum amount of memory a script may consume (16MB)</span><br><span class="line">post_max_size = 64M</span><br><span class="line">upload_tmp_dir =/tmp</span><br><span class="line">upload_max_filesize = 64M</span><br></pre></td></tr></table></figure>
+<p>修改php.ini后apache需重启</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/hustoj/" rel="tag"># hustoj</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/10/23/old-posts/" rel="prev" title="老博客">
+                老博客 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">fr0stw01f</p>
+              <p class="site-description motion-element" itemprop="description">long long ago = 0;</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">13</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">19</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/fr0stw01f" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:tangzhnju@gmail.com" target="_blank" title="E-Mail"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">fr0stw01f</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Mist</a> v6.0.6</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.0.6"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.0.6"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.0.6"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.0.6"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.0.6"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
