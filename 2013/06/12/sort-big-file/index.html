@@ -1,0 +1,909 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.0.6" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.0.6">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.0.6">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.0.6">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.0.6" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '6.0.6',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="这篇主要记录一下学习陈硕同学的对下面这道题的算法思想与代码。 题目是这样的：  有10个文件，每个文件1G，每个文件的每行存放的都是用户的query（请自己随机产生），每个文件的query都可能重复。要求你按照query的频度排序。  （当然，这里的重点是大文件，所以10个1G的文件，或者1个10G的文件，原理都是一样的） 陈硕的代码在这里： https://gist.github.com/400">
+<meta name="keywords" content="sorting,big file">
+<meta property="og:type" content="article">
+<meta property="og:title" content="学习大文件统计与排序(转载)">
+<meta property="og:url" content="http://zhenhao.io/2013/06/12/sort-big-file/index.html">
+<meta property="og:site_name" content="Zhenhao&#39;s Blog">
+<meta property="og:description" content="这篇主要记录一下学习陈硕同学的对下面这道题的算法思想与代码。 题目是这样的：  有10个文件，每个文件1G，每个文件的每行存放的都是用户的query（请自己随机产生），每个文件的query都可能重复。要求你按照query的频度排序。  （当然，这里的重点是大文件，所以10个1G的文件，或者1个10G的文件，原理都是一样的） 陈硕的代码在这里： https://gist.github.com/400">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-03-17T05:55:24.681Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="学习大文件统计与排序(转载)">
+<meta name="twitter:description" content="这篇主要记录一下学习陈硕同学的对下面这道题的算法思想与代码。 题目是这样的：  有10个文件，每个文件1G，每个文件的每行存放的都是用户的query（请自己随机产生），每个文件的query都可能重复。要求你按照query的频度排序。  （当然，这里的重点是大文件，所以10个1G的文件，或者1个10G的文件，原理都是一样的） 陈硕的代码在这里： https://gist.github.com/400">
+
+
+
+
+
+
+  <link rel="canonical" href="http://zhenhao.io/2013/06/12/sort-big-file/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>学习大文件统计与排序(转载) | Zhenhao's Blog</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"> 
+
+<div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Zhenhao's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Connecting the dots.</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+          
+  <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+</li>
+
+      
+        
+        
+          
+  <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签</a>
+</li>
+
+      
+        
+        
+          
+  <li class="menu-item menu-item-categories">
+    <a href="/categories/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />分类</a>
+</li>
+
+      
+        
+        
+          
+  <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档</a>
+</li>
+
+      
+        
+        
+          
+  <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br />关于</a>
+</li>
+
+      
+
+      
+    </ul>
+  
+
+  
+    
+
+    
+    
+      
+      
+    
+      
+      
+    
+      
+      
+    
+      
+      
+    
+      
+      
+    
+    
+
+  
+
+
+  
+
+  
+</nav>
+
+
+  
+
+
+
+ </div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://zhenhao.io/2013/06/12/sort-big-file/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="fr0stw01f">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhenhao's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">学习大文件统计与排序(转载)</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2013-06-12T22:01:59+08:00">2013-06-12</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/转载/" itemprop="url" rel="index"><span itemprop="name">转载</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>这篇主要记录一下学习陈硕同学的对下面这道题的算法思想与代码。</p>
+<p>题目是这样的：</p>
+<blockquote>
+<p>有10个文件，每个文件1G，每个文件的每行存放的都是用户的query（请自己随机产生），每个文件的query都可能重复。要求你按照query的频度排序。</p>
+</blockquote>
+<p>（当然，这里的重点是大文件，所以10个1G的文件，或者1个10G的文件，原理都是一样的）</p>
+<p>陈硕的代码在这里：</p>
+<p><a href="https://gist.github.com/4009225" target="_blank" rel="noopener">https://gist.github.com/4009225</a></p>
+<p>这是一段非常漂亮的代码，解法与代码都非常值得一看。</p>
+<h2 id="解法"><a href="#解法" class="headerlink" title="解法"></a>解法</h2><p>基本步骤就是不断读入文件，并做初步统计，到了某个内存的极限时写出文件，写的方式是按query的哈希值分配到10个不同的文件中，直到读完所有文件内容，然后把这10个文件中的query按count排序，并10路归并排序出最后结果。</p>
+<h3 id="shuffle"><a href="#shuffle" class="headerlink" title="shuffle"></a>shuffle</h3><p>从命令行传入输入文件，逐行读入，并存放在一个hashmap中，边读边统计&lt;query, count&gt;，到map的size到达指定size时（10<em>1000</em>1000， 主要是考虑内存容量），把这个hashmap的内容先写出去，写到10个文件的第hash(query) % 10个中去，这保证了相同的query肯定在同一个文件中。 这样，直到把文件读完。所以如果输入文件总大小为10G的话，每个文件大小为 &lt;1G （因为相同的query并合并了），可以进行单文件内存内处理。注意此时虽然相同的query在同一文件中，他们可能是分布在好几个地方的，如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">query1 10</span><br><span class="line">query2 5</span><br><span class="line">query3 3</span><br><span class="line">query1 3</span><br><span class="line">query4 3</span><br><span class="line">query 2 7</span><br></pre></td></tr></table></figure>
+<h3 id="reduce"><a href="#reduce" class="headerlink" title="reduce"></a>reduce</h3><p>把每个文件中相同query合并，并将query按count排序。</p>
+<h3 id="merge"><a href="#merge" class="headerlink" title="merge"></a>merge</h3><p>10个有序的文件，通过归并排序得到最后的结果。归并的方式是通过一个10个元素的堆，相比于两两迭代归并排序，这大大减少了读文件的时间。</p>
+<a id="more"></a>
+<h2 id="运行"><a href="#运行" class="headerlink" title="运行"></a>运行</h2><p>该程序只在linux下运行，并需要boost，ubunut下，先安装boost：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt-get install libboost-dev</span><br></pre></td></tr></table></figure>
+<p>然后编译，该程序用到了c++ 0x的feature，所以需要-std=c++0x:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">g++ sort.cpp -o sort -std=c++0x</span><br></pre></td></tr></table></figure>
+<p>在运行前，需要准备输入数据，这里用lua随机产生：（<a href="https://gist.github.com/4045503）" target="_blank" rel="noopener">https://gist.github.com/4045503）</a></p>
+<p>复制代码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">-- updated version, use a table thus no gc involved</span><br><span class="line">local file = io.open(&quot;file.txt&quot;, &quot;w&quot;)</span><br><span class="line">local t = &#123;&#125;</span><br><span class="line">for i = 1, 500000000 do</span><br><span class="line">        local n = i % math.random(10000)</span><br><span class="line">        local str = string.format(&quot;This is a number %d\n&quot;, n)</span><br><span class="line">        table.insert(t, str)</span><br><span class="line">        if i % 10000 == 0 then</span><br><span class="line">                file:write(table.concat(t))</span><br><span class="line">                t = &#123;&#125;</span><br><span class="line">        end</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+<p>复制代码<br>好，开始运行：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sort file.txt</span><br></pre></td></tr></table></figure>
+<p>结果如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">$ time sort file.txt</span><br><span class="line">processing file.txt</span><br><span class="line">shuffling done</span><br><span class="line">reading shard-00000-of-00010</span><br><span class="line">writing count-00000-of-00010</span><br><span class="line">reading shard-00001-of-00010</span><br><span class="line">writing count-00001-of-00010</span><br><span class="line">reading shard-00002-of-00010</span><br><span class="line">writing count-00002-of-00010</span><br><span class="line">reading shard-00003-of-00010</span><br><span class="line">writing count-00003-of-00010</span><br><span class="line">reading shard-00004-of-00010</span><br><span class="line">writing count-00004-of-00010</span><br><span class="line">reading shard-00005-of-00010</span><br><span class="line">writing count-00005-of-00010</span><br><span class="line">reading shard-00006-of-00010</span><br><span class="line">writing count-00006-of-00010</span><br><span class="line">reading shard-00007-of-00010</span><br><span class="line">writing count-00007-of-00010</span><br><span class="line">reading shard-00008-of-00010</span><br><span class="line">writing count-00008-of-00010</span><br><span class="line">reading shard-00009-of-00010</span><br><span class="line">writing count-00009-of-00010</span><br><span class="line">reducing done</span><br><span class="line">merging done</span><br><span class="line"></span><br><span class="line">real  19m18.805s</span><br><span class="line">user  14m20.726s</span><br><span class="line">sys 1m37.758s</span><br></pre></td></tr></table></figure>
+<p>在我的32位Ubuntu11.10虚拟机上， 分配了1G内存，1个2.5G的CPU core， 处理一个15G的文件，花了19m分钟。</p>
+<h2 id="学习"><a href="#学习" class="headerlink" title="学习"></a>学习</h2><ul>
+<li>把query按哈希值分配到不同的文件，保证想通过query在同一个文件中，漂亮</li>
+<li>10路归并排序，用一个最大（小）堆来做，减少了文件读写，漂亮</li>
+<li>LocalSink, Shuffler, Source等很小的类来封装、解耦一些特别的的任务，结构十分漂亮</li>
+<li>一些我不熟悉的知识：<ul>
+<li><strong>gnu_cxx::</strong>sso_string, gnu short string optimization, 这里有跟更多的说明</li>
+<li>boost::function , boost::bind</li>
+<li>使用map的[] operator时，插入数据根据默认构造函数初始化，对于int默认则是为0</li>
+<li>C++ 0x的for each：for (auto kv : queries)</li>
+<li>boost::noncopyable：不能被copy的类从此继承</li>
+<li>std::hash<string>()： 返回一个针对string的hash functor</string></li>
+<li>boost::ptr_vector：boost针对每个container都一共了一个ptr的版本，这个比单纯的使用vector&lt;shared_ptr<t>&gt;要更高效</t></li>
+<li>unlink： delete的一个文件</li>
+<li>std::unordered_map&lt;string, int64_t&gt; queries(read_shard(i, nbuckets))：使用了move sematic，不然效率会很低</li>
+<li>std::pair定义了 &lt; operator，先比较第一个元素</li>
+</ul>
+</li>
+</ul>
+<p><a href="http://www.cnblogs.com/baiyanhuang/archive/2012/11/11/2764914.html" target="_blank" rel="noopener">原文链接</a></p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/sorting/" rel="tag"># sorting</a>
+          
+            <a href="/tags/big-file/" rel="tag"># big file</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/10/12/hustoj-install/" rel="prev" title="安装hustoj">
+                安装hustoj <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">fr0stw01f</p>
+              <p class="site-description motion-element" itemprop="description">long long ago = 0;</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">14</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">9</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">21</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/fr0stw01f" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:tangzhnju@gmail.com" target="_blank" title="E-Mail"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#解法"><span class="nav-number">1.</span> <span class="nav-text">解法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#shuffle"><span class="nav-number">1.1.</span> <span class="nav-text">shuffle</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#reduce"><span class="nav-number">1.2.</span> <span class="nav-text">reduce</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#merge"><span class="nav-number">1.3.</span> <span class="nav-text">merge</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#运行"><span class="nav-number">2.</span> <span class="nav-text">运行</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#学习"><span class="nav-number">3.</span> <span class="nav-text">学习</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">fr0stw01f</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Mist</a> v6.0.6</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.0.6"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.0.6"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.0.6"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.0.6"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.0.6"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
