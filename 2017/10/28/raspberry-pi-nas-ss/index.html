@@ -107,7 +107,7 @@
 <meta property="og:site_name" content="Zhenhao&#39;s Blog">
 <meta property="og:description" content="现在有一个路由器，若干个移动硬盘，想自己搭建一个NAS系统，顺便能够解决优雅上网的问题。考虑到Raspberry Pi(树莓派)小巧、便宜和低功率的特点，非常符合我的需求。下面介绍思路。 搭建NAS首先，将移动硬盘挂载到树莓派，并设置为启动自动挂载。需要注意的是，树莓派的功率比较低，挂载2.5寸移动硬盘可能会带不动，我用的是3.5寸需额外供电的移动硬盘，应该不会出现功率不够的问题。 挂载成功之后，">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-03-17T00:22:34.571Z">
+<meta property="og:updated_time" content="2018-03-17T00:44:17.697Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="使用Raspberry Pi搭建NAS和SS服务器">
 <meta name="twitter:description" content="现在有一个路由器，若干个移动硬盘，想自己搭建一个NAS系统，顺便能够解决优雅上网的问题。考虑到Raspberry Pi(树莓派)小巧、便宜和低功率的特点，非常符合我的需求。下面介绍思路。 搭建NAS首先，将移动硬盘挂载到树莓派，并设置为启动自动挂载。需要注意的是，树莓派的功率比较低，挂载2.5寸移动硬盘可能会带不动，我用的是3.5寸需额外供电的移动硬盘，应该不会出现功率不够的问题。 挂载成功之后，">
@@ -394,7 +394,7 @@
         <p>现在有一个路由器，若干个移动硬盘，想自己搭建一个NAS系统，顺便能够解决优雅上网的问题。考虑到Raspberry Pi(树莓派)小巧、便宜和低功率的特点，非常符合我的需求。下面介绍思路。</p>
 <h2 id="搭建NAS"><a href="#搭建NAS" class="headerlink" title="搭建NAS"></a>搭建NAS</h2><p>首先，将移动硬盘挂载到树莓派，并设置为启动自动挂载。需要注意的是，树莓派的功率比较低，挂载2.5寸移动硬盘可能会带不动，我用的是3.5寸需额外供电的移动硬盘，应该不会出现功率不够的问题。</p>
 <p>挂载成功之后，安装DLNA服务。</p>
-<p>成功之后就可以在其它设备上访问移动硬盘里的音频和视频资料了。这里推荐一款收费的iOS应用：Infuse Pro。它能够播放几乎所有的音频和视频格式，应该是我见过的功能最强的iOS播放器了。另外，免费的Infuse不能播放AC3和DTS等有版权的音频格式，其它都是一样的。Infuse还提供订阅式的收费方式，而Infuse Pro是一次性购买的，大版本之间是不能升级的，而且老版本会下架，这点比较坑。</p>
+<p>成功之后就可以在其它设备上访问移动硬盘里的音频和视频资料了。这里推荐一款收费的iOS应用：Infuse Pro。它能够播放几乎所有的音频和视频格式，应该是我见过的功能最强的iOS播放器了。另外，免费的Infuse不能播放AC3和DTS等有版权的音频格式，其它都是一样的。Infuse还提供订阅式的收费方式，而Infuse Pro是一次性购买的，大版本之间是不能升级的，而且老版本会下架，这点比较坑，需要注意。</p>
 <a id="more"></a>
 <h2 id="搭建SS"><a href="#搭建SS" class="headerlink" title="搭建SS"></a>搭建SS</h2><p>现在SS在各个平台都有客户端，使用也比较方便。唯一的遗憾是iOS平台，因为iOS会定期杀掉长期后台运行的进程(除非越狱过了)，所以如果想后台开着SS，前台优雅上网的话，每隔一段时间SS就会断，需要重新把它重新弄到前台，为后面的使用争取几分钟的时间，非常的不方便。</p>
 <p>我的思路是，既然SS可以为局域网的其它设备提供服务，可以在树莓派上面安装SS，然后允许其它ip访问SS服务。这样这个局域网的其它设备都不需要自己开SS了，只要联网的时候设置http代理为树莓派就行了。另外，为了减少不必要的代理，我们可以使用来实现白名单代理。</p>
@@ -437,8 +437,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/03/11/build-chromium-for-android/" rel="next" title="Building chromium for Android">
-                <i class="fa fa-chevron-left"></i> Building chromium for Android
+              <a href="/2017/09/11/why-i-love-kotlin/" rel="next" title="为什么我喜爱Kotlin">
+                <i class="fa fa-chevron-left"></i> 为什么我喜爱Kotlin
               </a>
             
           </div>
@@ -446,10 +446,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/03/16/hello-world/" rel="prev" title="Hello World">
-                Hello World <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -556,7 +552,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">9</span>
+                      
+                    
+                    <span class="site-state-item-count">10</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
