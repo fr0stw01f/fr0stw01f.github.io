@@ -1049,11 +1049,11 @@
             <p>最近因为工作需要，想从安卓的终端上运行curl。试了几种办法都不是很靠谱，最后找到一种实用的办法。这个办法是将termux中提供的curl拿出来供整个系统。</p>
 <ul>
 <li>安装termux。</li>
-<li>在termux中安装curl。<ul>
-<li>命令：<code>packages install curl</code></li>
-</ul>
+<li><p>在termux中安装curl。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">packages install curl</span><br></pre></td></tr></table></figure>
 </li>
-<li>将termux中的curl可执行文件拷贝到/system/bin。</li>
+<li><p>将termux中的curl可执行文件拷贝到/system/bin。</p>
+</li>
 <li>将以下curl以来的动态库文件拷贝到/system/lib。<ul>
 <li>libcurl.so</li>
 <li>libnghttp2.so</li>
@@ -1061,12 +1061,15 @@
 <li>libcrypto.so.1.0.0</li>
 </ul>
 </li>
-<li>将curl的权限改为755，把拷贝的库的权限改为644。注意点：<ul>
-<li>这需要获取su权限: su or su -c ‘cmd’。</li>
-<li>还需要把/system目录改为writable<ul>
-<li>命令：<code>mount -o rw,remount,rw /system</code></li>
-<li>参考：<a href="http://android.stackexchange.com/questions/110927/how-to-mount-system-rewritable-or-read-only-rw-ro。" target="_blank" rel="noopener">http://android.stackexchange.com/questions/110927/how-to-mount-system-rewritable-or-read-only-rw-ro。</a></li>
-</ul>
+<li><p>将curl的权限改为755，把拷贝的库的权限改为644。注意点：</p>
+<ul>
+<li><p>这需要获取su权限</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">su or su -c ‘cmd’</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>还需要把/system目录改为writable</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mount -o rw,remount,rw /system</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>参考<a href="http://android.stackexchange.com/questions/110927/how-to-mount-system-rewritable-or-read-only-rw-ro" target="_blank" rel="noopener">这篇文件</a></p>
 </li>
 </ul>
 </li>
