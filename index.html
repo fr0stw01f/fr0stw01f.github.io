@@ -324,6 +324,162 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://zhenhao.io/2018/03/18/v8-ignition-relationship-betweeen-js-engine-and-bytecode/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="fr0stw01f">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhenhao's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/03/18/v8-ignition-relationship-betweeen-js-engine-and-bytecode/" itemprop="url">V8 Ignition：JS 引擎与字节码的不解之缘(转载)</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-18T13:09:23+08:00">2018-03-18</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/转载/" itemprop="url" rel="index"><span itemprop="name">转载</span></a></span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/转载/V8/" itemprop="url" rel="index"><span itemprop="name">V8</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p><a href="http://arewefastyet.com" target="_blank" rel="noopener">http://arewefastyet.com</a> 网站测试并展示了数个 JavaScript 引擎的性能数据，是各家 JS 引擎性能的比武场：</p>
+<p><img src="/images/v8-ignition-relationship-betweeen-js-engine-and-bytecode-0.png" alt="">)</p>
+<p>我们看到在这个比武场上，最近 Chrome 出现了多个新条目，其中很多条目都是关于 v8 的 Ignition 新架构的组合，他们是 v8 引擎最近推出的 JS 字节码解释器。</p>
+<p>纵览各个 JS 引擎的实现，我们发现基于字节码的实现是主流。例如苹果公司的 JavaScriptCore （JSC） 引擎，2008 年时他们引入了 SquirrelFish（市场名 Nitro），实现了一个字节码寄存器机（Register Machine）。再如 Mozilla 公司的 SpiderMonkey，他们使用字节码的历史更久，可以追溯到 1998 年的 Netscape 4（见 <a href="https://dxr.mozilla.org/classic/source/js/src/jsemit.c" target="_blank" rel="noopener">https://dxr.mozilla.org/classic/source/js/src/jsemit.c</a> ），SpiderMonkey 实现的是堆栈机（Stack Machine）。微软的 Chakra 也使用了字节码，他们实现的是寄存器机（Register Machine）。而 v8 之前的做法是比较“脱俗”的，他们跳过了字节码这一层，直接把 JS 编译成机器码。而在刚刚过去的五一假日前夕，v8 5.9 发布了，其中的 Ignition 字节码解释器将默认启动 ：<a href="https://v8project.blogspot.co.id/2017/04/v8-release-59.html" target="_blank" rel="noopener">https://v8project.blogspot.co.id/2017/04/v8-release-59.html</a>  。v8 自此回到了字节码的怀抱。</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/03/18/v8-ignition-relationship-betweeen-js-engine-and-bytecode/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://zhenhao.io/2018/03/14/gcc-gdb-compatibility/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -420,162 +576,6 @@
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2018/03/14/gcc-gdb-compatibility/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://zhenhao.io/2018/03/13/visual-studio-2013-preview-c++11-support/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="fr0stw01f">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhenhao's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/03/13/visual-studio-2013-preview-c++11-support/" itemprop="url">Visual Studio 2013 Preview对C++11的支持</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-13T15:33:11+08:00">2018-03-13</time>
-            
-
-            
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/C/" itemprop="url" rel="index"><span itemprop="name">C++</span></a></span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/C/C-11/" itemprop="url" rel="index"><span itemprop="name">C++11</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>为期3天的微软Build 2013大会结束了，作为微软一年一度的开发者大会，微软也做足了功夫：很多产品（包括Windows 8.1和Visual Studio 2013 Preview）发布，channel9全程直播，可以到<a href="http://channel9.msdn.com/Events/Build/2013" target="_blank" rel="noopener">这里</a>这边查看会议的所有内容。</p>
-<p>虽然整个Build大会不像Google的I/O和Apple的WWDC那么热闹（Google和Apple的粉丝比较多），但我倒是一直非常期待，其中最大的期待在于Herb Sutter曾近承诺在2013年上半年提供一个更好支持C++11的VS版本。Herb Sutter（Visual C++首席架构师、C++标准委员会主席，可以说是当今C++领域影响最大的人物之一了）在Build大会第三天有个演讲，题目叫做“<a href="http://channel9.msdn.com/Events/Build/2013/2-306" target="_blank" rel="noopener">The Future of C++</a>”，具体介绍了Visual Studio 2013 Preview对C++11的支持。在这个演讲之前，我已经把Visual Studio 2013 Preview安装起来，并尝试了一些在Visual Studio 2012中没有被支持的C++11特性，差不多得出了一个支持列表。</p>
-<p>OK，还是看看Herb Sutter给出的官方roadamp吧：</p>
-<p><img src="/images/visual-studio-2013-preview-c++11-support.jpg" alt=""></p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/03/13/visual-studio-2013-preview-c++11-support/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -743,6 +743,162 @@
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2018/03/13/centos-build-llvm-clang-libc++/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://zhenhao.io/2018/03/13/visual-studio-2013-preview-c++11-support/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="fr0stw01f">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhenhao's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/03/13/visual-studio-2013-preview-c++11-support/" itemprop="url">Visual Studio 2013 Preview对C++11的支持</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-13T15:33:11+08:00">2018-03-13</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/C/" itemprop="url" rel="index"><span itemprop="name">C++</span></a></span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/C/C-11/" itemprop="url" rel="index"><span itemprop="name">C++11</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>为期3天的微软Build 2013大会结束了，作为微软一年一度的开发者大会，微软也做足了功夫：很多产品（包括Windows 8.1和Visual Studio 2013 Preview）发布，channel9全程直播，可以到<a href="http://channel9.msdn.com/Events/Build/2013" target="_blank" rel="noopener">这里</a>这边查看会议的所有内容。</p>
+<p>虽然整个Build大会不像Google的I/O和Apple的WWDC那么热闹（Google和Apple的粉丝比较多），但我倒是一直非常期待，其中最大的期待在于Herb Sutter曾近承诺在2013年上半年提供一个更好支持C++11的VS版本。Herb Sutter（Visual C++首席架构师、C++标准委员会主席，可以说是当今C++领域影响最大的人物之一了）在Build大会第三天有个演讲，题目叫做“<a href="http://channel9.msdn.com/Events/Build/2013/2-306" target="_blank" rel="noopener">The Future of C++</a>”，具体介绍了Visual Studio 2013 Preview对C++11的支持。在这个演讲之前，我已经把Visual Studio 2013 Preview安装起来，并尝试了一些在Visual Studio 2012中没有被支持的C++11特性，差不多得出了一个支持列表。</p>
+<p>OK，还是看看Herb Sutter给出的官方roadamp吧：</p>
+<p><img src="/images/visual-studio-2013-preview-c++11-support.jpg" alt=""></p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/03/13/visual-studio-2013-preview-c++11-support/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1684,166 +1840,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://zhenhao.io/2017/09/11/why-i-love-kotlin/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="fr0stw01f">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhenhao's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/09/11/why-i-love-kotlin/" itemprop="url">为什么我喜爱Kotlin</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-11T10:21:15+08:00">2017-09-11</time>
-            
-
-            
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/编程语言/" itemprop="url" rel="index"><span itemprop="name">编程语言</span></a></span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/编程语言/Kotlin/" itemprop="url" rel="index"><span itemprop="name">Kotlin</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Kotlin类似于Scala，是一个基于Java的语言。虽然它还支持JavaScript，但是我们这里只讨论Java部分。我们都知道Java是一门非常枯燥的语言，Java代码总是比较冗长而无趣的。Scala在此基础上有了很好的扩展，但它毕竟是一门学术语言，尚未得到工业界的认可。而Kotlin从一开始设计的时候就是为了写出工业级的代码的，因此也更快地得到大家的认可。Android官方也将它作为第一梯队的开发语言。</p>
-<p>我个人喜欢Kotlin主要是因为以下几点：</p>
-<ul>
-<li>容器类代码可以写得非常优雅，基本可以不使用raw loops。写出的代码类型基本上是Mapreduce的风格。这样的好处是逻辑非常清楚，根本不需要去看循环里在干嘛，Kotlin提供的函数名一目了然。这和C++ STL中的算法的用途差不多，就是用来代替简单循环的。</li>
-<li>不要写伤脑的getter/setter了。</li>
-<li>加强了Java的类型系统，可以显式指定一个指针是不是可以为null。之前在Java中需要通过库来实现。</li>
-</ul>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -1886,7 +1887,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">20</span>
+                    <span class="site-state-item-count">21</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -1921,7 +1922,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">11</span>
+                      
+                    
+                    <span class="site-state-item-count">12</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -1992,7 +1995,11 @@
                     
                       
                     
-                    <span class="site-state-item-count">29</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">31</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
