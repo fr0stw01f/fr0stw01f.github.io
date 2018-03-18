@@ -1,0 +1,935 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.0.6" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.0.6">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.0.6">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.0.6">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.0.6" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '6.0.6',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="LLVM的最新版本3.3终于在6月17日发布了，按之前的计划6月5日就应该发布了，不过毕竟没有太晚，赶在VS2013 preview（6月26日微软Build大会）之前出来了微笑。加上之前gcc4.8.1在5月底6月初发布，当今最优秀的三大C++编译器都在这个月发布重要更新，这个6月份真是C++的好日子啊！ LLVM之前就已经宣布做到C++11 Feature Complete了，3.3应该是第一">
+<meta name="keywords" content="C++,LLVM,Clang,libc++">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CentOS 6.4上编译安装LLVM3.3，Clang和Libc++">
+<meta property="og:url" content="http://zhenhao.io/2018/03/13/centos-build-llvm-clang-libc++/index.html">
+<meta property="og:site_name" content="Zhenhao&#39;s Blog">
+<meta property="og:description" content="LLVM的最新版本3.3终于在6月17日发布了，按之前的计划6月5日就应该发布了，不过毕竟没有太晚，赶在VS2013 preview（6月26日微软Build大会）之前出来了微笑。加上之前gcc4.8.1在5月底6月初发布，当今最优秀的三大C++编译器都在这个月发布重要更新，这个6月份真是C++的好日子啊！ LLVM之前就已经宣布做到C++11 Feature Complete了，3.3应该是第一">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-03-17T09:13:31.072Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="CentOS 6.4上编译安装LLVM3.3，Clang和Libc++">
+<meta name="twitter:description" content="LLVM的最新版本3.3终于在6月17日发布了，按之前的计划6月5日就应该发布了，不过毕竟没有太晚，赶在VS2013 preview（6月26日微软Build大会）之前出来了微笑。加上之前gcc4.8.1在5月底6月初发布，当今最优秀的三大C++编译器都在这个月发布重要更新，这个6月份真是C++的好日子啊！ LLVM之前就已经宣布做到C++11 Feature Complete了，3.3应该是第一">
+
+
+
+
+
+
+  <link rel="canonical" href="http://zhenhao.io/2018/03/13/centos-build-llvm-clang-libc++/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>CentOS 6.4上编译安装LLVM3.3，Clang和Libc++ | Zhenhao's Blog</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"> 
+
+<div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Zhenhao's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Connecting the dots.</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+          
+  <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+</li>
+
+      
+        
+        
+          
+  <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签</a>
+</li>
+
+      
+        
+        
+          
+  <li class="menu-item menu-item-categories">
+    <a href="/categories/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />分类</a>
+</li>
+
+      
+        
+        
+          
+  <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档</a>
+</li>
+
+      
+        
+        
+          
+  <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br />关于</a>
+</li>
+
+      
+
+      
+    </ul>
+  
+
+  
+    
+
+    
+    
+      
+      
+    
+      
+      
+    
+      
+      
+    
+      
+      
+    
+      
+      
+    
+    
+
+  
+
+
+  
+
+  
+</nav>
+
+
+  
+
+
+
+ </div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://zhenhao.io/2018/03/13/centos-build-llvm-clang-libc++/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="fr0stw01f">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhenhao's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">CentOS 6.4上编译安装LLVM3.3，Clang和Libc++</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-13T15:33:11+08:00">2018-03-13</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/C/" itemprop="url" rel="index"><span itemprop="name">C++</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>LLVM的最新版本3.3终于在6月17日发布了，按之前的计划6月5日就应该发布了，不过毕竟没有太晚，赶在VS2013 preview（6月26日微软Build大会）之前出来了微笑。加上之前gcc4.8.1在5月底6月初发布，当今最优秀的三大C++编译器都在这个月发布重要更新，这个6月份真是C++的好日子啊！</p>
+<p>LLVM之前就已经宣布做到C++11 Feature Complete了，3.3应该是第一个稳定版，之前gcc4.8.1也同样是全面支持C++11，这篇文章介绍了如何在CentOS上编译安装最新的gcc，VS一直是落后很多的，不过还是很期待VS2013 preview中能增加多少C++11特性。</p>
+<p>LLVM3.3提供了非常丰富的Pre-built Binaries：包括Ubuntu13.04，Ubuntu12.04和Ubuntu10.04，还有Debian6、FreeBSD9和Fedora18，当然还有Apple自己的Mac OS X了。只可惜没有给CentOS也提供预编译版本，只能自己编译安装了。</p>
+<p>今天在CentOS上将最新版本的LLVM套件（LLVM，Clang和Libc++）编译安装好了，中间遇到了不少问题。虽然已经有很多博客介绍如何编译安装LLVM了，但是根据我自己亲身体验的情况来看，还是有地方需要注意的，也有东西值得跟大家分享一下。</p>
+<p>安装过程主要参考这几篇文章：</p>
+<p><a href="http://clang.llvm.org/get_started.html" target="_blank" rel="noopener">http://clang.llvm.org/get_started.html</a></p>
+<p><a href="http://www.cnblogs.com/Frandy/archive/2012/10/20/llvm_clang_libcxx_cxx11.html" target="_blank" rel="noopener">http://www.cnblogs.com/Frandy/archive/2012/10/20/llvm_clang_libcxx_cxx11.html</a></p>
+<p><a href="http://www.cnblogs.com/ralphjzhang/archive/2011/12/02/2272671.html" target="_blank" rel="noopener">http://www.cnblogs.com/ralphjzhang/archive/2011/12/02/2272671.html</a></p>
+<p>下面开始：</p>
+<p>首先，从<a href="http://llvm.org/releases/download.html#3.3这边下载最新的版本。如果从SVN下载代码的话，已经是3.4的开发版本了，如果需要使用稳定版本，推荐自己下载3.3的代码包，需要下载5个文件：" target="_blank" rel="noopener">http://llvm.org/releases/download.html#3.3这边下载最新的版本。如果从SVN下载代码的话，已经是3.4的开发版本了，如果需要使用稳定版本，推荐自己下载3.3的代码包，需要下载5个文件：</a></p>
+<ul>
+<li><p>LLVM source code</p>
+</li>
+<li><p>Clang source code</p>
+</li>
+<li><p>Clang Tools Extra source code</p>
+</li>
+<li><p>Compiler RT source code</p>
+</li>
+<li><p>LibC++ source code</p>
+</li>
+</ul>
+<p>下载好了以后，四个压缩包都解压出来，得到四个目录：</p>
+<ul>
+<li><p>llvm-3.3.src</p>
+</li>
+<li><p>cfe-3.3.src</p>
+</li>
+<li><p>clang-tools-extra-3.3.src</p>
+</li>
+<li><p>compiler-rt-3.3.src</p>
+</li>
+<li><p>libcxx-3.3.src</p>
+</li>
+</ul>
+<p>然后按下面的步骤组织：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ mv cfe-3.3.src clang</span><br><span class="line">$ mv clang/ llvm-3.3.src/tools/</span><br><span class="line"></span><br><span class="line">$ mv clang-tools-extra-3.3.src extra</span><br><span class="line">$ mv extra/ llvm-3.3.src/tools/clang/</span><br><span class="line"></span><br><span class="line">$ mv compiler-rt-3.3.src compiler-rt</span><br><span class="line">$ mv compiler-rt llvm-3.3.src/projects/</span><br></pre></td></tr></table></figure>
+<p>这样以后clang，clang-tools-extra和compiler-rt就可以和llvm一起编译了。</p>
+<p>在llvm-3.3.src同一层目录上新建个目录build-3.3并进入：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mkdir build-3.3</span><br><span class="line"><span class="built_in">cd</span> build-3.3</span><br></pre></td></tr></table></figure>
+<p>然后configure：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">../llvm-3.3.src/configure --<span class="built_in">enable</span>-optimized --<span class="built_in">enable</span>-targets=host-only</span><br></pre></td></tr></table></figure>
+<p>注意：这边两个选项推荐大家加上，否则会产生巨大的文件，我第一次编译的时候，没有加上这两个选项，编译出来的结果多大9.4G（够吓人的吧？把我的磁盘都耗尽了，还报错，google了好久才发现是磁盘空间不够），耗时超过一个半小时，加上以后编译出来的结果不到1G，i5四核20分钟多一点就编译完成。</p>
+<p>然后make：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">make -j4</span><br></pre></td></tr></table></figure>
+<p>尽量把几个核都用上。</p>
+<p>然后make install：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo make install</span><br></pre></td></tr></table></figure>
+<p>用clang++ -v查看下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">clang version 3.3 (tags/RELEASE_33/final)</span><br><span class="line">Target: x86_64-unknown-linux-gnu</span><br><span class="line">Thread model: posix</span><br></pre></td></tr></table></figure>
+<p>此时clang就可以正常使用了，clang默认用的是C++库gcc的libstdc++。clang用法和gcc类似，如果要使用C++11的话：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">clang++ -std=c++11 [input]</span><br></pre></td></tr></table></figure>
+<p>如果想用LLVM自己的libc++，就需要以下步骤（有点小麻烦）：</p>
+<p>进入之前解压出来的libcxx-3.3.src：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> libcxx-3.3.src/lib</span><br><span class="line">./buildit</span><br></pre></td></tr></table></figure>
+<p>然后在libcxx-3.3.src/lib下面就可以看到libc++.so.1.0文件，这就是libc++的动态库。</p>
+<p>按照下面的步骤把libc++.so.1.0放到/usr/lib下，并创建几个链接：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sudo cp ./libc++.so.1.0 /usr/lib</span><br><span class="line"><span class="built_in">cd</span> /usr/lib</span><br><span class="line">sudo ln -sf /usr/lib/libc++.so.1.0 libc++.so</span><br><span class="line">sudo ln -sf /usr/lib/libc++.so.1.0 libc++.so.1</span><br></pre></td></tr></table></figure>
+<p>然后把libcxx-3.3.src/include目录拷贝到/usr/include/c++/v1（这个地址是clang默认查找的目录，如果目录不存在则自己创建）：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cp -r libcxx-3.3.src/include/ /usr/include/c++/v1</span><br></pre></td></tr></table></figure>
+<p>按理说，这样以后，就可以了，使用libc++的方式如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">clang++ -stdlib=libc++ -std=c++11 [input]</span><br></pre></td></tr></table></figure>
+<p>但是我这边编译的时候，提示找不到头文件，需要手动加上-I/usr/include/c++/v1/：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">clang++ -stdlib=libc++ -std=c++11 -I/usr/include/c++/v1/ [input]</span><br></pre></td></tr></table></figure>
+<p>运行的时候，也会提示链接错误：error while loading shared libraries: libc++.so.1: cannot open shared object file: No such file or directory。</p>
+<p>解决办法是在~/.basrch中加入下面的环境变量：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> LD_LIBRARY_PATH=/usr/lib:/usr/<span class="built_in">local</span>/lib</span><br></pre></td></tr></table></figure>
+<p>重启个shell就可以了正常运行了，上面这些找不到头文件和链接错误都是因为使用libc++的原因，如果使用默认的libstdc++就没有这些问题。</p>
+<p>OK，尽管使用起来有点小麻烦，不过写个makefile就不用每次都敲那么长的命令了，Enjoy！</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/C/" rel="tag"># C++</a>
+          
+            <a href="/tags/LLVM/" rel="tag"># LLVM</a>
+          
+            <a href="/tags/Clang/" rel="tag"># Clang</a>
+          
+            <a href="/tags/libc/" rel="tag"># libc++</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/03/13/visual-studio-2013-preview-c++11-support/" rel="next" title="Visual Studio 2013 Preview对C++11的支持">
+                <i class="fa fa-chevron-left"></i> Visual Studio 2013 Preview对C++11的支持
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/03/14/gcc-gdb-compatibility/" rel="prev" title="gcc与gdb版本兼容问题">
+                gcc与gdb版本兼容问题 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">fr0stw01f</p>
+              <p class="site-description motion-element" itemprop="description">long long ago = 0;</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">20</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">11</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">29</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/fr0stw01f" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:tangzhnju@gmail.com" target="_blank" title="E-Mail"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">fr0stw01f</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Mist</a> v6.0.6</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.0.6"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.0.6"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.0.6"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.0.6"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.0.6"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

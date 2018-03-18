@@ -99,19 +99,19 @@
 
 
 
-  <meta name="description" content="CommandsAlias Use ‘git adog’ to show pretty branch graphs  1git config --global alias.adog &amp;quot;log --all --decorate --oneline --graph&amp;quot; Basics Add file to the Index (Stage)  12$ git add &amp;lt;file">
+  <meta name="description" content="CommandsAlias Use ‘git adog’ to show pretty branch graphs  1$ git config --global alias.adog &quot;log --all --decorate --oneline --graph&quot; Basics Add file to the Index (Stage)  12$ git add &amp;lt;filename&amp;gt;">
 <meta name="keywords" content="git">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Git常用命令和分支模型">
 <meta property="og:url" content="http://zhenhao.io/2017/02/16/git/index.html">
 <meta property="og:site_name" content="Zhenhao&#39;s Blog">
-<meta property="og:description" content="CommandsAlias Use ‘git adog’ to show pretty branch graphs  1git config --global alias.adog &amp;quot;log --all --decorate --oneline --graph&amp;quot; Basics Add file to the Index (Stage)  12$ git add &amp;lt;file">
+<meta property="og:description" content="CommandsAlias Use ‘git adog’ to show pretty branch graphs  1$ git config --global alias.adog &quot;log --all --decorate --oneline --graph&quot; Basics Add file to the Index (Stage)  12$ git add &amp;lt;filename&amp;gt;">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://nvie.com/img/git-model@2x.png">
-<meta property="og:updated_time" content="2018-03-16T06:48:08.005Z">
+<meta property="og:updated_time" content="2018-03-17T08:08:34.937Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Git常用命令和分支模型">
-<meta name="twitter:description" content="CommandsAlias Use ‘git adog’ to show pretty branch graphs  1git config --global alias.adog &amp;quot;log --all --decorate --oneline --graph&amp;quot; Basics Add file to the Index (Stage)  12$ git add &amp;lt;file">
+<meta name="twitter:description" content="CommandsAlias Use ‘git adog’ to show pretty branch graphs  1$ git config --global alias.adog &quot;log --all --decorate --oneline --graph&quot; Basics Add file to the Index (Stage)  12$ git add &amp;lt;filename&amp;gt;">
 <meta name="twitter:image" content="http://nvie.com/img/git-model@2x.png">
 
 
@@ -396,73 +396,73 @@
         <h2 id="Commands"><a href="#Commands" class="headerlink" title="Commands"></a>Commands</h2><h3 id="Alias"><a href="#Alias" class="headerlink" title="Alias"></a>Alias</h3><ul>
 <li>Use ‘git adog’ to show pretty branch graphs</li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git config --global alias.adog &quot;log --all --decorate --oneline --graph&quot;</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git config --global alias.adog <span class="string">"log --all --decorate --oneline --graph"</span></span><br></pre></td></tr></table></figure>
 <h3 id="Basics"><a href="#Basics" class="headerlink" title="Basics"></a>Basics</h3><ul>
 <li>Add file to the Index (Stage)</li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ git add &lt;filename&gt;</span><br><span class="line">$ git add *</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ git add &lt;filename&gt;</span><br><span class="line">$ git add *</span><br></pre></td></tr></table></figure>
 <p>This is the first step in the basic git workflow.</p>
 <ul>
 <li>To actually commit these changes use</li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git commit -m &quot;Commit message&quot;</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git commit -m <span class="string">"Commit message"</span></span><br></pre></td></tr></table></figure>
 <p>Now the file is committed to the HEAD, but not in your remote repository yet.</p>
 <a id="more"></a>
 <ul>
 <li>Commit after staging</li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git commit -a -m &quot;Commit message&quot;</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git commit -a -m <span class="string">"Commit message"</span></span><br></pre></td></tr></table></figure>
 <blockquote>
 <p>-a (–all): automatically stage files that have been modified and deleted, but new files you have not told Git about are not affected.</p>
 </blockquote>
 <ul>
 <li>Rename a file</li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git mv &lt;old_filename&gt; &lt;new_filename&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git mv &lt;old_filename&gt; &lt;new_filename&gt;</span><br></pre></td></tr></table></figure>
 <ul>
 <li>Set/Show git username</li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git config [--global] user.name &quot;&lt;username&gt;&quot;</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git config [--global] user.name <span class="string">"&lt;username&gt;"</span></span><br></pre></td></tr></table></figure>
 <ul>
 <li>Using clang-format on Chromium C++ code</li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git cl format</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git cl format</span><br></pre></td></tr></table></figure>
 <h3 id="Branching"><a href="#Branching" class="headerlink" title="Branching"></a>Branching</h3><ul>
 <li>Create a new branch and switch to it</li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git checkout -b &lt;branch_name&gt; [&lt;start point&gt;]</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git checkout -b &lt;branch_name&gt; [&lt;start point&gt;]</span><br></pre></td></tr></table></figure>
 <ul>
 <li>Switch to branch</li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git checkout &lt;branch_name&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git checkout &lt;branch_name&gt;</span><br></pre></td></tr></table></figure>
 <ul>
 <li>Delete branch</li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git branch -d &lt;branch_name&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git branch -d &lt;branch_name&gt;</span><br></pre></td></tr></table></figure>
 <h3 id="Pushing-changes"><a href="#Pushing-changes" class="headerlink" title="Pushing changes"></a>Pushing changes</h3><ul>
 <li>Show all remote repositories</li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git remote</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git remote</span><br></pre></td></tr></table></figure>
 <ul>
 <li>Connect repository to a remote server (Add a new remote repository)</li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git remote add &lt;repo_alias&gt; &lt;repo_url&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git remote add &lt;repo_alias&gt; &lt;repo_url&gt;</span><br></pre></td></tr></table></figure>
 <ul>
 <li>Push the branch to remote repository</li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git push [&lt;repo_alias&gt; &lt;branch_name&gt;]</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git push [&lt;repo_alias&gt; &lt;branch_name&gt;]</span><br></pre></td></tr></table></figure>
 <ul>
 <li>Remove remote branch</li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git push &lt;repo_alias&gt; :&lt;branch_name&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git push &lt;repo_alias&gt; :&lt;branch_name&gt;</span><br></pre></td></tr></table></figure>
 <h3 id="Update-and-merge"><a href="#Update-and-merge" class="headerlink" title="Update and merge"></a>Update and merge</h3><ul>
 <li>Update local repository to the newest commit (fetch and merge remote changes)</li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git pull #in your working directory</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git pull <span class="comment">#in your working directory</span></span><br></pre></td></tr></table></figure>
 <ul>
 <li>Merge another branch into active branch (e.g. master)</li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git merge [--no-ff] [-X &lt;strategy-option&gt;] &lt;branch_name&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git merge [--no-ff] [-X &lt;strategy-option&gt;] &lt;branch_name&gt;</span><br></pre></td></tr></table></figure>
 <blockquote>
 <p>The –no-ff flag avoids losing information about the historical existence of a feature branch and groups together all commits that together added the feature.</p>
 </blockquote>
@@ -475,39 +475,39 @@
 <ul>
 <li>Add manually merged files after editing</li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git add &lt;filename&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git add &lt;filename&gt;</span><br></pre></td></tr></table></figure>
 <ul>
 <li>Preview them by using before merging changes</li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git diff &lt;source_branch&gt; &lt;target_branch&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git diff &lt;source_branch&gt; &lt;target_branch&gt;</span><br></pre></td></tr></table></figure>
 <ul>
 <li>Prefer theirs(ours) when merging to avoid conflict</li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git pull -X theirs(ours)</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git pull -X theirs(ours)</span><br></pre></td></tr></table></figure>
 <ul>
 <li>Accept theirs(ours) if already in conflicted state</li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git checkout --theirs(ours) &lt;path/to/file&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git checkout --theirs(ours) &lt;path/to/file&gt;</span><br></pre></td></tr></table></figure>
 <ul>
 <li>Discard changes on staged files</li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git checkout -- &lt;path/to/file&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git checkout -- &lt;path/to/file&gt;</span><br></pre></td></tr></table></figure>
 <h3 id="Stash"><a href="#Stash" class="headerlink" title="Stash"></a>Stash</h3><p>Stash the changes in a dirty working directory away</p>
 <ul>
 <li>Move changes in current branch to another branch</li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ git stash</span><br><span class="line">$ git checkout &lt;branch_name&gt;</span><br><span class="line">$ git stash pop</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ git stash</span><br><span class="line">$ git checkout &lt;branch_name&gt;</span><br><span class="line">$ git stash pop</span><br></pre></td></tr></table></figure>
 <ul>
 <li>Move changes in current branch to a new branch</li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ git stash</span><br><span class="line">$ git stash branch &lt;branchname&gt; [&lt;stash&gt;]</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ git stash</span><br><span class="line">$ git stash branch &lt;branchname&gt; [&lt;stash&gt;]</span><br></pre></td></tr></table></figure>
 <p>Its effect is the same as the effect of:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ git stash</span><br><span class="line">$ git checkout -b xxx</span><br><span class="line">$ git stash pop</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ git stash</span><br><span class="line">$ git checkout -b xxx</span><br><span class="line">$ git stash pop</span><br></pre></td></tr></table></figure>
 <ul>
 <li>Interrupted workflow</li>
 </ul>
 <p>When you are in the middle of something, your boss comes in and demands that you fix something immediately.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">... hack hack hack ...</span><br><span class="line">$ git stash</span><br><span class="line">... edit emergency fix ...</span><br><span class="line">$ git commit -a -m &quot;Fix in a hurry&quot;</span><br><span class="line">$ git stash pop</span><br><span class="line">... continue hacking ...</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">... hack hack hack ...</span><br><span class="line">$ git stash</span><br><span class="line">... edit emergency fix ...</span><br><span class="line">$ git commit -a -m <span class="string">"Fix in a hurry"</span></span><br><span class="line">$ git stash pop</span><br><span class="line">... <span class="built_in">continue</span> hacking ...</span><br></pre></td></tr></table></figure>
 <h2 id="Branching-model"><a href="#Branching-model" class="headerlink" title="Branching model"></a>Branching model</h2><p><img src="http://nvie.com/img/git-model@2x.png" alt="alt text" title="Branching model"></p>
 <h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
 <li><a href="http://rogerdudler.github.io/git-guide/index.html" target="_blank" rel="noopener">git - the simple guide</a></li>
@@ -633,7 +633,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">14</span>
+                    <span class="site-state-item-count">20</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -664,7 +664,11 @@
                     
                       
                     
-                    <span class="site-state-item-count">9</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">11</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -719,7 +723,23 @@
                     
                       
                     
-                    <span class="site-state-item-count">21</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">29</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>

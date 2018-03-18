@@ -107,7 +107,7 @@
 <meta property="og:site_name" content="Zhenhao&#39;s Blog">
 <meta property="og:description" content="这篇主要记录一下学习陈硕同学的对下面这道题的算法思想与代码。 题目是这样的：  有10个文件，每个文件1G，每个文件的每行存放的都是用户的query（请自己随机产生），每个文件的query都可能重复。要求你按照query的频度排序。  （当然，这里的重点是大文件，所以10个1G的文件，或者1个10G的文件，原理都是一样的） 陈硕的代码在这里： https://gist.github.com/400">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-03-17T05:55:24.681Z">
+<meta property="og:updated_time" content="2018-03-17T08:04:24.886Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="学习大文件统计与排序(转载)">
 <meta name="twitter:description" content="这篇主要记录一下学习陈硕同学的对下面这道题的算法思想与代码。 题目是这样的：  有10个文件，每个文件1G，每个文件的每行存放的都是用户的query（请自己随机产生），每个文件的query都可能重复。要求你按照query的频度排序。  （当然，这里的重点是大文件，所以10个1G的文件，或者1个10G的文件，原理都是一样的） 陈硕的代码在这里： https://gist.github.com/400">
@@ -430,9 +430,9 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">g++ sort.cpp -o sort -std=c++0x</span><br></pre></td></tr></table></figure>
 <p>在运行前，需要准备输入数据，这里用lua随机产生：（<a href="https://gist.github.com/4045503）" target="_blank" rel="noopener">https://gist.github.com/4045503）</a></p>
 <p>复制代码</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">-- updated version, use a table thus no gc involved</span><br><span class="line">local file = io.open(&quot;file.txt&quot;, &quot;w&quot;)</span><br><span class="line">local t = &#123;&#125;</span><br><span class="line">for i = 1, 500000000 do</span><br><span class="line">        local n = i % math.random(10000)</span><br><span class="line">        local str = string.format(&quot;This is a number %d\n&quot;, n)</span><br><span class="line">        table.insert(t, str)</span><br><span class="line">        if i % 10000 == 0 then</span><br><span class="line">                file:write(table.concat(t))</span><br><span class="line">                t = &#123;&#125;</span><br><span class="line">        end</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- updated version, use a table thus no gc involved</span></span><br><span class="line"><span class="keyword">local</span> file = <span class="built_in">io</span>.<span class="built_in">open</span>(<span class="string">"file.txt"</span>, <span class="string">"w"</span>)</span><br><span class="line"><span class="keyword">local</span> t = &#123;&#125;</span><br><span class="line"><span class="keyword">for</span> i = <span class="number">1</span>, <span class="number">500000000</span> <span class="keyword">do</span></span><br><span class="line">        <span class="keyword">local</span> n = i % <span class="built_in">math</span>.<span class="built_in">random</span>(<span class="number">10000</span>)</span><br><span class="line">        <span class="keyword">local</span> str = <span class="built_in">string</span>.<span class="built_in">format</span>(<span class="string">"This is a number %d\n"</span>, n)</span><br><span class="line">        <span class="built_in">table</span>.<span class="built_in">insert</span>(t, str)</span><br><span class="line">        <span class="keyword">if</span> i % <span class="number">10000</span> == <span class="number">0</span> <span class="keyword">then</span></span><br><span class="line">                file:<span class="built_in">write</span>(<span class="built_in">table</span>.<span class="built_in">concat</span>(t))</span><br><span class="line">                t = &#123;&#125;</span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
 <p>复制代码<br>好，开始运行：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sort file.txt</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sort file.txt</span><br></pre></td></tr></table></figure>
 <p>结果如下：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">$ time sort file.txt</span><br><span class="line">processing file.txt</span><br><span class="line">shuffling done</span><br><span class="line">reading shard-00000-of-00010</span><br><span class="line">writing count-00000-of-00010</span><br><span class="line">reading shard-00001-of-00010</span><br><span class="line">writing count-00001-of-00010</span><br><span class="line">reading shard-00002-of-00010</span><br><span class="line">writing count-00002-of-00010</span><br><span class="line">reading shard-00003-of-00010</span><br><span class="line">writing count-00003-of-00010</span><br><span class="line">reading shard-00004-of-00010</span><br><span class="line">writing count-00004-of-00010</span><br><span class="line">reading shard-00005-of-00010</span><br><span class="line">writing count-00005-of-00010</span><br><span class="line">reading shard-00006-of-00010</span><br><span class="line">writing count-00006-of-00010</span><br><span class="line">reading shard-00007-of-00010</span><br><span class="line">writing count-00007-of-00010</span><br><span class="line">reading shard-00008-of-00010</span><br><span class="line">writing count-00008-of-00010</span><br><span class="line">reading shard-00009-of-00010</span><br><span class="line">writing count-00009-of-00010</span><br><span class="line">reducing done</span><br><span class="line">merging done</span><br><span class="line"></span><br><span class="line">real  19m18.805s</span><br><span class="line">user  14m20.726s</span><br><span class="line">sys 1m37.758s</span><br></pre></td></tr></table></figure>
 <p>在我的32位Ubuntu11.10虚拟机上， 分配了1G内存，1个2.5G的CPU core， 处理一个15G的文件，花了19m分钟。</p>
@@ -496,8 +496,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2015/10/12/hustoj-install/" rel="prev" title="安装hustoj">
-                安装hustoj <i class="fa fa-chevron-right"></i>
+              <a href="/2014/01/12/vc2013-bug/" rel="prev" title="VC2013编译器的一个Bug">
+                VC2013编译器的一个Bug <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -572,7 +572,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">14</span>
+                    <span class="site-state-item-count">20</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -603,7 +603,11 @@
                     
                       
                     
-                    <span class="site-state-item-count">9</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">11</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -658,7 +662,23 @@
                     
                       
                     
-                    <span class="site-state-item-count">21</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">29</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>

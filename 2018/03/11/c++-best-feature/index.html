@@ -1,0 +1,954 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.0.6" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.0.6">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.0.6">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.0.6">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.0.6" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '6.0.6',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="最近看到了很多优秀的文章，包括《Why mobile web apps are slow》，实在忍不住翻译出来跟大家分享。这篇文章通过大量的实验和参考文献向我们说明移动应用开发所遇到的问题，基本的观点可以总结为：移动平台的编程环境是一种资源受限（主要是CPU和内存）的环境，在这样的环境下编程，程序员不得不考虑如何高效地利用资源，这些问题不是仅仅靠一些高级语言特性（如垃圾回收）就能够解决的。因为这些">
+<meta name="keywords" content="C++">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C++的最佳特性（译）">
+<meta property="og:url" content="http://zhenhao.io/2018/03/11/c++-best-feature/index.html">
+<meta property="og:site_name" content="Zhenhao&#39;s Blog">
+<meta property="og:description" content="最近看到了很多优秀的文章，包括《Why mobile web apps are slow》，实在忍不住翻译出来跟大家分享。这篇文章通过大量的实验和参考文献向我们说明移动应用开发所遇到的问题，基本的观点可以总结为：移动平台的编程环境是一种资源受限（主要是CPU和内存）的环境，在这样的环境下编程，程序员不得不考虑如何高效地利用资源，这些问题不是仅仅靠一些高级语言特性（如垃圾回收）就能够解决的。因为这些">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-03-17T08:42:40.255Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="C++的最佳特性（译）">
+<meta name="twitter:description" content="最近看到了很多优秀的文章，包括《Why mobile web apps are slow》，实在忍不住翻译出来跟大家分享。这篇文章通过大量的实验和参考文献向我们说明移动应用开发所遇到的问题，基本的观点可以总结为：移动平台的编程环境是一种资源受限（主要是CPU和内存）的环境，在这样的环境下编程，程序员不得不考虑如何高效地利用资源，这些问题不是仅仅靠一些高级语言特性（如垃圾回收）就能够解决的。因为这些">
+
+
+
+
+
+
+  <link rel="canonical" href="http://zhenhao.io/2018/03/11/c++-best-feature/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>C++的最佳特性（译） | Zhenhao's Blog</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"> 
+
+<div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Zhenhao's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Connecting the dots.</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+          
+  <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+</li>
+
+      
+        
+        
+          
+  <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签</a>
+</li>
+
+      
+        
+        
+          
+  <li class="menu-item menu-item-categories">
+    <a href="/categories/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />分类</a>
+</li>
+
+      
+        
+        
+          
+  <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档</a>
+</li>
+
+      
+        
+        
+          
+  <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br />关于</a>
+</li>
+
+      
+
+      
+    </ul>
+  
+
+  
+    
+
+    
+    
+      
+      
+    
+      
+      
+    
+      
+      
+    
+      
+      
+    
+      
+      
+    
+    
+
+  
+
+
+  
+
+  
+</nav>
+
+
+  
+
+
+
+ </div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://zhenhao.io/2018/03/11/c++-best-feature/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="fr0stw01f">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhenhao's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">C++的最佳特性（译）</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-11T15:33:11+08:00">2018-03-11</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/C/" itemprop="url" rel="index"><span itemprop="name">C++</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>最近看到了很多优秀的文章，包括《<a href="http://sealedabstract.com/rants/why-mobile-web-apps-are-slow/" target="_blank" rel="noopener">Why mobile web apps are slow</a>》，实在忍不住翻译出来跟大家分享。这篇文章通过<strong>大量的实验和参考文献</strong>向我们说明移动应用开发所遇到的问题，基本的观点可以总结为：移动平台的编程环境是一种资源受限（主要是CPU和内存）的环境，在这样的环境下编程，程序员不得不考虑如何高效地利用资源，这些问题不是仅仅靠一些高级语言特性（如垃圾回收）就能够解决的。因为这些高级语言特性在尝试解决一个问题的同时，往往又会引入其它的问题。</p>
+<p>也就是说，<strong>无论编程语言发展到多么高级的层次，程序员的价值永远存在</strong>。就像现在科技发展到今天这样的地步，电子竞技还是无法替代体育运动，我们还是喜欢看球员在球场上展现自己的风采。程序员需要在必要的时候取得对程序行为100%的控制，而这一点恰恰是手动内存管理能够提供的，这也是Going Native最本质上的意义。</p>
+<p>今天想跟大家推荐一篇文章《<a href="http://sealedabstract.com/rants/why-mobile-web-apps-are-slow/" target="_blank" rel="noopener">C++’s best feature</a>》，这篇文章介绍了<strong>C++手动内存管理的基础：确定的对象生命周期（Determined object life-time）</strong>。正如垃圾回收可能不像你感觉的那么可行一样，<strong>手动内存管理也可能不像你感觉的那么难</strong>。我相信这篇文章能够给你一个基本的认识。</p>
+<p>下面是翻译：</p>
+<p>更新：我之前关于数组初始化过程中临时对象生命周期的说法是不正确的。这一部分已经得到了修改，另外根据Herb Sutter的建议，我还加入了一些必要的信息。</p>
+<p>如果你想学会C++的全部内容，这是一件巨大、复杂和充满陷阱的事情。如果你看到一些人使用它的方式，你可能会被吓坏。现在新的功能正在陆续加入C++标准，所以要学会语言的各个细节没有很多年的积累是不现实的。</p>
+<p>但是你没必要学会语言的方方面面才能去动手写程序，高效地使用C++其实只需要学习它的几个基本特性。在这篇文章中，我准备向大家介绍一下我认为C++中最重要的特性之一，这个特性也是是我选择C++而不是其它编程语言的原因。</p>
+<h2 id="确定的对象生命周期（Determined-object-life-time）"><a href="#确定的对象生命周期（Determined-object-life-time）" class="headerlink" title="确定的对象生命周期（Determined object life-time）"></a>确定的对象生命周期（Determined object life-time）</h2><p>你在程序中创建的每一个对象都有一个精确且确定的生命周期。一旦你确定使用某种生命周期，你就准确地知道你创建的对象的生命周期从什么时候开始，到什么时候结束。</p>
+<a id="more"></a>
+<p>对于<strong>局部变量</strong>（automatic variables），它们的生命周期从他们声明处开始（在正常的初始化过程结束后，没有产生异常），到离开所在的作用域为止。对于两个相邻的局部变量，定义在前面的变量生命周期开始得较早，结束得较晚。</p>
+<p>对于<strong>函数形参</strong>，它们的生命周期刚好在函数开始之前开始，刚好在函数完成执行之后结束。</p>
+<p>对于<strong>全局变量</strong>，它们的生命周期在main函数之前开始（译注：实际上是由系统的C Runtime进行初始化，初始化之后才调用main函数），在main函数完成执行后结束。定义在同一个编译单元（译注：translation unit，C++术语，可以理解为已经包含了引入了头文件的cpp文件）中的两个全局变量，定义在前面的变量生命周期开始得较早，结束得较晚。对于定义在不同编译单元的两个全局变量，不能对他们之间生命周期的关系做出假设（译注：有些像C++中未定义的行为，是实现相关的）。</p>
+<p>对于<strong>几乎所有的临时变量</strong>（除了两种已经良好定义的例外），它们的生命周期从一个较长的表达式内部的函数通过传值返回（或者显式地创建）开始，到整个表达式求值完成为止。</p>
+<p>两个例外如下：<strong>当一个临时对象绑定到一个全局或局部的引用上时</strong>，它的生命周期和那个引用的生命周期一样长。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Base &amp;&amp; b = Derived&#123;&#125;;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">  b.modify();</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// Derived类型的临时对象生命周期到此为止</span></span><br></pre></td></tr></table></figure>
+<p>（注意引用的类型和临时对象的类型不是一样的，而且我们可以修改这个临时对象。“临时”表示存在时间是“短暂的”，但是当它绑定到一个全局引用上时，它的生命周期就和其它任何全局变量的生命周期一样长了。）</p>
+<p>第二个例外适用于<strong>初始化用户自定义类型的数组</strong>。在这种情况下，如果使用一个默认构造函数来初始化数组的第n个元素，而且默认构造函数有一个或多个默认参数，那么在默认参数里面创建的每个临时对象的生命周期在我们继续初始化第n+1个元素时结束。但是你很可能在写程序的过程中不需要知道这一点。</p>
+<p>对于类内部的成员对象来说，它们的生命周期在其所在的对象生命周期开始之前开始，在所在的对象生命周期结束之后结束。</p>
+<p>其它类型的对象的生命周期是类似的：函数局部静态变量、thread-local变量以及我们可以手动控制的变量生命周期，比如new/delete和optional等。在这些情况下，对象生命周期的开始和结束都是经过良好定义且可预测的。</p>
+<p>在对象初始化的过程中，它的生命周期马上就要开始，但如果此时发生了异常，那么它的生命周期并没有真正开始。</p>
+<p>简而言之，这就是确定的对象生命周期的本质。那什么是不确定的对象生命周期呢？在C++中（暂时）还没有，但是你可以在其它带有“垃圾回收”支持的语言中看到。在这种情况下，当你创建一个对象的时候，它的生命周期开始了，但是你不知道它的生命周期什么时候结束。垃圾回收保证，如果你有引用指向一个对象，那个这个对象的生命周期就一定不会结束。但是如果指向这个对象的最后一个引用不存在了，那么它存活的时间可能就是任意长的，直到整个进程的结束。</p>
+<p>那么，为什么确定的对象生命周期如此重要呢？</p>
+<h2 id="析构函数"><a href="#析构函数" class="headerlink" title="析构函数"></a>析构函数</h2><p>C++保证，在任何类型的对象在它们生命周期结束时调用它们的析构函数。析构函数是对象所在类的成员函数，并被确保是类的对象最后调用的函数。</p>
+<p>所有都已经知道这一点了，但是不是所有人都了解它给我们带来的好处。首先，最重要的一点，你可以通过析构函数来清理你的对象在生命周期中所获取的资源。这种清理被封装了起来，对于用户是不可见的：用户不需要手动调用任何dispose或者close函数。所以你一般不会忘记去清理资源，你甚至不用知道你当前使用的类是否有管理着资源。而且当对象销毁时，它的资源会被立即清理，而不是在某个不确定的将来。资源越早释放越好，这会防止资源泄露。这个过程不会留下任何垃圾，也不会留下资源在为确定的时间需要清理。（当你看到“资源”这个字眼时，不要只想着内存，多想想打开数据库或者socket连接。）</p>
+<p>确定的对象生命周期还保证了对象销毁的相对顺序。假如一个作用域中有几个局部对象，那么它们会按照与声明（和初始化）相反的顺序被销毁。类似的，对于类的内部对象来说，它们也是按照在类定义中声明（和初始化）相反的顺序被销毁。这本质上是保证资源相互依赖关系的正确性。</p>
+<p>这个特性是由于垃圾回收的，有以下几个原因：</p>
+<ol>
+<li><p>它为所有你能想到的所有资源管理提供了统一的方式，而不仅仅是内存；</p>
+</li>
+<li><p>资源会在它们不再被使用时立即被释放，而不是让垃圾回收来决定什么时候去清理；</p>
+</li>
+<li><p>它不会带来像垃圾回收所带来的运行时刻的额外开销。</p>
+</li>
+</ol>
+<p>基于垃圾回收器的语言倾向于提供资源管理的替代方式：在C#中的<a href="http://msdn.microsoft.com/en-us/library/yh598w02%28v=vs.80%29.aspx" target="_blank" rel="noopener">using语句</a>或者Java中的<a href="http://docs.oracle.com/javase/tutorial/essential/exceptions/tryResourceClose.html" target="_blank" rel="noopener">try语句</a>。尽管它们是朝着好的方向去的，但还是不如析构函数的用法好。</p>
+<ol>
+<li><p>资源管理直接暴露给了用户：你需要知道你当前使用的类型管理着内存，然后添加额外的代码来请求释放资源；</p>
+</li>
+<li><p>如果类的维护者决定将一个原本不管理资源的类改成管理资源的类，那么用户需要修改自己的代码，这是资源清理没有被封装带来的问题；</p>
+</li>
+<li><p>这种方式无法与泛型编程一起使用：你不能写出对于处理和不处理资源的类的统一语法的代码。</p>
+</li>
+</ol>
+<p>最后（译注：作者表示这是双关，但是我没看懂什么意思），这种保护语句块（guarding statements）只能替代C++中的对于“局部”对象（也就是在函数或者某个语句块中创建的对象）的处理方式。C++还提供了其它类型的对象生命周期。比如说，你可以让一个资源管理的对象成为另外一个“主”对象的成员，通过这种方式表达：这个资源的生命周期一直持续到主对象的生命周期结束时。</p>
+<p>考虑以下打开n个文件流然后把他们放在一个容器里面返回的函数，还有一个从这个容器里面读出这些文件流然后自动关闭这些流的函数：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">vector</span>&lt;ifstream&gt; produce()</span><br><span class="line">&#123;</span><br><span class="line">  <span class="built_in">vector</span>&lt;ifstream&gt; ans;</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>;  i &lt; <span class="number">10</span>; ++i) &#123;</span><br><span class="line">    ans.emplace_back(name(i));</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> ans;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">consumer</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="built_in">vector</span>&lt;ifstream&gt; files = produce();</span><br><span class="line">  <span class="keyword">for</span> (ifstream&amp; f: files) &#123;</span><br><span class="line">    read(f);</span><br><span class="line">  &#125;</span><br><span class="line">&#125; <span class="comment">// 关闭所有文件</span></span><br></pre></td></tr></table></figure>
+<p>如果你想通过using语句或者是try语句，你怎么实现这个功能呢？</p>
+<p>注意这边有一个窍门。我们用到了C++中的另一个重要的特性：<a href="http://akrzemi1.wordpress.com/2011/08/11/move-constructor/" target="_blank" rel="noopener">move构造函数</a>，还用到了一个基本事实：std::fstream是不可拷贝，但却是可以移动的。（然而GCC 4.8.1的用户可能不会注意这个）同样的事情（传递地）发生在std::vector&lt;std::ifstream&gt;上。move操作像是仿真了另一个唯一的对象的生命周期。在这个过程中，我们有资源（文件句柄的集合）的“虚拟的”生命周期和“手工的”生命周期，其中这个生命周期从ans被创建开始，到定义在另外一个作用域里的不同的对象生命周期结束而结束。</p>
+<p>注意到，整个文件句柄的集合整个的“扩展的”生命周期中，如果有异常发生，每个句柄都被保护不会泄露。即使name函数在第5次迭代时发生了异常，之前已经创建好的4个元素都会保证在produce函数被正确析构。</p>
+<p>类似的，你无法通过“保护”语句做到做到下面的效果：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CombinedResource</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">  <span class="built_in">std</span>::fstream f;</span><br><span class="line">  Socket s;</span><br><span class="line"></span><br><span class="line">  CombinedResource(<span class="built_in">string</span> name, <span class="keyword">unsigned</span> port)</span><br><span class="line">    : f&#123;name&#125;, s&#123;port&#125; &#123;&#125;</span><br><span class="line">  <span class="comment">// 没有显式地调用析构函数</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>这段代码已经给了你好几个有用的安全性保障。两个资源会在CombinedResource的生命周期结束时被释放：这是在隐式的析构函数中按照与初始化的相反的顺序来处理的，你不需要去手工写这些代码。假设在初始化第二个资源s的时候，在其构造函数中发生了异常，已经被初始化好了的f的析构函数会被立即调用，这个过程在异常从s的构造函数中向上抛出时已经完成了。你可以免费获取到这些安全性保障。</p>
+<p>试问，你怎么通过using或者try来保证上面的安全性保障呢？</p>
+<h2 id="不好的方面"><a href="#不好的方面" class="headerlink" title="不好的方面"></a>不好的方面</h2><p>这边有必要提一些有些人不喜欢析构函数的原因。在某些情况下，垃圾回收比C++提供的资源管理方式要好。比如，有了垃圾回收器（如果你用得起它的话），你可以仅仅通过分配节点然后通过指针（你也可以称之为“引用”）把他们连接起来，来很好地表示一个带环的图。在C++中，你没法做到这一点，甚至用“智能”指针也不行。当然，这种通过垃圾回收来管理的图中的节点没法管理资源，因为它们可能会泄露：using或者try语句在这里不起作用，因为finalizer函数不一定会被调用。</p>
+<p>还有，我听一些人说有一些高效的并行算法只能在垃圾回收器的帮助下完成。我承认我没见过这样的算法。</p>
+<p>有些人不喜欢在看不到代码中看不到析构函数，有些人喜欢这种方式，也有人不喜欢。当你在分析和调试程序时，你可能不会注意某个析构函数被调用了，而且这可能有一些副作用。我在调试一个大而混乱的程序时，就曾经落入这个陷阱中。一个被野指针（raw pointer）指向的对象可能突然会因为某个未知的原因变得无效了，而且我也看不出来有什么函数会导致这种情况。后来我才意识到同一个对象被另一个unique_ptr所指向，而这个unique_ptr又悄无声息地超出了作用域。对于临时对象来说，情况可能会更糟，你既看不到析构函数，也看不到对象本身。</p>
+<p>在使用析构函数的时候有一些限制：为了能够使析构函数与栈展开（stack unwinding，由异常导致，是C++中异常处理的标准流程）正确地协作，它们本身不能抛出异常。这个限制对于某些人来说非常难，因为他们需要来标志资源释放失败了，或者用析构函数达到其它的目的。</p>
+<p>注意，在C++中，除非你将析构函数定义为noexcept(false)，那么它会被隐式地声明为noexcept，如果异常异常从其中抛出的话，就会调用std::terminate。加入你想在发生异常的时候标志资源释放失败，推荐的做法是提供一个像release这样的成员函数用来显示调用，然后让析构函数检查资源是否已释放，如果没有，则“安静地”释放（吞下任何异常而不继续抛出）。</p>
+<p>这种通过析构函数来释放资源的另一个潜在的弊端是，有些时候你需要在你的函数中引入额外的手工的作用域（或者叫块），而这仅仅是为了在函数的作用域结束之前触发局部对象的析构函数。比如：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> Type::fun()</span><br><span class="line">&#123;</span><br><span class="line">  doSomeProcessing1();</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="built_in">std</span>::lock_guard&lt;<span class="built_in">std</span>::mutex&gt; g&#123;mutex_&#125;;</span><br><span class="line">    read(sharedData_);</span><br><span class="line">  &#125;</span><br><span class="line">  doSomeProcessing2();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里，我们不得不加入一个额外的程序块，保证我们再调用doSomeProcessing2函数的时候mutex没有被锁住：我们想在停止使用资源后立即释放它们。这个看上去就有点像using或try语句了，但是有两个区别：</p>
+<ol>
+<li><p>这是一种例外，而不是以一种规则；</p>
+</li>
+<li><p>如果我们忘了这个作用域，资源会被持有更长的时间，但不会泄露，因为它的析构函数绑定在调用者身上。</p>
+</li>
+</ol>
+<p>这就是我要讲的。我个人感觉析构函数是所有程序语言里面最优雅和实用的特性，而且我还没提到其它的优势：和异常处理机制的相互作用。这是C++中比性能更能吸引我的特点：优雅。</p>
+<p>最后我想说的是，我并非声称这是C++中真正最好的特性，我只是想让标题更能引人人的眼球。</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/C/" rel="tag"># C++</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/11/12/linux-grub-recover/" rel="next" title="Linux恢复grub引导">
+                <i class="fa fa-chevron-left"></i> Linux恢复grub引导
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/03/12/c++-function-call/" rel="prev" title="C++函数调用的那些事">
+                C++函数调用的那些事 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">fr0stw01f</p>
+              <p class="site-description motion-element" itemprop="description">long long ago = 0;</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">20</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">11</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">29</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/fr0stw01f" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:tangzhnju@gmail.com" target="_blank" title="E-Mail"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#确定的对象生命周期（Determined-object-life-time）"><span class="nav-number">1.</span> <span class="nav-text">确定的对象生命周期（Determined object life-time）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#析构函数"><span class="nav-number">2.</span> <span class="nav-text">析构函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#不好的方面"><span class="nav-number">3.</span> <span class="nav-text">不好的方面</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">fr0stw01f</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Mist</a> v6.0.6</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.0.6"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.0.6"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.0.6"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.0.6"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.0.6"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
