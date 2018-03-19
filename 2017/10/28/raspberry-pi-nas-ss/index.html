@@ -99,18 +99,18 @@
 
 
 
-  <meta name="description" content="现在有一个路由器，若干个移动硬盘，想自己搭建一个NAS系统，顺便能够解决优雅上网的问题。考虑到Raspberry Pi(树莓派)小巧、便宜和低功率的特点，非常符合我的需求。下面介绍思路。 搭建NAS首先，将移动硬盘挂载到树莓派，并设置为启动自动挂载。需要注意的是，树莓派的功率比较低，挂载2.5寸移动硬盘可能会带不动，我用的是3.5寸需额外供电的移动硬盘，应该不会出现功率不够的问题。 挂载成功之后，">
+  <meta name="description" content="现在有一个路由器，若干个移动硬盘，想自己搭建一个流媒体服务器（配合iPad看视频，完美），顺便能够解决优雅上网的问题。考虑到Raspberry Pi(树莓派)小巧、便宜和低功率的特点，非常符合我的需求。下面介绍思路。 搭建流媒体服务器设置硬盘自动挂载首先，将移动硬盘挂载到树莓派（系统为Raspbian），并设置为启动自动挂载。需要注意的是，树莓派的功率比较低，挂载2.5寸移动硬盘可能会带不动，我用">
 <meta name="keywords" content="RaspberryPi,树莓派,NAS,SS">
 <meta property="og:type" content="article">
-<meta property="og:title" content="使用Raspberry Pi搭建NAS和SS服务器">
+<meta property="og:title" content="使用Raspberry Pi搭建流媒体服务器和SS服务器">
 <meta property="og:url" content="http://zhenhao.io/2017/10/28/raspberry-pi-nas-ss/index.html">
 <meta property="og:site_name" content="Zhenhao&#39;s Blog">
-<meta property="og:description" content="现在有一个路由器，若干个移动硬盘，想自己搭建一个NAS系统，顺便能够解决优雅上网的问题。考虑到Raspberry Pi(树莓派)小巧、便宜和低功率的特点，非常符合我的需求。下面介绍思路。 搭建NAS首先，将移动硬盘挂载到树莓派，并设置为启动自动挂载。需要注意的是，树莓派的功率比较低，挂载2.5寸移动硬盘可能会带不动，我用的是3.5寸需额外供电的移动硬盘，应该不会出现功率不够的问题。 挂载成功之后，">
+<meta property="og:description" content="现在有一个路由器，若干个移动硬盘，想自己搭建一个流媒体服务器（配合iPad看视频，完美），顺便能够解决优雅上网的问题。考虑到Raspberry Pi(树莓派)小巧、便宜和低功率的特点，非常符合我的需求。下面介绍思路。 搭建流媒体服务器设置硬盘自动挂载首先，将移动硬盘挂载到树莓派（系统为Raspbian），并设置为启动自动挂载。需要注意的是，树莓派的功率比较低，挂载2.5寸移动硬盘可能会带不动，我用">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-03-19T01:46:52.523Z">
+<meta property="og:updated_time" content="2018-03-19T07:44:25.020Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="使用Raspberry Pi搭建NAS和SS服务器">
-<meta name="twitter:description" content="现在有一个路由器，若干个移动硬盘，想自己搭建一个NAS系统，顺便能够解决优雅上网的问题。考虑到Raspberry Pi(树莓派)小巧、便宜和低功率的特点，非常符合我的需求。下面介绍思路。 搭建NAS首先，将移动硬盘挂载到树莓派，并设置为启动自动挂载。需要注意的是，树莓派的功率比较低，挂载2.5寸移动硬盘可能会带不动，我用的是3.5寸需额外供电的移动硬盘，应该不会出现功率不够的问题。 挂载成功之后，">
+<meta name="twitter:title" content="使用Raspberry Pi搭建流媒体服务器和SS服务器">
+<meta name="twitter:description" content="现在有一个路由器，若干个移动硬盘，想自己搭建一个流媒体服务器（配合iPad看视频，完美），顺便能够解决优雅上网的问题。考虑到Raspberry Pi(树莓派)小巧、便宜和低功率的特点，非常符合我的需求。下面介绍思路。 搭建流媒体服务器设置硬盘自动挂载首先，将移动硬盘挂载到树莓派（系统为Raspbian），并设置为启动自动挂载。需要注意的是，树莓派的功率比较低，挂载2.5寸移动硬盘可能会带不动，我用">
 
 
 
@@ -127,7 +127,7 @@
   };
 </script>
 
-  <title>使用Raspberry Pi搭建NAS和SS服务器 | Zhenhao's Blog</title>
+  <title>使用Raspberry Pi搭建流媒体服务器和SS服务器 | Zhenhao's Blog</title>
   
 
 
@@ -342,7 +342,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">使用Raspberry Pi搭建NAS和SS服务器</h1>
+          <h1 class="post-title" itemprop="name headline">使用Raspberry Pi搭建流媒体服务器和SS服务器</h1>
         
 
         <div class="post-meta">
@@ -409,13 +409,35 @@
       
 
       
-        <p>现在有一个路由器，若干个移动硬盘，想自己搭建一个NAS系统，顺便能够解决优雅上网的问题。考虑到Raspberry Pi(树莓派)小巧、便宜和低功率的特点，非常符合我的需求。下面介绍思路。</p>
-<h2 id="搭建NAS"><a href="#搭建NAS" class="headerlink" title="搭建NAS"></a>搭建NAS</h2><p>首先，将移动硬盘挂载到树莓派，并设置为启动自动挂载。需要注意的是，树莓派的功率比较低，挂载2.5寸移动硬盘可能会带不动，我用的是3.5寸需额外供电的移动硬盘，应该不会出现功率不够的问题。</p>
-<p>挂载成功之后，安装DLNA服务。</p>
+        <p>现在有一个路由器，若干个移动硬盘，想自己搭建一个流媒体服务器（配合iPad看视频，完美），顺便能够解决优雅上网的问题。考虑到Raspberry Pi(树莓派)小巧、便宜和低功率的特点，非常符合我的需求。下面介绍思路。</p>
+<h2 id="搭建流媒体服务器"><a href="#搭建流媒体服务器" class="headerlink" title="搭建流媒体服务器"></a>搭建流媒体服务器</h2><h3 id="设置硬盘自动挂载"><a href="#设置硬盘自动挂载" class="headerlink" title="设置硬盘自动挂载"></a>设置硬盘自动挂载</h3><p>首先，将移动硬盘挂载到树莓派（系统为Raspbian），并设置为启动自动挂载。需要注意的是，树莓派的功率比较低，挂载2.5寸移动硬盘可能会带不动，我用的是3.5寸需额外供电的移动硬盘，应该不会出现功率不够的问题。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo vi /etc/fstab</span><br></pre></td></tr></table></figure>
+<p>添加以下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/dev/sdax      /path/to/mount     ntfs    defaults   0    2</span><br></pre></td></tr></table></figure>
+<p>重启以下验证是否成功。如果挂载失败，系统会报错。</p>
+<h3 id="安装DLNA服务"><a href="#安装DLNA服务" class="headerlink" title="安装DLNA服务"></a>安装DLNA服务</h3><p>挂载成功之后，安装DLNA服务。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-get update</span><br><span class="line">$ sudo apt-get install minidlna</span><br></pre></td></tr></table></figure></p>
+<h3 id="配置DLNA"><a href="#配置DLNA" class="headerlink" title="配置DLNA"></a>配置DLNA</h3><p>设置/etc/minidlna.conf文件，在文件尾部添加如下内容：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#A表示这个目录是存放音乐的，当minidlna读到配置文件时，它会自动加载这个目录下的音乐文件</span></span><br><span class="line"></span><br><span class="line">media_dir=A,/path/to/Music</span><br><span class="line">media_dir=P,/path/to/Picture</span><br><span class="line">media_dir=V,/path/to/Video</span><br><span class="line"></span><br><span class="line"><span class="comment">#配置minidlna的数库数据的存放目录</span></span><br><span class="line">db_dir=/path/to/db</span><br><span class="line"></span><br><span class="line"><span class="comment">#配置日志目录</span></span><br><span class="line">log_dir=/path/to/<span class="built_in">log</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="重启DLNA服务"><a href="#重启DLNA服务" class="headerlink" title="重启DLNA服务"></a>重启DLNA服务</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ /etc/init.d/minidlna restart</span><br></pre></td></tr></table></figure>
 <p>成功之后就可以在其它设备上访问移动硬盘里的音频和视频资料了。这里推荐一款收费的iOS应用：Infuse Pro。它能够播放几乎所有的音频和视频格式，应该是我见过的功能最强的iOS播放器了。另外，免费的Infuse不能播放AC3和DTS等有版权的音频格式，其它都是一样的。Infuse还提供订阅式的收费方式，而Infuse Pro是一次性购买的，大版本之间是不能升级的，而且老版本会下架，这点比较坑，需要注意。</p>
+<p>当修改配置文件及媒体资源更新时，需要强制刷新，以便minidlna将最新的媒体文件进行索引。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo service minidlna force-reload</span><br></pre></td></tr></table></figure>
+<p>DLNA服务是默认开机启动的。每次树莓派启动之后就能够自动识别了。</p>
 <a id="more"></a>
 <h2 id="搭建SS"><a href="#搭建SS" class="headerlink" title="搭建SS"></a>搭建SS</h2><p>现在SS在各个平台都有客户端，使用也比较方便。唯一的遗憾是iOS平台，因为iOS会定期杀掉长期后台运行的进程(除非越狱过了)，所以如果想后台开着SS，前台优雅上网的话，每隔一段时间SS就会断，需要重新把它重新弄到前台，为后面的使用争取几分钟的时间，非常的不方便。</p>
-<p>我的思路是，既然SS可以为局域网的其它设备提供服务，可以在树莓派上面安装SS，然后允许其它ip访问SS服务。这样这个局域网的其它设备都不需要自己开SS了，只要联网的时候设置http代理为树莓派就行了。另外，为了减少不必要的代理，我们可以使用来实现白名单代理。</p>
+<p>我的思路是，既然SS可以为局域网的其它设备提供服务，可以在树莓派上面安装SS，然后允许其它ip访问SS服务。这样这个局域网的其它设备都不需要自己开SS了，只要联网的时候设置http代理为树莓派就行了。另外，我们可以使用<a href="https://github.com/cyfdecyf/cow" target="_blank" rel="noopener">Cow</a>（基于黑名单）和<a href="https://github.com/netheril96/MEOW" target="_blank" rel="noopener">Meow</a>来实现白名单（基于白名单）来智能分流，帮助我们自动化地决定哪些网址直连，哪些需要经过SS。</p>
+<h3 id="安装SS和配置"><a href="#安装SS和配置" class="headerlink" title="安装SS和配置"></a>安装SS和配置</h3><h4 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-get install python-pip python-m2crypto</span><br><span class="line">$ sudo pip install shadowsocks</span><br></pre></td></tr></table></figure>
+<h4 id="新建配置文件"><a href="#新建配置文件" class="headerlink" title="新建配置文件"></a>新建配置文件</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo vi /etc/shadowsocks.json</span><br></pre></td></tr></table></figure>
+<p>配置文件内容如下。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line"> <span class="string">"server"</span>:<span class="string">"SS服务器ip地址"</span>,</span><br><span class="line"> <span class="string">"server_port"</span>:443,</span><br><span class="line"> <span class="string">"local_address"</span>:<span class="string">"0.0.0.0"</span>, <span class="comment">#允许局域网访问</span></span><br><span class="line"> <span class="string">"local_port"</span>:1080,</span><br><span class="line"> <span class="string">"password"</span>:<span class="string">"your-passwd"</span>,</span><br><span class="line"> <span class="string">"timeout"</span>:300,</span><br><span class="line"> <span class="string">"method"</span>:<span class="string">"aes-256-cfb"</span>,</span><br><span class="line"> <span class="string">"fast_open"</span>:<span class="literal">false</span>,</span><br><span class="line"> <span class="string">"workers"</span>:10</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h4 id="添加到开机自启动"><a href="#添加到开机自启动" class="headerlink" title="添加到开机自启动"></a>添加到开机自启动</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo nano /etc/rc.local</span><br></pre></td></tr></table></figure>
+<p>在 exit 0 之前写入这一行<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/usr/<span class="built_in">local</span>/bin/sslocal -c /etc/shadowsocks.json -d start</span><br></pre></td></tr></table></figure></p>
+<h4 id="重启树莓派"><a href="#重启树莓派" class="headerlink" title="重启树莓派"></a>重启树莓派</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo reboot</span><br></pre></td></tr></table></figure>
+<p>参考<br><a href="http://wiki.guoruei.org/computer/software/linux/install-shadowsocks-on-ubuntu-vps" target="_blank" rel="noopener">http://wiki.guoruei.org/computer/software/linux/install-shadowsocks-on-ubuntu-vps</a><br><a href="https://medium.com/@moreless/%E5%9C%A8-raspberry-pi-%E4%B8%8A%E5%AE%89%E8%A3%85shadowsocks-f008b15991b0" target="_blank" rel="noopener">https://medium.com/@moreless/%E5%9C%A8-raspberry-pi-%E4%B8%8A%E5%AE%89%E8%A3%85shadowsocks-f008b15991b0</a></p>
+<h3 id="安装和配置Meow"><a href="#安装和配置Meow" class="headerlink" title="安装和配置Meow"></a>安装和配置Meow</h3><h4 id="安装-1"><a href="#安装-1" class="headerlink" title="安装"></a>安装</h4><p>安装 Go，然后<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">go get github.com/netheril96/MEOW</span><br></pre></td></tr></table></figure></p>
+<h4 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h4><p>编辑 ~/.meow/rc，设置上级SS代理，例子：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 监听地址，设为0.0.0.0可以监听所有端口，共享给局域网使用</span></span><br><span class="line">listen = http://0.0.0.0:4411</span><br><span class="line"><span class="comment"># 至少指定一个上级代理</span></span><br><span class="line"><span class="comment"># SOCKS5 上级代理</span></span><br><span class="line"><span class="comment"># proxy = socks5://127.0.0.1:1080</span></span><br><span class="line"><span class="comment"># HTTP 上级代理</span></span><br><span class="line"><span class="comment"># proxy = http://127.0.0.1:8087</span></span><br><span class="line"><span class="comment"># shadowsocks 上级代理</span></span><br><span class="line"><span class="comment"># proxy = ss://aes-128-cfb:password@example.server.com:25</span></span><br><span class="line"><span class="comment"># HTTPS 上级代理</span></span><br><span class="line"><span class="comment"># proxy = https://user:password@example.server.com:port</span></span><br></pre></td></tr></table></figure>
+<p>以后某个局域网设备需要优雅上网的时候，只需要在无线设置添加代理http://树莓派ip:4411就行了。</p>
+<p>参考<br><a href="https://github.com/netheril96/MEOW" target="_blank" rel="noopener">https://github.com/netheril96/MEOW</a></p>
+<p>搞定!小小树莓派起了大作用。</p>
 
       
     </div>
@@ -473,8 +495,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/11/01/arch-install/" rel="prev" title="安装Arch Linux">
-                安装Arch Linux <i class="fa fa-chevron-right"></i>
+              <a href="/2018/03/18/v8-ignition-relationship-betweeen-js-engine-and-bytecode/" rel="prev" title="V8 Ignition：JS 引擎与字节码的不解之缘(转载)">
+                V8 Ignition：JS 引擎与字节码的不解之缘(转载) <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -719,7 +741,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#搭建NAS"><span class="nav-number">1.</span> <span class="nav-text">搭建NAS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#搭建SS"><span class="nav-number">2.</span> <span class="nav-text">搭建SS</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#搭建流媒体服务器"><span class="nav-number">1.</span> <span class="nav-text">搭建流媒体服务器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#设置硬盘自动挂载"><span class="nav-number">1.1.</span> <span class="nav-text">设置硬盘自动挂载</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装DLNA服务"><span class="nav-number">1.2.</span> <span class="nav-text">安装DLNA服务</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#配置DLNA"><span class="nav-number">1.3.</span> <span class="nav-text">配置DLNA</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#重启DLNA服务"><span class="nav-number">1.4.</span> <span class="nav-text">重启DLNA服务</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#搭建SS"><span class="nav-number">2.</span> <span class="nav-text">搭建SS</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#安装SS和配置"><span class="nav-number">2.1.</span> <span class="nav-text">安装SS和配置</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#安装"><span class="nav-number">2.1.1.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#新建配置文件"><span class="nav-number">2.1.2.</span> <span class="nav-text">新建配置文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#添加到开机自启动"><span class="nav-number">2.1.3.</span> <span class="nav-text">添加到开机自启动</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#重启树莓派"><span class="nav-number">2.1.4.</span> <span class="nav-text">重启树莓派</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装和配置Meow"><span class="nav-number">2.2.</span> <span class="nav-text">安装和配置Meow</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#安装-1"><span class="nav-number">2.2.1.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#配置"><span class="nav-number">2.2.2.</span> <span class="nav-text">配置</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
