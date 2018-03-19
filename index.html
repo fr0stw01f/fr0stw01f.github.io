@@ -480,787 +480,6 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://zhenhao.io/2018/03/14/gcc-gdb-compatibility/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="fr0stw01f">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhenhao's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/03/14/gcc-gdb-compatibility/" itemprop="url">gcc与gdb版本兼容问题</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-14T15:33:11+08:00">2018-03-14</time>
-            
-
-            
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/C/" itemprop="url" rel="index"><span itemprop="name">C++</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>今天在用gdb调试C++程序的时候，想用”p i”命令打印出程序的一个局部变量i，却一直提示：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">No symbol <span class="string">"i"</span> <span class="keyword">in</span> current context.</span><br></pre></td></tr></table></figure>
-<p>我想到有几种原因可能导致这种情况：</p>
-<p>1、编译的时候没有加上-g选项，一直编译器没有在可执行程序中加入调试信息；</p>
-<p>2、编译的时候加上了优化选项，使得编译器把某些变量优化掉了；</p>
-<p>3、断点加的位置不对，变量超出作用域了。</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/03/14/gcc-gdb-compatibility/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://zhenhao.io/2018/03/13/centos-build-llvm-clang-libc++/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="fr0stw01f">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhenhao's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/03/13/centos-build-llvm-clang-libc++/" itemprop="url">CentOS 6.4上编译安装LLVM3.3，Clang和Libc++</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-13T15:33:11+08:00">2018-03-13</time>
-            
-
-            
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/C/" itemprop="url" rel="index"><span itemprop="name">C++</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>LLVM的最新版本3.3终于在6月17日发布了，按之前的计划6月5日就应该发布了，不过毕竟没有太晚，赶在VS2013 preview（6月26日微软Build大会）之前出来了微笑。加上之前gcc4.8.1在5月底6月初发布，当今最优秀的三大C++编译器都在这个月发布重要更新，这个6月份真是C++的好日子啊！</p>
-<p>LLVM之前就已经宣布做到C++11 Feature Complete了，3.3应该是第一个稳定版，之前gcc4.8.1也同样是全面支持C++11，这篇文章介绍了如何在CentOS上编译安装最新的gcc，VS一直是落后很多的，不过还是很期待VS2013 preview中能增加多少C++11特性。</p>
-<p>LLVM3.3提供了非常丰富的Pre-built Binaries：包括Ubuntu13.04，Ubuntu12.04和Ubuntu10.04，还有Debian6、FreeBSD9和Fedora18，当然还有Apple自己的Mac OS X了。只可惜没有给CentOS也提供预编译版本，只能自己编译安装了。</p>
-<p>今天在CentOS上将最新版本的LLVM套件（LLVM，Clang和Libc++）编译安装好了，中间遇到了不少问题。虽然已经有很多博客介绍如何编译安装LLVM了，但是根据我自己亲身体验的情况来看，还是有地方需要注意的，也有东西值得跟大家分享一下。</p>
-<p>安装过程主要参考这几篇文章：</p>
-<p><a href="http://clang.llvm.org/get_started.html" target="_blank" rel="noopener">http://clang.llvm.org/get_started.html</a></p>
-<p><a href="http://www.cnblogs.com/Frandy/archive/2012/10/20/llvm_clang_libcxx_cxx11.html" target="_blank" rel="noopener">http://www.cnblogs.com/Frandy/archive/2012/10/20/llvm_clang_libcxx_cxx11.html</a></p>
-<p><a href="http://www.cnblogs.com/ralphjzhang/archive/2011/12/02/2272671.html" target="_blank" rel="noopener">http://www.cnblogs.com/ralphjzhang/archive/2011/12/02/2272671.html</a></p>
-<p>下面开始：</p>
-<p>首先，从<a href="http://llvm.org/releases/download.html#3.3这边下载最新的版本。如果从SVN下载代码的话，已经是3.4的开发版本了，如果需要使用稳定版本，推荐自己下载3.3的代码包，需要下载5个文件：" target="_blank" rel="noopener">http://llvm.org/releases/download.html#3.3这边下载最新的版本。如果从SVN下载代码的话，已经是3.4的开发版本了，如果需要使用稳定版本，推荐自己下载3.3的代码包，需要下载5个文件：</a></p>
-<ul>
-<li><p>LLVM source code</p>
-</li>
-<li><p>Clang source code</p>
-</li>
-<li><p>Clang Tools Extra source code</p>
-</li>
-<li><p>Compiler RT source code</p>
-</li>
-<li><p>LibC++ source code</p>
-</li>
-</ul>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/03/13/centos-build-llvm-clang-libc++/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://zhenhao.io/2018/03/13/visual-studio-2013-preview-c++11-support/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="fr0stw01f">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhenhao's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/03/13/visual-studio-2013-preview-c++11-support/" itemprop="url">Visual Studio 2013 Preview对C++11的支持</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-13T15:33:11+08:00">2018-03-13</time>
-            
-
-            
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/C/" itemprop="url" rel="index"><span itemprop="name">C++</span></a></span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/C/C-11/" itemprop="url" rel="index"><span itemprop="name">C++11</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>为期3天的微软Build 2013大会结束了，作为微软一年一度的开发者大会，微软也做足了功夫：很多产品（包括Windows 8.1和Visual Studio 2013 Preview）发布，channel9全程直播，可以到<a href="http://channel9.msdn.com/Events/Build/2013" target="_blank" rel="noopener">这里</a>这边查看会议的所有内容。</p>
-<p>虽然整个Build大会不像Google的I/O和Apple的WWDC那么热闹（Google和Apple的粉丝比较多），但我倒是一直非常期待，其中最大的期待在于Herb Sutter曾近承诺在2013年上半年提供一个更好支持C++11的VS版本。Herb Sutter（Visual C++首席架构师、C++标准委员会主席，可以说是当今C++领域影响最大的人物之一了）在Build大会第三天有个演讲，题目叫做“<a href="http://channel9.msdn.com/Events/Build/2013/2-306" target="_blank" rel="noopener">The Future of C++</a>”，具体介绍了Visual Studio 2013 Preview对C++11的支持。在这个演讲之前，我已经把Visual Studio 2013 Preview安装起来，并尝试了一些在Visual Studio 2012中没有被支持的C++11特性，差不多得出了一个支持列表。</p>
-<p>OK，还是看看Herb Sutter给出的官方roadamp吧：</p>
-<p><img src="/images/visual-studio-2013-preview-c++11-support.jpg" alt=""></p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/03/13/visual-studio-2013-preview-c++11-support/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://zhenhao.io/2018/03/12/c++-function-call/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="fr0stw01f">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhenhao's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/03/12/c++-function-call/" itemprop="url">C++函数调用的那些事</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-12T15:33:11+08:00">2018-03-12</time>
-            
-
-            
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/C/" itemprop="url" rel="index"><span itemprop="name">C++</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>C++的函数调用相比于C的函数调用要复杂很多，这主要是由于<strong>函数重载、类、命名空间</strong>等特性造成的。</p>
-<p>根据Stephan T. Lavavej的介绍，C++编译器在解析一次函数调用的时候，要按照顺序做以下事情（根据具体情况，有些步骤可能会跳过的）：</p>
-<p>1 名字查找（Name Lookup）</p>
-<p>2 模板参数类型推导（Template Argument Deduction）</p>
-<p>3 重载决议（Overload Resolution）</p>
-<p>4 访问控制（Access Control）</p>
-<p>5 动态绑定（Dynamic Binding）</p>
-<p>本篇博客主要跟大家分享下自己对<strong>Name lookup</strong>的理解。</p>
-<p>对于编译器来说，完成一次函数调用之前，必须能够先找到这个函数。在C中这个问题很简单，就是函数调用点向上找函数声明，如果能找到就匹配，如果找不到就报错。在C++中有函数<strong>重载（Function Overload）</strong>和<strong>名字空间（Namespace）</strong>的概念，使得这个问题变得有些复杂，但非常有意思。</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/03/12/c++-function-call/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://zhenhao.io/2018/03/11/c++-best-feature/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="fr0stw01f">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhenhao's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/03/11/c++-best-feature/" itemprop="url">C++的最佳特性（译）</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-11T15:33:11+08:00">2018-03-11</time>
-            
-
-            
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/C/" itemprop="url" rel="index"><span itemprop="name">C++</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>最近看到了很多优秀的文章，包括《<a href="http://sealedabstract.com/rants/why-mobile-web-apps-are-slow/" target="_blank" rel="noopener">Why mobile web apps are slow</a>》，实在忍不住翻译出来跟大家分享。这篇文章通过<strong>大量的实验和参考文献</strong>向我们说明移动应用开发所遇到的问题，基本的观点可以总结为：移动平台的编程环境是一种资源受限（主要是CPU和内存）的环境，在这样的环境下编程，程序员不得不考虑如何高效地利用资源，这些问题不是仅仅靠一些高级语言特性（如垃圾回收）就能够解决的。因为这些高级语言特性在尝试解决一个问题的同时，往往又会引入其它的问题。</p>
-<p>也就是说，<strong>无论编程语言发展到多么高级的层次，程序员的价值永远存在</strong>。就像现在科技发展到今天这样的地步，电子竞技还是无法替代体育运动，我们还是喜欢看球员在球场上展现自己的风采。程序员需要在必要的时候取得对程序行为100%的控制，而这一点恰恰是手动内存管理能够提供的，这也是Going Native最本质上的意义。</p>
-<p>今天想跟大家推荐一篇文章《<a href="http://sealedabstract.com/rants/why-mobile-web-apps-are-slow/" target="_blank" rel="noopener">C++’s best feature</a>》，这篇文章介绍了<strong>C++手动内存管理的基础：确定的对象生命周期（Determined object life-time）</strong>。正如垃圾回收可能不像你感觉的那么可行一样，<strong>手动内存管理也可能不像你感觉的那么难</strong>。我相信这篇文章能够给你一个基本的认识。</p>
-<p>下面是翻译：</p>
-<p>更新：我之前关于数组初始化过程中临时对象生命周期的说法是不正确的。这一部分已经得到了修改，另外根据Herb Sutter的建议，我还加入了一些必要的信息。</p>
-<p>如果你想学会C++的全部内容，这是一件巨大、复杂和充满陷阱的事情。如果你看到一些人使用它的方式，你可能会被吓坏。现在新的功能正在陆续加入C++标准，所以要学会语言的各个细节没有很多年的积累是不现实的。</p>
-<p>但是你没必要学会语言的方方面面才能去动手写程序，高效地使用C++其实只需要学习它的几个基本特性。在这篇文章中，我准备向大家介绍一下我认为C++中最重要的特性之一，这个特性也是是我选择C++而不是其它编程语言的原因。</p>
-<h2 id="确定的对象生命周期（Determined-object-life-time）"><a href="#确定的对象生命周期（Determined-object-life-time）" class="headerlink" title="确定的对象生命周期（Determined object life-time）"></a>确定的对象生命周期（Determined object life-time）</h2><p>你在程序中创建的每一个对象都有一个精确且确定的生命周期。一旦你确定使用某种生命周期，你就准确地知道你创建的对象的生命周期从什么时候开始，到什么时候结束。</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/03/11/c++-best-feature/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://zhenhao.io/2017/11/12/linux-grub-recover/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1800,6 +1019,797 @@
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2017/10/28/raspberry-pi-nas-ss/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://zhenhao.io/2017/09/11/why-i-love-kotlin/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="fr0stw01f">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhenhao's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/09/11/why-i-love-kotlin/" itemprop="url">为什么我喜爱Kotlin</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-11T10:21:15+08:00">2017-09-11</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/编程语言/" itemprop="url" rel="index"><span itemprop="name">编程语言</span></a></span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/编程语言/Kotlin/" itemprop="url" rel="index"><span itemprop="name">Kotlin</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>Kotlin类似于Scala，是一个基于Java的语言。虽然它还支持JavaScript，但是我们这里只讨论Java部分。我们都知道Java是一门非常枯燥的语言，Java代码总是比较冗长而无趣的。Scala在此基础上有了很好的扩展，但它毕竟是一门学术语言，尚未得到工业界的认可。而Kotlin从一开始设计的时候就是为了写出工业级的代码的，因此也更快地得到大家的认可。Android官方也将它作为第一梯队的开发语言。</p>
+<p>我个人喜欢Kotlin主要是因为以下几点：</p>
+<ul>
+<li>容器类代码可以写得非常优雅，基本可以不使用raw loops。写出的代码类型基本上是Mapreduce的风格。这样的好处是逻辑非常清楚，根本不需要去看循环里在干嘛，Kotlin提供的函数名一目了然。这和C++ STL中的算法的用途差不多，就是用来代替简单循环的。</li>
+<li>不要写伤脑的getter/setter了。</li>
+<li>加强了Java的类型系统，可以显式指定一个指针是不是可以为null。之前在Java中需要通过库来实现。</li>
+</ul>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://zhenhao.io/2017/04/22/run-curl-from-terminal-in-android/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="fr0stw01f">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhenhao's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/04/22/run-curl-from-terminal-in-android/" itemprop="url">在安卓上运行curl</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-22T13:48:12+08:00">2017-04-22</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Android/" itemprop="url" rel="index"><span itemprop="name">Android</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>最近因为工作需要，想从安卓的终端上运行curl。试了几种办法都不是很靠谱，最后找到一种实用的办法。这个办法是将termux中提供的curl拿出来供整个系统。</p>
+<ul>
+<li>安装termux。</li>
+<li><p>在termux中安装curl。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">packages install curl</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>将termux中的curl可执行文件拷贝到/system/bin。</p>
+</li>
+<li>将以下curl以来的动态库文件拷贝到/system/lib。<ul>
+<li>libcurl.so</li>
+<li>libnghttp2.so</li>
+<li>libssl.so.1.0.0</li>
+<li>libcrypto.so.1.0.0</li>
+</ul>
+</li>
+<li><p>将curl的权限改为755，把拷贝的库的权限改为644。注意点：</p>
+<ul>
+<li><p>这需要获取su权限</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">su or su -c ‘cmd’</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>还需要把/system目录改为writable</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mount -o rw,remount,rw /system</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>参考<a href="http://android.stackexchange.com/questions/110927/how-to-mount-system-rewritable-or-read-only-rw-ro" target="_blank" rel="noopener">这篇文件</a></p>
+</li>
+</ul>
+</li>
+</ul>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://zhenhao.io/2017/04/15/Ignition-v8-interpreter/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="fr0stw01f">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhenhao's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/04/15/Ignition-v8-interpreter/" itemprop="url">Ignition - V8 Interpreter(转载)</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-15T01:22:01+08:00">2017-04-15</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/转载/" itemprop="url" rel="index"><span itemprop="name">转载</span></a></span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/转载/V8/" itemprop="url" rel="index"><span itemprop="name">V8</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>JavaScript isn’t enabled in your browser, so this file can’t be opened. Enable and reload.</p>
+<p>The machine code generated by V8’s full-codegen compiler is verbose, and as such, can contribute significantly to the amount of memory used by V8’s heap for typical web-pages (a previous analysis showed that the code-space contributed to around 15-20% of the JS heap). The aim of the ignition project is to build an interpreter for V8 which executes a low-level bytecode, thus enabling run-once or non-hot code to be stored more compactly in bytecode form. An added advantage of the bytecode is that it could be fed into a Turbofan graph generator directly, thereby avoiding the need to reparse the JavaScript source code when optimizing a function</p>
+<p>This section outlines the overall design of the Ignition bytecode interpreter, with following sections giving more details on the specifics.</p>
+<p>The interpreter itself consists of a set of bytecode handler code snippets, each of which handles a specific bytecode and dispatches to the handler for the next bytecode. These bytecode handlers are written in a high level, machine architecture agnostic form of assembly code, as implemented by the RawMachineAssembler class and compiled by Turbofan (in the future, we may write some of the more complex bytecode handlers in JavaScript with intrinsics, like the Turbofan CodeStubs). As such, the interpreter can be written once and uses TurboFan to generate machine instructions for each of the architectures supported by V8. When the interpreter is enabled, the isolate includes a global interpreter table holding a code object pointer to each bytecode handler, indexed by the bytecode value. These bytecode handlers can be included in the startup snapshot and deserialized when a new isolate is created.</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/04/15/Ignition-v8-interpreter/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://zhenhao.io/2017/04/11/how-v8-works/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="fr0stw01f">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhenhao's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/04/11/how-v8-works/" itemprop="url">一张图解释V8是如何工作的</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-11T23:12:55+08:00">2017-04-11</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Chromium/" itemprop="url" rel="index"><span itemprop="name">Chromium</span></a></span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Chromium/V8/" itemprop="url" rel="index"><span itemprop="name">V8</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>简洁明了。</p>
+<p><img src="/images/v8.png" alt=""></p>
+<p><a href="https://medium.com/reloading/javascript-start-up-performance-69200f43b201" target="_blank" rel="noopener">原文链接</a></p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://zhenhao.io/2017/03/11/build-chromium-for-android/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="fr0stw01f">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhenhao's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/03/11/build-chromium-for-android/" itemprop="url">Building chromium for Android</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-11T14:05:12+08:00">2017-03-11</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Chromium/" itemprop="url" rel="index"><span itemprop="name">Chromium</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="Install-the-depot-tools-package"><a href="#Install-the-depot-tools-package" class="headerlink" title="Install the depot_tools package"></a>Install the depot_tools package</h2><ol>
+<li><p>Confirm git and python are installed. git 2.2.1+ recommended. python 2.7+ recommended.</p>
+</li>
+<li><p>Fetch depot_tools:</p>
+</li>
+</ol>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git <span class="built_in">clone</span> https://chromium.googlesource.com/chromium/tools/depot_tools.git</span><br></pre></td></tr></table></figure>
+<ol>
+<li>Add depot_tools to your PATH:</li>
+</ol>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">export</span> PATH=`<span class="built_in">pwd</span>`/depot_tools:<span class="string">"<span class="variable">$PATH</span>"</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>Yes, you want to put depot_tools ahead of everything else, otherwise gcl will refer to the GNU Common Lisp compiler.</li>
+<li>You may want to add this to your .bashrc file or your shell’s equivalent so that you don’t need to reset your $PATH manually each time you open a new shell.</li>
+</ul>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/03/11/build-chromium-for-android/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
