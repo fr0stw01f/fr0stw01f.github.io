@@ -1,0 +1,931 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.0.6" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.0.6">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.0.6">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.0.6">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.0.6" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '6.0.6',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="之前就写过一篇博客《C++的高效从何而来》，分析C++中效率问题。最近在Herb Sutter（C++标准委员会的chair）的GotW中看到了这篇文章GotW #2: Temporary Objects (5/10)，主要是讲C++中临时对象的问题，文章给出了一段代码，问读者有多少处地方产生了不必要的临时对象。代码如下： 12345678string find_addr( list&amp;lt;emp">
+<meta name="keywords" content="C++">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C++的高效从何而来(2)">
+<meta property="og:url" content="http://zhenhao.io/2013/05/10/c++-efficiency-2/index.html">
+<meta property="og:site_name" content="Zhenhao&#39;s Blog">
+<meta property="og:description" content="之前就写过一篇博客《C++的高效从何而来》，分析C++中效率问题。最近在Herb Sutter（C++标准委员会的chair）的GotW中看到了这篇文章GotW #2: Temporary Objects (5/10)，主要是讲C++中临时对象的问题，文章给出了一段代码，问读者有多少处地方产生了不必要的临时对象。代码如下： 12345678string find_addr( list&amp;lt;emp">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://zhenhao.io/images/c++-efficiency-1-0.png">
+<meta property="og:image" content="http://zhenhao.io/images/c++-efficiency-1-1.png">
+<meta property="og:image" content="http://zhenhao.io/images/c++-efficiency-1-2.png">
+<meta property="og:image" content="http://zhenhao.io/images/c++-efficiency-1-3.png">
+<meta property="og:updated_time" content="2018-03-19T02:29:45.865Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="C++的高效从何而来(2)">
+<meta name="twitter:description" content="之前就写过一篇博客《C++的高效从何而来》，分析C++中效率问题。最近在Herb Sutter（C++标准委员会的chair）的GotW中看到了这篇文章GotW #2: Temporary Objects (5/10)，主要是讲C++中临时对象的问题，文章给出了一段代码，问读者有多少处地方产生了不必要的临时对象。代码如下： 12345678string find_addr( list&amp;lt;emp">
+<meta name="twitter:image" content="http://zhenhao.io/images/c++-efficiency-1-0.png">
+
+
+
+
+
+
+  <link rel="canonical" href="http://zhenhao.io/2013/05/10/c++-efficiency-2/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>C++的高效从何而来(2) | Zhenhao's Blog</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"> 
+
+<div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Zhenhao's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Connecting the dots.</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+          
+  <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+</li>
+
+      
+        
+        
+          
+  <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签</a>
+</li>
+
+      
+        
+        
+          
+  <li class="menu-item menu-item-categories">
+    <a href="/categories/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />分类</a>
+</li>
+
+      
+        
+        
+          
+  <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档</a>
+</li>
+
+      
+        
+        
+          
+  <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br />关于</a>
+</li>
+
+      
+
+      
+    </ul>
+  
+
+  
+    
+
+    
+    
+      
+      
+    
+      
+      
+    
+      
+      
+    
+      
+      
+    
+      
+      
+    
+    
+
+  
+
+
+  
+
+  
+</nav>
+
+
+  
+
+
+
+ </div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://zhenhao.io/2013/05/10/c++-efficiency-2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="fr0stw01f">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhenhao's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">C++的高效从何而来(2)</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2013-05-10T20:20:14+08:00">2013-05-10</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/C/" itemprop="url" rel="index"><span itemprop="name">C++</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>之前就写过一篇博客《C++的高效从何而来》，分析C++中效率问题。最近在Herb Sutter（C++标准委员会的chair）的GotW中看到了这篇文章GotW #2: Temporary Objects (5/10)，主要是讲C++中临时对象的问题，文章给出了一段代码，问读者有多少处地方产生了不必要的临时对象。代码如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="built_in">string</span> <span class="title">find_addr</span><span class="params">( <span class="built_in">list</span>&lt;employee&gt; emps, <span class="built_in">string</span> name )</span> </span>&#123;</span><br><span class="line">    <span class="keyword">for</span>( <span class="keyword">auto</span> i = begin(emps); i != end(emps); i++ ) &#123;</span><br><span class="line">        <span class="keyword">if</span>( *i == name ) &#123;</span><br><span class="line">            <span class="keyword">return</span> i-&gt;addr;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">""</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这段代码的作用是在emps这个list中寻找名字为name的那个employee。具体答案我们在这边不做太多讨论，有兴趣的可以自己想想。</p>
+<p>我看到这个函数以后，第一反应是：这样的实现是不是最好的？</p>
+<p>我们知道C++里面要完成这样一个查找有很多方式，我自己想到了下面着一些（我在代码中用的是vector）：</p>
+<a id="more"></a>
+<p>1、最直观的for循环</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// original for loop</span></span><br><span class="line"><span class="function"><span class="built_in">string</span> <span class="title">find_addr_01</span><span class="params">(<span class="keyword">const</span> <span class="built_in">vector</span>&lt;Employee&gt;&amp; emps, <span class="keyword">const</span> <span class="built_in">string</span>&amp; name)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">auto</span> emps_end = end(emps);</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">auto</span> iter = begin(emps); iter != emps_end; ++iter) &#123;</span><br><span class="line">        <span class="keyword">if</span> (iter-&gt;name_ == name) &#123;</span><br><span class="line">            <span class="keyword">return</span> iter-&gt;addr_;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">""</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这段代码其实是我自己对Herb Sutter那段代码的一个改进版，消除了不必要的临时变量。</p>
+<p>2、C++11中引入了range-based for循环，用法和Java类似// Range-based for loop(since C++11)</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="built_in">string</span> <span class="title">find_addr_02</span><span class="params">(<span class="keyword">const</span> <span class="built_in">vector</span>&lt;Employee&gt;&amp; emps, <span class="keyword">const</span> <span class="built_in">string</span>&amp; name)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span>&amp; employee : emps) &#123;</span><br><span class="line">        <span class="keyword">if</span> (employee.name_ == name) &#123;</span><br><span class="line">            <span class="keyword">return</span> employee.addr_;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">""</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这段代码相对于find_addr_01没有什么新东西，语法简单而已。</p>
+<p>3、STL算法find_if和lambda表达式</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// find_if with lambda expression</span></span><br><span class="line"><span class="function"><span class="built_in">string</span> <span class="title">find_addr_03</span><span class="params">(<span class="keyword">const</span> <span class="built_in">vector</span>&lt;Employee&gt;&amp; emps, <span class="keyword">const</span> <span class="built_in">string</span>&amp; name)</span></span>&#123;</span><br><span class="line">    <span class="keyword">auto</span>&amp; iter = find_if(begin(emps), end(emps), [&amp;](<span class="keyword">const</span> Employee&amp; employee) -&gt; <span class="keyword">bool</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> employee.name_ == name;</span><br><span class="line">    &#125;);</span><br><span class="line">    <span class="keyword">return</span> iter != end(emps) ? iter-&gt;addr_ : <span class="string">""</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这段代码将find_if算法和lambda表达式结合起来，比较直观和优雅，符合Modern C++的风格。</p>
+<p>4、find_if的手动实现版</p>
+<p>了解STL的人应该知道find_if的内部实现，其实很简单：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">InputIterator</span>, <span class="title">class</span> <span class="title">Predicate</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">InputIterator</span> <span class="title">find_if</span>(<span class="title">InputIterator</span> <span class="title">first</span>, <span class="title">InputIterator</span> <span class="title">last</span>, <span class="title">Predicate</span> <span class="title">pred</span>) &#123;</span></span><br><span class="line">    <span class="keyword">while</span>(first != last &amp;&amp; !pred(*first)) ++first;</span><br><span class="line">    <span class="keyword">return</span> first;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我自己也可以手动实现，还省了一次函数调用：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// original for loop without if inside while</span></span><br><span class="line"><span class="function"><span class="built_in">string</span> <span class="title">find_addr_04</span><span class="params">(<span class="keyword">const</span> <span class="built_in">vector</span>&lt;Employee&gt;&amp; emps, <span class="keyword">const</span> <span class="built_in">string</span>&amp; name)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">auto</span> iter = begin(emps);</span><br><span class="line">    <span class="keyword">auto</span> emps_end = end(emps);</span><br><span class="line">    <span class="keyword">while</span> (iter != emps_end &amp;&amp; iter-&gt;name_ != name) ++iter;</span><br><span class="line">    <span class="keyword">return</span> iter != emps_end ? iter-&gt;addr_ : <span class="string">""</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这段代码和find_addr_01中的差别在于，把循环中的if语句的判断提到循环中来了。</p>
+<p>5、独具C++特色的function object</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// function object</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">EmpCompare</span> &#123;</span></span><br><span class="line">    EmpCompare(<span class="keyword">const</span> <span class="built_in">string</span>&amp; name) : name_(name)</span><br><span class="line">    &#123;&#125;</span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">operator</span><span class="params">()</span><span class="params">(<span class="keyword">const</span> Employee&amp; emp)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> emp.name_ == name_;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">string</span> name_;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// find_if with function object</span></span><br><span class="line"><span class="function"><span class="built_in">string</span> <span class="title">find_addr_05</span><span class="params">(<span class="keyword">const</span> <span class="built_in">vector</span>&lt;Employee&gt;&amp; emps, <span class="keyword">const</span> <span class="built_in">string</span>&amp; name)</span></span>&#123;</span><br><span class="line">    <span class="keyword">auto</span>&amp; iter = find_if(begin(emps), end(emps), EmpCompare(name));</span><br><span class="line">    <span class="keyword">return</span> iter != end(emps) ? : iter-&gt;addr_ : <span class="string">""</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这段代码和find_addr_03很像，只不过把find_if中的Predicate从lambda表达式换成了function object而已。</p>
+<p>6、最后一个是find_if和bind的综合</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">emp_compare</span><span class="params">(<span class="keyword">const</span> Employee&amp; emp, <span class="keyword">const</span> <span class="built_in">string</span>&amp; name)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> emp.name_ == name;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// find_if with bind and function pointer</span></span><br><span class="line"><span class="function"><span class="built_in">string</span> <span class="title">find_addr_06</span><span class="params">(<span class="keyword">const</span> <span class="built_in">vector</span>&lt;Employee&gt;&amp; emps, <span class="keyword">const</span> <span class="built_in">string</span>&amp; name)</span></span>&#123;</span><br><span class="line">    <span class="keyword">auto</span>&amp; iter = find_if(begin(emps), end(emps), bind(emp_compare, placeholders::_1, name));</span><br><span class="line">    <span class="keyword">return</span> iter != end(emps) ? iter-&gt;addr_ : <span class="string">""</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>bind是C++11新加入的adapter，作用相当于bind1st和bind2nd，但用途更广，支持绑定多个，placeholders::_1是一个占位符，表示待接受的参数。</p>
+<p>不知道大家感觉上面这6个函数，效率谁高谁低？</p>
+<p>废话少说，写测试代码，首先是一些辅助函数（这段代码的风格是模仿Milo Yip的）：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> COUNT 10000        <span class="comment">// loop count</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> EMPS  10000        <span class="comment">// emps size</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> TIME(X) &#123; \</span></span><br><span class="line">    LARGE_INTEGER start, stop, freq; \</span><br><span class="line">    QueryPerformanceCounter(&amp;start); \</span><br><span class="line">    &#123;X;&#125; \</span><br><span class="line">    QueryPerformanceCounter(&amp;stop); \</span><br><span class="line">    QueryPerformanceFrequency(&amp;freq); \</span><br><span class="line">    <span class="keyword">double</span> duration = (<span class="keyword">double</span>)(stop.QuadPart - start.QuadPart) / (<span class="keyword">double</span>)(freq.QuadPart); \</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; setw(<span class="number">10</span>) &lt;&lt; fixed &lt;&lt; duration &lt;&lt; <span class="string">" "</span> &lt;&lt; #X &lt;&lt; <span class="built_in">endl</span>; \</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Employee</span> &#123;</span></span><br><span class="line">    Employee(<span class="keyword">const</span> <span class="built_in">string</span>&amp; name, <span class="keyword">const</span> <span class="built_in">string</span>&amp; addr)</span><br><span class="line">        : name_(name), addr_(addr)</span><br><span class="line">    &#123;&#125;</span><br><span class="line">    <span class="built_in">string</span> name_;</span><br><span class="line">    <span class="built_in">string</span> addr_;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">typedef</span> <span class="title">string</span> <span class="params">(*find_addr_func)</span><span class="params">(<span class="keyword">const</span> <span class="built_in">vector</span>&lt;Employee&gt;&amp;, <span class="keyword">const</span> <span class="built_in">string</span>&amp;)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">test_average</span><span class="params">(<span class="keyword">const</span> <span class="built_in">vector</span>&lt;Employee&gt;&amp; emps,  find_addr_func find_addr)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; COUNT; i++) &#123;</span><br><span class="line">        <span class="built_in">string</span> addr = find_addr(emps, <span class="string">"name5000"</span>);</span><br><span class="line">        assert(addr == <span class="string">"addr5000"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>COUNT是循环次数，EMPS是员工的数目，TIME宏用来记录运行时间（较精确，仅在windows下有效，linux下可以用不是特别精确的clock_t来实现），test_average函数接受一个vector和一个find_addr_func类型的函数指针（通过typedef定义），分别去寻找名字为”name5000”的employee。</p>
+<p>main函数如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">vector</span>&lt;Employee&gt; emps;</span><br><span class="line">    emps.reserve(EMPS);</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; EMPS; ++i) &#123;</span><br><span class="line">        <span class="built_in">stringstream</span> ssname, ssaddr;</span><br><span class="line">        ssname &lt;&lt; <span class="string">"name"</span> &lt;&lt; i;</span><br><span class="line">        ssaddr &lt;&lt; <span class="string">"addr"</span> &lt;&lt; i;</span><br><span class="line">        emps.push_back(Employee(ssname.str(), ssaddr.str()));</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//srand(0);</span></span><br><span class="line">    <span class="comment">//random_shuffle(begin(emps), end(emps));</span></span><br><span class="line"></span><br><span class="line">    TIME(test_average(emps, find_addr_01));</span><br><span class="line">    TIME(test_average(emps, find_addr_02));</span><br><span class="line">    TIME(test_average(emps, find_addr_03));</span><br><span class="line">    TIME(test_average(emps, find_addr_04));</span><br><span class="line">    TIME(test_average(emps, find_addr_05));</span><br><span class="line">    TIME(test_average(emps, find_addr_06));</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>首先把vector初始化好，预留10000个空间，构造出“name0,addr0”到“name9999,addr9999”的Employee对象。大家可能看出来了，在调用find_addr_xx的时候，每次都是寻找中间的name5000这个employee。大家也可以通过random_shuffle来将vector中的对象随机打乱，不过这样对我们测试的影响不大。</p>
+<p>我的机器配置是i5-2400+8G，在VS2012 Update2中的运行结果：</p>
+<p>Debug(/Od):</p>
+<p><img src="/images/c++-efficiency-1-0.png" alt=""></p>
+<p>Release(/O2):</p>
+<p><img src="/images/c++-efficiency-1-1.png" alt=""></p>
+<p>大家可能会问，是我眼睛看花了吗？怎么相差几十倍啊！</p>
+<p>这也是我没有搞懂的一个问题，VC到底在Debug模式下做了什么东西，怎么会这么慢？</p>
+<p>在没有优化之前，find_if+lambda表达式，以及find_if+function object是效率最高的，但是优化以后就不一定了，所以我决定看看其它编译器的结果。</p>
+<p>使用MinGW4.8，Debug模式下（不开优化）：</p>
+<p><img src="/images/c++-efficiency-1-2.png" alt=""></p>
+<p>Release模式下（-O2）：</p>
+<p><img src="/images/c++-efficiency-1-3.png" alt=""></p>
+<p>MinGW给出的结果就比较靠谱了，优化效果也很明显，并且优化前后效率关系基本保持一致，比较利于我们的分析。</p>
+<p>首先，find_if+bind效率最低，原因是adapter从某种程度上<strong>阻止了内联</strong>（MinGW中没有加优化，时间几乎是其它的4倍），但编译器优化似乎做得也不错，最后也没有慢太多；</p>
+<p>其次，VC下手写的for循环总体比find_if要慢一些，但find_addr_04的效率在VC中是挺高的，说明是while循环中的if语句起了影响，使得CPU的<strong>分支预测</strong>更准确，提出来之后效率提高很明显；</p>
+<p>第三，VC下find_addr_04比find_if+lambda和find_if+function object要快，因为lambda表达式和function object都多了一个function object的构造和析构，MinGW中这一点体现不出来，不是很清楚原因，但是相差也不大；</p>
+<p>第四，MinGW秒杀VC，我真想不通微软在自己的操作系统上的编译器为什么还不如Linux上GCC移植过来的编译器产生的代码？</p>
+<p><strong>结论</strong>：C++中实现循环的方式很多，之间的效率差别有各种原因（主要是内联和分支预测），但现在的C++编译器的优化能力已经是非常强悍了，效率上的差别已经不是那么明显了。反而最大的区别是体现在代码风格上，我个人比较喜欢find_if+lambda表达式，它是高效（lambda表达式容易内联）和直观（STL中的算法实现即高效又直观，从名字上就知道用途，不用自己写for循环，很不直观）的完美结合。不知道大家更喜欢哪种？</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/C/" rel="tag"># C++</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2012/11/25/c++-efficiency/" rel="next" title="C++的高效从何而来">
+                <i class="fa fa-chevron-left"></i> C++的高效从何而来
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2013/06/12/sort-big-file/" rel="prev" title="学习大文件统计与排序(转载)">
+                学习大文件统计与排序(转载) <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.jpg"
+                alt="fr0stw01f" />
+            
+              <p class="site-author-name" itemprop="name">fr0stw01f</p>
+              <p class="site-description motion-element" itemprop="description">long long ago = 0;</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">24</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">12</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">33</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/fr0stw01f" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:tangzhnju@gmail.com" target="_blank" title="E-Mail"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">fr0stw01f</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Mist</a> v6.0.6</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.0.6"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.0.6"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.0.6"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.0.6"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.0.6"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
