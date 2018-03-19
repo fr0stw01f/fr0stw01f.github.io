@@ -107,7 +107,7 @@
 <meta property="og:site_name" content="Zhenhao&#39;s Blog">
 <meta property="og:description" content="现在有一个路由器，若干个移动硬盘，想自己搭建一个流媒体服务器（配合iPad看视频，完美），顺便能够解决优雅上网的问题。考虑到Raspberry Pi(树莓派)小巧、便宜和低功率的特点，非常符合我的需求。下面介绍思路。 搭建流媒体服务器设置硬盘自动挂载首先，将移动硬盘挂载到树莓派（系统为Raspbian），并设置为启动自动挂载。需要注意的是，树莓派的功率比较低，挂载2.5寸移动硬盘可能会带不动，我用">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-03-19T07:44:25.020Z">
+<meta property="og:updated_time" content="2018-03-19T07:53:17.250Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="使用Raspberry Pi搭建流媒体服务器和SS服务器">
 <meta name="twitter:description" content="现在有一个路由器，若干个移动硬盘，想自己搭建一个流媒体服务器（配合iPad看视频，完美），顺便能够解决优雅上网的问题。考虑到Raspberry Pi(树莓派)小巧、便宜和低功率的特点，非常符合我的需求。下面介绍思路。 搭建流媒体服务器设置硬盘自动挂载首先，将移动硬盘挂载到树莓派（系统为Raspbian），并设置为启动自动挂载。需要注意的是，树莓派的功率比较低，挂载2.5寸移动硬盘可能会带不动，我用">
@@ -416,13 +416,14 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/dev/sdax      /path/to/mount     ntfs    defaults   0    2</span><br></pre></td></tr></table></figure>
 <p>重启以下验证是否成功。如果挂载失败，系统会报错。</p>
 <h3 id="安装DLNA服务"><a href="#安装DLNA服务" class="headerlink" title="安装DLNA服务"></a>安装DLNA服务</h3><p>挂载成功之后，安装DLNA服务。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-get update</span><br><span class="line">$ sudo apt-get install minidlna</span><br></pre></td></tr></table></figure></p>
+<a id="more"></a>
 <h3 id="配置DLNA"><a href="#配置DLNA" class="headerlink" title="配置DLNA"></a>配置DLNA</h3><p>设置/etc/minidlna.conf文件，在文件尾部添加如下内容：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#A表示这个目录是存放音乐的，当minidlna读到配置文件时，它会自动加载这个目录下的音乐文件</span></span><br><span class="line"></span><br><span class="line">media_dir=A,/path/to/Music</span><br><span class="line">media_dir=P,/path/to/Picture</span><br><span class="line">media_dir=V,/path/to/Video</span><br><span class="line"></span><br><span class="line"><span class="comment">#配置minidlna的数库数据的存放目录</span></span><br><span class="line">db_dir=/path/to/db</span><br><span class="line"></span><br><span class="line"><span class="comment">#配置日志目录</span></span><br><span class="line">log_dir=/path/to/<span class="built_in">log</span></span><br></pre></td></tr></table></figure></p>
 <h3 id="重启DLNA服务"><a href="#重启DLNA服务" class="headerlink" title="重启DLNA服务"></a>重启DLNA服务</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ /etc/init.d/minidlna restart</span><br></pre></td></tr></table></figure>
 <p>成功之后就可以在其它设备上访问移动硬盘里的音频和视频资料了。这里推荐一款收费的iOS应用：Infuse Pro。它能够播放几乎所有的音频和视频格式，应该是我见过的功能最强的iOS播放器了。另外，免费的Infuse不能播放AC3和DTS等有版权的音频格式，其它都是一样的。Infuse还提供订阅式的收费方式，而Infuse Pro是一次性购买的，大版本之间是不能升级的，而且老版本会下架，这点比较坑，需要注意。</p>
 <p>当修改配置文件及媒体资源更新时，需要强制刷新，以便minidlna将最新的媒体文件进行索引。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo service minidlna force-reload</span><br></pre></td></tr></table></figure>
 <p>DLNA服务是默认开机启动的。每次树莓派启动之后就能够自动识别了。</p>
-<a id="more"></a>
+<!-- more -->
 <h2 id="搭建SS"><a href="#搭建SS" class="headerlink" title="搭建SS"></a>搭建SS</h2><p>现在SS在各个平台都有客户端，使用也比较方便。唯一的遗憾是iOS平台，因为iOS会定期杀掉长期后台运行的进程(除非越狱过了)，所以如果想后台开着SS，前台优雅上网的话，每隔一段时间SS就会断，需要重新把它重新弄到前台，为后面的使用争取几分钟的时间，非常的不方便。</p>
 <p>我的思路是，既然SS可以为局域网的其它设备提供服务，可以在树莓派上面安装SS，然后允许其它ip访问SS服务。这样这个局域网的其它设备都不需要自己开SS了，只要联网的时候设置http代理为树莓派就行了。另外，我们可以使用<a href="https://github.com/cyfdecyf/cow" target="_blank" rel="noopener">Cow</a>（基于黑名单）和<a href="https://github.com/netheril96/MEOW" target="_blank" rel="noopener">Meow</a>来实现白名单（基于白名单）来智能分流，帮助我们自动化地决定哪些网址直连，哪些需要经过SS。</p>
 <h3 id="安装SS和配置"><a href="#安装SS和配置" class="headerlink" title="安装SS和配置"></a>安装SS和配置</h3><h4 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-get install python-pip python-m2crypto</span><br><span class="line">$ sudo pip install shadowsocks</span><br></pre></td></tr></table></figure>

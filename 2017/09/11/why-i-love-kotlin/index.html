@@ -107,7 +107,7 @@
 <meta property="og:site_name" content="Zhenhao&#39;s Blog">
 <meta property="og:description" content="Kotlin类似于Scala，是一个基于Java的语言。虽然它还支持JavaScript，但是我们这里只讨论Java部分。我们都知道Java是一门非常枯燥的语言，Java代码总是比较冗长而无趣的。Scala在此基础上有了很好的扩展，但它毕竟是一门学术语言，尚未得到工业界的认可。而Kotlin从一开始设计的时候就是为了写出工业级的代码的，因此也更快地得到大家的认可。Android官方也将它作为第一梯">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-03-17T05:58:57.994Z">
+<meta property="og:updated_time" content="2018-03-19T08:09:20.318Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="为什么我喜爱Kotlin">
 <meta name="twitter:description" content="Kotlin类似于Scala，是一个基于Java的语言。虽然它还支持JavaScript，但是我们这里只讨论Java部分。我们都知道Java是一门非常枯燥的语言，Java代码总是比较冗长而无趣的。Scala在此基础上有了很好的扩展，但它毕竟是一门学术语言，尚未得到工业界的认可。而Kotlin从一开始设计的时候就是为了写出工业级的代码的，因此也更快地得到大家的认可。Android官方也将它作为第一梯">
@@ -419,10 +419,18 @@
         <p>Kotlin类似于Scala，是一个基于Java的语言。虽然它还支持JavaScript，但是我们这里只讨论Java部分。我们都知道Java是一门非常枯燥的语言，Java代码总是比较冗长而无趣的。Scala在此基础上有了很好的扩展，但它毕竟是一门学术语言，尚未得到工业界的认可。而Kotlin从一开始设计的时候就是为了写出工业级的代码的，因此也更快地得到大家的认可。Android官方也将它作为第一梯队的开发语言。</p>
 <p>我个人喜欢Kotlin主要是因为以下几点：</p>
 <ul>
+<li>语法很简洁，比如main类的不需要在任何类中。</li>
+<li>异常不需要强制捕获，try…catch…可以少写点了。</li>
+<li>支持函数式编程，没有额外开销。</li>
+<li>支持扩展函数。</li>
+<li>支持操作符重载，C++既视感。</li>
+<li>==代替equals，真是福音；引用比较用===。</li>
+<li>字符串拼接优雅多了，<code>&quot;works like ${this.example}!&quot;</code>，而不是<code>&quot;works like&quot; +  this.example&quot; + &quot;!&quot;</code>。</li>
 <li>容器类代码可以写得非常优雅，基本可以不使用raw loops。写出的代码类型基本上是Mapreduce的风格。这样的好处是逻辑非常清楚，根本不需要去看循环里在干嘛，Kotlin提供的函数名一目了然。这和C++ STL中的算法的用途差不多，就是用来代替简单循环的。</li>
 <li>不要写伤脑的getter/setter了。</li>
-<li>加强了Java的类型系统，可以显式指定一个指针是不是可以为null。之前在Java中需要通过库来实现。</li>
+<li>加强了Java的类型系统，可以显式指定一个引用是不是可以为null。之前在Java中需要通过库来实现。</li>
 </ul>
+<p>另外，IntelliJ IDEA完美支持Kotlin，从Java转到Kotlin太容易了。推荐大家尝试！</p>
 
       
     </div>

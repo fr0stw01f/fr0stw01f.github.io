@@ -99,18 +99,18 @@
 
 
 
-  <meta name="description" content="最近因为工作需要，想从安卓的终端上运行curl。试了几种办法都不是很靠谱，最后找到一种实用的办法。这个办法是将termux中提供的curl拿出来供整个系统。  安装termux。 在termux中安装curl。 1packages install curl  将termux中的curl可执行文件拷贝到/system/bin。  将以下curl以来的动态库文件拷贝到/system/lib。 libc">
+  <meta name="description" content="最近因为工作需要，想从安卓的终端上运行curl，同时可以从程序中调用。试了几种办法都不是很靠谱。后来发现termux这个应用在Android中提供了一个Linux环境，并且可以安装一些Linux工具，包括curl，但是这些工具只能在termux中使用，并不能被整个系统使用。所以我想如果把curl这个可执行文件和它以来的库文件都拷贝到Android的系统目录/system/bin和/system/l">
 <meta name="keywords" content="Android,curl,termux">
 <meta property="og:type" content="article">
 <meta property="og:title" content="在安卓上运行curl">
 <meta property="og:url" content="http://zhenhao.io/2017/04/22/run-curl-from-terminal-in-android/index.html">
 <meta property="og:site_name" content="Zhenhao&#39;s Blog">
-<meta property="og:description" content="最近因为工作需要，想从安卓的终端上运行curl。试了几种办法都不是很靠谱，最后找到一种实用的办法。这个办法是将termux中提供的curl拿出来供整个系统。  安装termux。 在termux中安装curl。 1packages install curl  将termux中的curl可执行文件拷贝到/system/bin。  将以下curl以来的动态库文件拷贝到/system/lib。 libc">
+<meta property="og:description" content="最近因为工作需要，想从安卓的终端上运行curl，同时可以从程序中调用。试了几种办法都不是很靠谱。后来发现termux这个应用在Android中提供了一个Linux环境，并且可以安装一些Linux工具，包括curl，但是这些工具只能在termux中使用，并不能被整个系统使用。所以我想如果把curl这个可执行文件和它以来的库文件都拷贝到Android的系统目录/system/bin和/system/l">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-03-17T08:05:14.835Z">
+<meta property="og:updated_time" content="2018-03-19T07:52:45.019Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="在安卓上运行curl">
-<meta name="twitter:description" content="最近因为工作需要，想从安卓的终端上运行curl。试了几种办法都不是很靠谱，最后找到一种实用的办法。这个办法是将termux中提供的curl拿出来供整个系统。  安装termux。 在termux中安装curl。 1packages install curl  将termux中的curl可执行文件拷贝到/system/bin。  将以下curl以来的动态库文件拷贝到/system/lib。 libc">
+<meta name="twitter:description" content="最近因为工作需要，想从安卓的终端上运行curl，同时可以从程序中调用。试了几种办法都不是很靠谱。后来发现termux这个应用在Android中提供了一个Linux环境，并且可以安装一些Linux工具，包括curl，但是这些工具只能在termux中使用，并不能被整个系统使用。所以我想如果把curl这个可执行文件和它以来的库文件都拷贝到Android的系统目录/system/bin和/system/l">
 
 
 
@@ -409,7 +409,7 @@
       
 
       
-        <p>最近因为工作需要，想从安卓的终端上运行curl。试了几种办法都不是很靠谱，最后找到一种实用的办法。这个办法是将termux中提供的curl拿出来供整个系统。</p>
+        <p>最近因为工作需要，想从安卓的终端上运行curl，同时可以从程序中调用。试了几种办法都不是很靠谱。后来发现termux这个应用在Android中提供了一个Linux环境，并且可以安装一些Linux工具，包括curl，但是这些工具只能在termux中使用，并不能被整个系统使用。所以我想如果把curl这个可执行文件和它以来的库文件都拷贝到Android的系统目录/system/bin和/system/lib，那curl就可以被整个系统使用了。事实证明这样是可行的。下面是具体步骤。</p>
 <ul>
 <li>安装termux。</li>
 <li><p>在termux中安装curl。</p>

@@ -574,12 +574,6 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/dev/sdax      /path/to/mount     ntfs    defaults   0    2</span><br></pre></td></tr></table></figure>
 <p>重启以下验证是否成功。如果挂载失败，系统会报错。</p>
 <h3 id="安装DLNA服务"><a href="#安装DLNA服务" class="headerlink" title="安装DLNA服务"></a>安装DLNA服务</h3><p>挂载成功之后，安装DLNA服务。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-get update</span><br><span class="line">$ sudo apt-get install minidlna</span><br></pre></td></tr></table></figure></p>
-<h3 id="配置DLNA"><a href="#配置DLNA" class="headerlink" title="配置DLNA"></a>配置DLNA</h3><p>设置/etc/minidlna.conf文件，在文件尾部添加如下内容：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#A表示这个目录是存放音乐的，当minidlna读到配置文件时，它会自动加载这个目录下的音乐文件</span></span><br><span class="line"></span><br><span class="line">media_dir=A,/path/to/Music</span><br><span class="line">media_dir=P,/path/to/Picture</span><br><span class="line">media_dir=V,/path/to/Video</span><br><span class="line"></span><br><span class="line"><span class="comment">#配置minidlna的数库数据的存放目录</span></span><br><span class="line">db_dir=/path/to/db</span><br><span class="line"></span><br><span class="line"><span class="comment">#配置日志目录</span></span><br><span class="line">log_dir=/path/to/<span class="built_in">log</span></span><br></pre></td></tr></table></figure></p>
-<h3 id="重启DLNA服务"><a href="#重启DLNA服务" class="headerlink" title="重启DLNA服务"></a>重启DLNA服务</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ /etc/init.d/minidlna restart</span><br></pre></td></tr></table></figure>
-<p>成功之后就可以在其它设备上访问移动硬盘里的音频和视频资料了。这里推荐一款收费的iOS应用：Infuse Pro。它能够播放几乎所有的音频和视频格式，应该是我见过的功能最强的iOS播放器了。另外，免费的Infuse不能播放AC3和DTS等有版权的音频格式，其它都是一样的。Infuse还提供订阅式的收费方式，而Infuse Pro是一次性购买的，大版本之间是不能升级的，而且老版本会下架，这点比较坑，需要注意。</p>
-<p>当修改配置文件及媒体资源更新时，需要强制刷新，以便minidlna将最新的媒体文件进行索引。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo service minidlna force-reload</span><br></pre></td></tr></table></figure>
-<p>DLNA服务是默认开机启动的。每次树莓派启动之后就能够自动识别了。</p>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2017/10/28/raspberry-pi-nas-ss/#more" rel="contents">
@@ -880,10 +874,18 @@
             <p>Kotlin类似于Scala，是一个基于Java的语言。虽然它还支持JavaScript，但是我们这里只讨论Java部分。我们都知道Java是一门非常枯燥的语言，Java代码总是比较冗长而无趣的。Scala在此基础上有了很好的扩展，但它毕竟是一门学术语言，尚未得到工业界的认可。而Kotlin从一开始设计的时候就是为了写出工业级的代码的，因此也更快地得到大家的认可。Android官方也将它作为第一梯队的开发语言。</p>
 <p>我个人喜欢Kotlin主要是因为以下几点：</p>
 <ul>
+<li>语法很简洁，比如main类的不需要在任何类中。</li>
+<li>异常不需要强制捕获，try…catch…可以少写点了。</li>
+<li>支持函数式编程，没有额外开销。</li>
+<li>支持扩展函数。</li>
+<li>支持操作符重载，C++既视感。</li>
+<li>==代替equals，真是福音；引用比较用===。</li>
+<li>字符串拼接优雅多了，<code>&quot;works like ${this.example}!&quot;</code>，而不是<code>&quot;works like&quot; +  this.example&quot; + &quot;!&quot;</code>。</li>
 <li>容器类代码可以写得非常优雅，基本可以不使用raw loops。写出的代码类型基本上是Mapreduce的风格。这样的好处是逻辑非常清楚，根本不需要去看循环里在干嘛，Kotlin提供的函数名一目了然。这和C++ STL中的算法的用途差不多，就是用来代替简单循环的。</li>
 <li>不要写伤脑的getter/setter了。</li>
-<li>加强了Java的类型系统，可以显式指定一个指针是不是可以为null。之前在Java中需要通过库来实现。</li>
+<li>加强了Java的类型系统，可以显式指定一个引用是不是可以为null。之前在Java中需要通过库来实现。</li>
 </ul>
+<p>另外，IntelliJ IDEA完美支持Kotlin，从Java转到Kotlin太容易了。推荐大家尝试！</p>
 
           
         
@@ -1025,7 +1027,7 @@
       
         
           
-            <p>最近因为工作需要，想从安卓的终端上运行curl。试了几种办法都不是很靠谱，最后找到一种实用的办法。这个办法是将termux中提供的curl拿出来供整个系统。</p>
+            <p>最近因为工作需要，想从安卓的终端上运行curl，同时可以从程序中调用。试了几种办法都不是很靠谱。后来发现termux这个应用在Android中提供了一个Linux环境，并且可以安装一些Linux工具，包括curl，但是这些工具只能在termux中使用，并不能被整个系统使用。所以我想如果把curl这个可执行文件和它以来的库文件都拷贝到Android的系统目录/system/bin和/system/lib，那curl就可以被整个系统使用了。事实证明这样是可行的。下面是具体步骤。</p>
 <ul>
 <li>安装termux。</li>
 <li><p>在termux中安装curl。</p>
