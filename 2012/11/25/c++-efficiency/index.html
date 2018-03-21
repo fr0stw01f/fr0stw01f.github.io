@@ -109,7 +109,7 @@
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://zhenhao.io/images/c++-efficiency-0.png">
 <meta property="og:image" content="http://zhenhao.io/images/c++-efficiency-1.png">
-<meta property="og:updated_time" content="2018-03-19T02:30:35.133Z">
+<meta property="og:updated_time" content="2018-03-21T00:55:32.469Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="C++的高效从何而来">
 <meta name="twitter:description" content="前一段时间，实验室的同学跟我说，“我自己写了个C的快速排序，排了一个10000000个int的数组，貌似比C库中是qsort算法要快，咋回事？C++的STL中快排（quick sort）算法的效率如何？”。 听他这么一说，我就立即做了个实验，写了如下代码： 12345678910111213141516171819202122232425262728293031323334353637383940">
@@ -437,7 +437,7 @@
 <p>编译器通过自动类型推导，知道了RandomIt其实是一个int*，于是产生这个函数：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sort(<span class="keyword">int</span>*, <span class="keyword">int</span>*);</span><br></pre></td></tr></table></figure>
 <p>具体实现中的RandomIt已经都替换成相应的int*，一个完整的函数就产生了。</p>
-<p>关键的问题出现了！编译器在实例化一个函数（类也一样）的时候，它必须知道具体的实现代码，才能够产生完整的函数。这也是为什么如果大家自己写模版的时候，.h文件和.cpp文件的关系变得十分奇怪的原因，一般做饭是在.h文件末尾，#include xx.cpp，其中xx.cpp中实现了.h文件中的函数声明，或者干脆直接在.h文件中写实现。否则，如果按照一般的.h和.cpp的关系，编译器会报错，说找不到函数的实现。写过模版的程序猿应该都知道这个。</p>
+<p>关键的问题出现了！编译器在实例化一个函数（类也一样）的时候，它必须知道具体的实现代码，才能够产生完整的函数。这也是为什么如果大家自己写模版的时候，.h文件和.cpp文件的关系变得十分奇怪的原因，一般做法是在.h文件末尾，#include xx.cpp，其中xx.cpp中实现了.h文件中的函数声明，或者干脆直接在.h文件中写实现。否则，如果按照一般的.h和.cpp的关系，编译器会报错，说找不到函数的实现。写过模版的程序猿应该都知道这个。</p>
 <p>事实上，C++标准委员会为了解决这个问题，曾经引入了export关键字，来试图解决这个问题，但很少有编译器实现了（估计是实现难度较大，且增加了复杂度，得不偿失），所以这个关键字后来基本上费了。</p>
 <p>大家或许会问，你是不是走题了，刚开始不是讨论C++的效率问题吗？怎么说了半天泛型和模版的事情了？</p>
 <p>答案是，真是由于泛型的这个“副作用”，使得编译器可以做更多的优化！</p>
